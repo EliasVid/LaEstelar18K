@@ -103,7 +103,7 @@
     <meta charset="utf-8">
 </head>
 
-<body class="bg-surface-container-lowest text-on-background font-body-md antialiased min-h-screen pb-24 md:pb-0">
+<body class="bg-surface-container-lowest text-on-background font-body-md antialiased min-h-screen">
     <!-- TopAppBar -->
     <header
         class="flex justify-between items-center px-2 sm:px-margin-mobile md:px-margin-desktop h-16 w-full fixed top-0 z-50 transition-all duration-300 bg-black/50 backdrop-blur-md border-b border-[#E5C76B]/20">
@@ -127,6 +127,7 @@
             </button>
         </a>
     </header>
+
     <!-- NavigationDrawer -->
     <div id="drawer-overlay"
         class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden opacity-0 transition-opacity duration-300"></div>
@@ -172,16 +173,16 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#"
+                    <a href="historia.html"
                         class="flex items-center gap-4 text-white/80 px-6 py-3.5 hover:bg-[#E5C76B]/10 hover:text-[#E5C76B] transition-colors">
                         <span class="material-symbols-outlined text-[#E5C76B]"
                             data-icon="history_edu">history_edu</span>
                         <span class="font-body-md">Nuestra Historia</span>
                     </a>
                 </li>
-                <!-- Social Links in Drawer -->
                 <li class="pt-4 border-t border-[#E5C76B]/10 mt-4">
-                    <a href="https://wa.me/573009635047" target="_blank" rel="noopener noreferrer"
+                    <a href="https://wa.me/573009635047?text=Hola,%20quisiera%20recibir%20informaci%C3%B3n%20sobre%20compras%20al%20por%20mayor."
+                        target="_blank" rel="noopener noreferrer"
                         class="flex items-center gap-4 text-white/80 px-6 py-3.5 hover:bg-[#E5C76B]/10 hover:text-[#E5C76B] transition-colors">
                         <svg class="w-5 h-5 fill-current text-[#E5C76B]" viewBox="0 0 24 24">
                             <path
@@ -213,130 +214,52 @@
             </ul>
         </nav>
     </aside>
-    <main>
-        <!-- Hero Section -->
-        <section
-            class="relative w-full h-[80vh] md:h-[90vh] flex flex-col justify-center items-center text-center px-margin-mobile md:px-margin-desktop overflow-hidden bg-black">
-            <div class="absolute inset-0 z-0">
-                <img src="img/landing.jpeg" alt="Woven gold rings on a hand"
-                    class="w-full h-full object-cover object-center opacity-85">
-                <div class="absolute inset-0 bg-gradient-to-b from-black/90 via-black/40 to-transparent"></div>
-            </div>
-            <div
-                class="relative z-10 max-w-3xl mx-auto flex flex-col items-center gap-stack-md text-center animate-fade-in-up pt-16">
-                <div class="space-y-stack-sm text-center">
-                    <h1 class="font-display-lg text-headline-lg-mobile md:text-display-lg text-white text-center">Joyas
-                        de alta calidad</h1>
-                    <p class="font-body-lg text-[#E5C76B]/90 max-w-xl mx-auto text-center font-medium">Piezas únicas en
-                        oro de 18k y 18k laminado.</p>
+
+    <main class="pt-20">
+        <!-- Wholesale Banner Header -->
+        <section class="bg-black text-[#E5C76B] py-20 px-margin-mobile md:px-margin-desktop text-center border-b border-[#E5C76B]/20 relative">
+            <div class="max-w-3xl mx-auto space-y-4">
+                <span class="text-xs uppercase tracking-widest text-[#E5C76B] font-bold bg-[#E5C76B]/10 px-4 py-1.5 rounded-full border border-[#E5C76B]/30 inline-block">Atención a Distribuidores</span>
+                <h1 class="font-display-lg text-headline-lg-mobile md:text-display-lg text-white">Ventas al Por Mayor</h1>
+                <p class="font-body-lg text-white/80 max-w-2xl mx-auto">Impulsa tu negocio con nuestra línea exclusiva de joyas en Oro de 18k y Oro Laminado 18k. Accede a precios de catálogo mayorista directamente en WhatsApp.</p>
+                <div class="pt-4">
+                    <a href="https://wa.me/573009635047?text=Hola,%20quisiera%20recibir%20informaci%C3%B3n%20sobre%20compras%20al%20por%20mayor." target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-3 bg-[#E5C76B] text-black font-semibold uppercase tracking-wider px-8 py-4 rounded-full hover:bg-white transition-all shadow-[0_4px_25px_rgba(229,199,107,0.3)] active:scale-95">
+                        <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                        Contactar Asesor Mayorista
+                    </a>
                 </div>
-                <a href="colecciones.html">
-                    <button
-                        class="bg-black/80 backdrop-blur-sm text-[#E5C76B] border border-[#E5C76B]/50 hover:border-[#E5C76B] font-label-sm px-10 py-4 rounded-full hover:bg-[#E5C76B] hover:text-black transition-all duration-300 shadow-[0_4px_25px_rgba(229,199,107,0.25)] uppercase tracking-widest font-semibold active:scale-95">
-                        Ver Colección
-                    </button>
-                </a>
             </div>
         </section>
-        <!-- Personaliza tu Pieza -->
+
+        <!-- Benefits Grid -->
         <section class="py-section-gap px-margin-mobile md:px-margin-desktop bg-surface-container-lowest">
-            <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-margin-desktop items-center">
-                <div class="order-2 lg:order-1 space-y-stack-md">
-                    <h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-black">Personaliza tu
-                        Pieza</h2>
-                    <p class="font-body-lg text-on-surface-variant">Cada historia es única, y tu joya debería serlo
-                        también. Colabora con nuestros artesanos para crear un diseño a medida, eligiendo desde el
-                        grosor del hilo de oro hasta el color del tejido.</p>
-                    <ul class="space-y-stack-sm font-body-md text-on-surface-variant">
-                        <li class="flex items-center gap-3">
-                            <span class="material-symbols-outlined text-[#735c00] text-sm">circle</span>
-                            Selección de quilataje (14k, 18k, 24k)
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <span class="material-symbols-outlined text-[#735c00] text-sm">circle</span>
-                            Variedad de hilos de seda natural
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <span class="material-symbols-outlined text-[#735c00] text-sm">circle</span>
-                            Grabado interior personalizado
-                        </li>
-                    </ul>
-                    <button
-                        class="mt-stack-md bg-black text-[#E5C76B] border border-black font-label-sm px-8 py-3 rounded-full hover:bg-[#735c00] hover:text-white hover:border-[#735c00] transition-colors duration-300 uppercase tracking-wider font-semibold">
-                        Iniciar Diseño Custom
-                    </button>
+            <div class="max-w-6xl mx-auto space-y-12">
+                <div class="text-center space-y-2">
+                    <h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-black">Beneficios para Mayoristas</h2>
+                    <p class="font-body-md text-on-surface-variant">Te acompañamos a hacer crecer tu marca de joyería con las mejores condiciones comercializadoras.</p>
                 </div>
-                <div class="order-1 lg:order-2">
-                    <div
-                        class="relative w-full aspect-square rounded-2xl overflow-hidden bg-surface-container shadow-[0_20px_60px_rgba(0,0,0,0.15)] border border-[#E5C76B]/30">
-                        <img class="w-full h-full object-cover" data-alt="Jeweler workbench"
-                            src="img/personalizar.jpeg">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="p-8 rounded-2xl border border-black/10 bg-stone-50 space-y-3">
+                        <span class="material-symbols-outlined text-3xl text-[#735c00]">percent</span>
+                        <h3 class="font-headline-lg text-xl text-black">Márgenes Preferenciales</h3>
+                        <p class="font-body-md text-on-surface-variant text-sm">Descuentos competitivos por volumen para maximizar el margen de ganancia en tu negocio.</p>
+                    </div>
+                    <div class="p-8 rounded-2xl border border-black/10 bg-stone-50 space-y-3">
+                        <span class="material-symbols-outlined text-3xl text-[#735c00]">local_shipping</span>
+                        <h3 class="font-headline-lg text-xl text-black">Envíos Prioritarios</h3>
+                        <p class="font-body-md text-on-surface-variant text-sm">Despacho seguro y monitoreado a nivel nacional para que tu inventario siempre esté al día.</p>
+                    </div>
+                    <div class="p-8 rounded-2xl border border-black/10 bg-stone-50 space-y-3">
+                        <span class="material-symbols-outlined text-3xl text-[#735c00]">headset_mic</span>
+                        <h3 class="font-headline-lg text-xl text-black">Asesoría Directa</h3>
+                        <p class="font-body-md text-on-surface-variant text-sm">Atención personalizada inmediata vía WhatsApp para pedidos, fotos y disponibilidad.</p>
                     </div>
                 </div>
-            </div>
-        </section>
-        <!-- Más Vendidos -->
-        <section class="py-section-gap px-margin-mobile md:px-margin-desktop bg-surface-container-lowest">
-            <div class="max-w-7xl mx-auto">
-                <div class="flex justify-between items-end mb-stack-md">
-                    <h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-black">Más Vendidos
-                    </h2>
-                    <a href="colecciones.html"
-                        class="font-label-sm text-[#735c00] hover:text-black transition-colors hidden md:block uppercase tracking-wider font-semibold">Ver
-                        todos</a>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
-                    <!-- Product Card 1 -->
-                    <a href="producto.html" class="block">
-                        <div class="group cursor-pointer">
-                            <div
-                                class="bg-surface-container rounded-xl overflow-hidden aspect-[4/5] relative mb-stack-sm transition-transform duration-500 group-hover:-translate-y-2 group-hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)] border border-[#E5C76B]/10">
-                                <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                                    data-alt="Dijes de Oro" src="img/dijes.jpeg">
-                            </div>
-                            <div class="text-center">
-                                <h3 class="font-headline-lg text-body-lg md:text-headline-lg-mobile text-on-background">
-                                    Anillo Nudo Infinito</h3>
-                                <p class="font-body-md text-[#735c00] font-semibold mt-1">$450</p>
-                            </div>
-                        </div>
+                <div class="text-center pt-6">
+                    <a href="https://wa.me/573009635047?text=Hola,%20quisiera%20recibir%20informaci%C3%B3n%20sobre%20compras%20al%20por%20mayor." target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-black text-[#E5C76B] border border-[#E5C76B]/40 hover:bg-[#E5C76B] hover:text-black font-semibold uppercase tracking-wider px-8 py-3.5 rounded-full transition-all">
+                        Solicitar Catálogo por WhatsApp
+                        <span class="material-symbols-outlined text-sm">arrow_forward</span>
                     </a>
-
-                    <!-- Product Card 2 -->
-                    <a href="producto.html" class="block">
-                        <div class="group cursor-pointer">
-                            <div
-                                class="bg-surface-container rounded-xl overflow-hidden aspect-[4/5] relative mb-stack-sm transition-transform duration-500 group-hover:-translate-y-2 group-hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)] border border-[#E5C76B]/10">
-                                <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                                    data-alt="Cadena de Oro 18k" src="img/cadena 2.jpeg">
-                            </div>
-                            <div class="text-center">
-                                <h3 class="font-headline-lg text-body-lg md:text-headline-lg-mobile text-on-background">
-                                    Topos Aurora</h3>
-                                <p class="font-body-md text-[#735c00] font-semibold mt-1">$280</p>
-                            </div>
-                        </div>
-                    </a>
-
-                    <!-- Product Card 3 -->
-                    <a href="producto.html" class="block">
-                        <div class="group cursor-pointer">
-                            <div
-                                class="bg-surface-container rounded-xl overflow-hidden aspect-[4/5] relative mb-stack-sm transition-transform duration-500 group-hover:-translate-y-2 group-hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)] border border-[#E5C76B]/10">
-                                <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                                    data-alt="Topos de Oro" src="img/topos 1.jpeg">
-                            </div>
-                            <div class="text-center">
-                                <h3 class="font-headline-lg text-body-lg md:text-headline-lg-mobile text-on-background">
-                                    Pulsera Lazo Carmesí</h3>
-                                <p class="font-body-md text-[#735c00] font-semibold mt-1">$320</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="mt-stack-md text-center md:hidden">
-                    <a class="font-label-sm text-[#735c00] underline hover:text-black transition-colors"
-                        href="colecciones.html">Ver todos</a>
                 </div>
             </div>
         </section>
@@ -357,8 +280,8 @@
             <div class="flex flex-wrap justify-center gap-6 text-sm text-white/80">
                 <a href="colecciones.html#oro-18k" class="hover:text-[#E5C76B] transition-colors">Oro 18k</a>
                 <a href="colecciones.html#oro-laminado" class="hover:text-[#E5C76B] transition-colors">Oro Laminado</a>
-                <a href="#" class="hover:text-[#E5C76B] transition-colors">Personalización</a>
-            </div>
+                <a href="mayorista.html" class="hover:text-[#E5C76B] transition-colors">Ventas al Mayor</a>
+                </div>
 
             <!-- Social Links -->
             <div class="flex items-center gap-4">
@@ -415,7 +338,6 @@
         closeBtn.addEventListener('click', toggleDrawer);
         overlay.addEventListener('click', toggleDrawer);
     </script>
-
 </body>
 
 </html>
