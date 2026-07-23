@@ -143,7 +143,7 @@
         <nav class="flex-1 overflow-y-auto">
             <ul class="space-y-1">
                 <li>
-                    <a href="colecciones.html#oro-laminado" onclick="switchCategory('laminado')"
+                    <a href="colecciones.html" onclick="switchCategory('laminado')"
                         class="flex items-center gap-4 text-white/80 px-6 py-3.5 hover:bg-[#E5C76B]/10 hover:text-[#E5C76B] transition-colors">
                         <span class="material-symbols-outlined text-[#E5C76B]"
                             data-icon="auto_awesome">auto_awesome</span>
@@ -249,7 +249,7 @@
         <div class="max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop py-12">
             
             <!-- ================= SECTION 1: ORO LAMINADO 18K (Default Visible) ================= -->
-            <section id="oro-laminado" class="scroll-mt-20 transition-all duration-500">
+            <section id="oro-laminado-section" class="scroll-mt-20 transition-all duration-500">
                 <!-- Oro Laminado Banner Header -->
                 <div
                     class="bg-gradient-to-r from-stone-900 to-black text-white p-6 md:p-8 rounded-2xl mb-8 flex flex-col md:flex-row justify-between items-center gap-4 border border-black/20 shadow-md">
@@ -318,7 +318,7 @@
             </section>
 
             <!-- ================= SECTION 2: ORO 18K (Hidden by Default) ================= -->
-            <section id="oro-18k" class="scroll-mt-20 hidden transition-all duration-500">
+            <section id="oro-18k-section" class="scroll-mt-20 hidden transition-all duration-500">
                 <!-- Oro 18k Banner Header -->
                 <div
                     class="bg-black text-[#E5C76B] p-6 md:p-8 rounded-2xl mb-8 flex flex-col md:flex-row justify-between items-center gap-4 border border-[#E5C76B]/30 shadow-lg">
@@ -485,8 +485,8 @@
         function switchCategory(cat) {
             const laminadoBtn = document.getElementById('tab-laminado-btn');
             const gold18kBtn = document.getElementById('tab-18k-btn');
-            const laminadoContent = document.getElementById('oro-laminado');
-            const gold18kContent = document.getElementById('oro-18k');
+            const laminadoContent = document.getElementById('oro-laminado-section');
+            const gold18kContent = document.getElementById('oro-18k-section');
 
             const activeBtnClasses = "flex-1 py-3 rounded-full text-xs md:text-sm font-semibold uppercase tracking-wider transition-all duration-300 bg-black text-[#E5C76B] shadow-md";
             const inactiveBtnClasses = "flex-1 py-3 rounded-full text-xs md:text-sm font-semibold uppercase tracking-wider transition-all duration-300 text-black/70 hover:text-black";
