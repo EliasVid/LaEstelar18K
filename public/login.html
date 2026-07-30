@@ -1,0 +1,27 @@
+<form id="loginForm">
+  <input type="password" id="password" placeholder="Password">
+  <button type="submit">Login</button>
+</form>
+
+<script>
+document.getElementById("loginForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const password = document.getElementById("password").value;
+
+  const res = await fetch("/api/admin-login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    credentials: "include",
+    body: JSON.stringify({ password })
+  });
+
+  if (res.ok) {
+    window.location.href = "/admin.html";
+  } else {
+    alert("Wrong password");
+  }
+});
+</script>

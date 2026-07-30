@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="es" style="">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&amp;family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&amp;display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block"
+        rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">try {
+            tailwind.config = {
+                darkMode: "class",
+                theme: {
+                    extend: {
+                        "colors": {
+                            "outline-variant": "#d7c2ba",
+                            "inverse-primary": "#fbb797",
+                            "on-tertiary-fixed-variant": "#574500",
+                            "surface-container": "#fdebdc",
+                            "outline": "#84746c",
+                            "surface-variant": "#f1dfd1",
+                            "surface-bright": "#fff8f4",
+                            "on-surface-variant": "#52443e",
+                            "on-tertiary-fixed": "#241a00",
+                            "on-tertiary": "#ffffff",
+                            "on-secondary-container": "#6d6354",
+                            "inverse-on-surface": "#ffeee0",
+                            "surface-container-low": "#fff1e7",
+                            "on-surface": "#231a11",
+                            "on-primary-container": "#50260f",
+                            "tertiary-fixed": "#ffe088",
+                            "surface-container-lowest": "#ffffff",
+                            "secondary-fixed": "#efe0cd",
+                            "primary-fixed": "#ffdbcb",
+                            "on-tertiary-container": "#4f3e00",
+                            "on-primary-fixed": "#341100",
+                            "tertiary-container": "#cca830",
+                            "surface-container-high": "#f7e5d7",
+                            "on-secondary-fixed-variant": "#4f4538",
+                            "on-error-container": "#93000a",
+                            "on-primary-fixed-variant": "#6a3b22",
+                            "on-primary": "#ffffff",
+                            "primary-fixed-dim": "#fbb797",
+                            "secondary-container": "#efe0cd",
+                            "surface-container-highest": "#f1dfd1",
+                            "on-background": "#231a11",
+                            "error": "#ba1a1a",
+                            "on-secondary-fixed": "#221a0f",
+                            "on-secondary": "#ffffff",
+                            "error-container": "#ffdad6",
+                            "tertiary-fixed-dim": "#e9c349",
+                            "background": "#fff8f4",
+                            "on-error": "#ffffff",
+                            "tertiary": "#735c00",
+                            "secondary": "#675d4e",
+                            "secondary-fixed-dim": "#d2c4b2",
+                            "primary": "#855137",
+                            "surface-tint": "#855137",
+                            "surface-dim": "#e8d7c9",
+                            "primary-container": "#c98b6d",
+                            "surface": "#fff8f4",
+                            "inverse-surface": "#392f25"
+                        },
+                        "borderRadius": {
+                            "DEFAULT": "0.25rem",
+                            "lg": "0.5rem",
+                            "xl": "0.75rem",
+                            "full": "9999px"
+                        },
+                        "spacing": {
+                            "gutter": "24px",
+                            "margin-desktop": "64px",
+                            "stack-md": "32px",
+                            "margin-mobile": "16px",
+                            "base": "8px",
+                            "section-gap": "80px",
+                            "stack-sm": "12px"
+                        },
+                        "fontFamily": {
+                            "display-lg": ["Libre Caslon Text", "serif"],
+                            "body-md": ["DM Sans", "sans-serif"],
+                            "headline-lg": ["Libre Caslon Text", "serif"],
+                            "body-lg": ["DM Sans", "sans-serif"],
+                            "headline-lg-mobile": ["Libre Caslon Text", "serif"],
+                            "label-sm": ["DM Sans", "sans-serif"]
+                        },
+                        "fontSize": {
+                            "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "400" }],
+                            "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                            "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "400" }],
+                            "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                            "headline-lg-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "400" }],
+                            "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }]
+                        }
+                    }
+                }
+            }
+        } catch (_e) { }</script>
+    <meta charset="utf-8">
+</head>
+
+<body class="bg-surface-container-lowest text-on-background font-body-md antialiased min-h-screen">
+    <!-- TopAppBar -->
+    <header
+        class="flex justify-between items-center px-2 sm:px-margin-mobile md:px-margin-desktop h-16 w-full fixed top-0 z-50 transition-all duration-300 bg-black/50 backdrop-blur-md border-b border-[#E5C76B]/20">
+        <button
+            class="hover:opacity-80 transition-opacity scale-95 active:scale-90 transition-transform p-2 text-[#E5C76B]"
+            id="menu-btn" aria-label="Abrir menú">
+            <span class="material-symbols-outlined text-2xl" data-icon="menu">menu</span>
+        </button>
+        <div class="flex-1 flex justify-center px-1 overflow-hidden">
+            <a href="index.html" class="hover:opacity-90 transition-opacity max-w-full">
+                <h1
+                    class="font-display-lg text-[22px] sm:text-2xl md:text-headline-lg whitespace-nowrap italic font-bold text-[#E5C76B] text-center tracking-tighter sm:tracking-wide">
+                    La Estelar Joyería 18k</h1>
+            </a>
+        </div>
+        <button
+            id="cart-btn"
+            class="hover:opacity-80 transition-opacity scale-95 active:scale-90 transition-transform p-2 text-[#E5C76B] relative"
+            aria-label="Bolsa de compras">
+            <span class="material-symbols-outlined text-2xl" data-icon="shopping_bag">shopping_bag</span>
+            <!-- Cart Badge -->
+            <span id="cart-badge" class="absolute top-1.5 right-1.5 bg-red-600 text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center hidden">0</span>
+        </button>
+    </header>
+
+    <!-- NavigationDrawer -->
+    <div id="drawer-overlay"
+        class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden opacity-0 transition-opacity duration-300"></div>
+    <aside id="nav-drawer"
+        class="fixed top-0 left-0 h-full w-80 bg-[#121212] border-r border-[#E5C76B]/20 shadow-2xl rounded-r-3xl z-50 transform -translate-x-full transition-transform duration-300 ease-in-out flex flex-col py-8 text-white">
+        <div class="px-6 mb-6 flex justify-between items-center">
+            <h2 class="text-[#E5C76B] font-display-lg italic text-headline-lg">Menú</h2>
+            <button id="close-drawer" class="text-white/70 hover:text-[#E5C76B] transition-colors"
+                aria-label="Cerrar menú">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <nav class="flex-1 overflow-y-auto">
+            <ul class="space-y-1">
+                <li>
+                    <a href="colecciones.html" onclick="switchCategory('laminado')"
+                        class="flex items-center gap-4 text-white/80 px-6 py-3.5 hover:bg-[#E5C76B]/10 hover:text-[#E5C76B] transition-colors">
+                        <span class="material-symbols-outlined text-[#E5C76B]"
+                            data-icon="auto_awesome">auto_awesome</span>
+                        <span class="font-body-md">Oro Laminado 18k</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="colecciones.html#oro-18k" onclick="switchCategory('18k')"
+                        class="flex items-center gap-4 text-white/80 px-6 py-3.5 hover:bg-[#E5C76B]/10 hover:text-[#E5C76B] transition-colors">
+                        <span class="material-symbols-outlined text-[#E5C76B]" data-icon="diamond">diamond</span>
+                        <span class="font-body-md">Oro 18k</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="personalizacion.html"
+                        class="flex items-center gap-4 text-white/80 px-6 py-3.5 hover:bg-[#E5C76B]/10 hover:text-[#E5C76B] transition-colors">
+                        <span class="material-symbols-outlined text-[#E5C76B]" data-icon="edit_note">edit_note</span>
+                        <span class="font-body-md">Personalización</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="mayorista.html"
+                        class="flex items-center gap-4 text-white/80 px-6 py-3.5 hover:bg-[#E5C76B]/10 hover:text-[#E5C76B] transition-colors">
+                        <span class="material-symbols-outlined text-[#E5C76B]"
+                            data-icon="storefront">storefront</span>
+                        <span class="font-body-md">Ventas al Mayor</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="historia.html"
+                        class="flex items-center gap-4 text-white/80 px-6 py-3.5 hover:bg-[#E5C76B]/10 hover:text-[#E5C76B] transition-colors">
+                        <span class="material-symbols-outlined text-[#E5C76B]"
+                            data-icon="history_edu">history_edu</span>
+                        <span class="font-body-md">Nuestra Historia</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Cart Drawer -->
+    <div id="cart-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden opacity-0 transition-opacity duration-300"></div>
+    <aside id="cart-drawer" class="fixed top-0 right-0 h-full w-full sm:w-[400px] bg-surface-container-lowest border-l border-[#E5C76B]/20 shadow-2xl z-50 transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col">
+        <div class="px-6 py-5 bg-black flex justify-between items-center border-b border-[#E5C76B]/20">
+            <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-[#E5C76B]">shopping_bag</span>
+                <h2 class="text-[#E5C76B] font-display-lg italic text-xl">Tu Selección</h2>
+            </div>
+            <button id="close-cart" class="text-white/70 hover:text-[#E5C76B] transition-colors" aria-label="Cerrar carrito">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+
+        <div id="cart-items-container" class="flex-1 overflow-y-auto p-4 space-y-4">
+            <div class="text-center mt-10">
+                <p class="text-black/50 text-sm">Tu carrito está vacío.</p>
+            </div>
+        </div>
+
+        <div class="p-6 bg-white border-t border-black/10 shadow-[0_-4px_20px_rgba(0,0,0,0.05)] z-10">
+            <div class="flex justify-between items-center mb-4">
+                <span class="font-body-md text-black/70 text-sm">Total Estimado</span>
+                <span id="cart-total-price" class="font-display-lg text-xl text-[#735c00] font-bold">$0 COP</span>
+            </div>
+            <button id="checkout-btn" class="w-full bg-black text-[#E5C76B] border border-[#E5C76B]/40 py-3.5 rounded-full hover:bg-[#E5C76B] hover:text-black transition-all shadow-md uppercase tracking-widest font-semibold text-xs flex items-center justify-center gap-2 opacity-50 cursor-not-allowed">
+                Proceder al Pago
+                <span class="material-symbols-outlined text-lg">arrow_forward</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- PRODUCT POPUP MODAL -->
+    <div id="product-modal-overlay" class="fixed inset-0 bg-black/80 backdrop-blur-md z-[100] hidden opacity-0 transition-opacity duration-300 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+        <div id="product-modal-content" class="bg-surface-container-lowest w-full max-w-5xl rounded-3xl overflow-hidden shadow-2xl relative transform scale-95 transition-transform duration-300">
+            
+            <!-- Perfect Circle Close Button -->
+            <button id="close-product-modal" class="absolute top-4 right-4 z-10 bg-white border border-black/10 hover:bg-stone-100 text-black w-10 h-10 flex items-center justify-center rounded-full transition-colors shadow-sm">
+                <span class="material-symbols-outlined text-xl">close</span>
+            </button>
+
+            <!-- Modal Grid Layout -->
+            <div class="flex flex-col md:flex-row max-h-[90vh] md:max-h-[80vh]">
+                
+                <!-- Left: Image Gallery -->
+                <div class="w-full md:w-1/2 p-6 md:p-8 bg-surface-container-low border-b md:border-b-0 md:border-r border-[#E5C76B]/20 flex items-center justify-center relative overflow-y-auto">
+                    <!-- Images will be injected here -->
+                    <div id="modal-image-container" class="w-full flex flex-col gap-4">
+                        <div class="w-full aspect-square bg-stone-200 animate-pulse rounded-2xl"></div>
+                    </div>
+                </div>
+
+                <!-- Right: Product Details -->
+                <div class="w-full md:w-1/2 p-6 md:p-8 flex flex-col overflow-y-auto">
+                    <div class="flex flex-col gap-1 mb-6 pr-8">
+                        <span id="modal-category" class="text-xs uppercase tracking-widest text-[#735c00] font-bold animate-pulse bg-stone-200 h-4 w-32 rounded"></span>
+                        <h2 id="modal-title" class="font-display-lg text-headline-lg-mobile md:text-headline-lg text-black mt-2 leading-tight">Cargando...</h2>
+                        <p id="modal-price" class="font-body-lg text-xl font-bold text-[#735c00] mt-1"></p>
+                    </div>
+                    
+                    <p id="modal-description" class="font-body-md text-on-surface-variant mb-6 leading-relaxed border-l-2 border-[#E5C76B] pl-4 min-h-[60px]">
+                    </p>
+                    
+                    <div class="h-px w-full bg-[#E5C76B]/20 mb-6"></div>
+
+                    <!-- Options -->
+                    <div class="flex flex-col gap-6 mb-8 flex-1">
+                        <div class="flex flex-col gap-3">
+                            <label class="font-label-sm text-black uppercase tracking-wider font-semibold">Tonalidad / Color</label>
+                            <div id="modal-variants" class="flex flex-wrap gap-3">
+                                <!-- Colored Swatches injected here -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="flex flex-col gap-3 mt-auto pt-4">
+                        <button onclick="addToCart()" class="w-full bg-black text-[#E5C76B] border border-[#E5C76B]/40 hover:border-[#E5C76B] font-label-sm py-4 rounded-full hover:bg-[#E5C76B] hover:text-black transition-all duration-300 shadow-[0_4px_20px_rgba(229,199,107,0.2)] uppercase tracking-widest font-semibold flex items-center justify-center gap-2 active:scale-[0.98]">
+                            <span class="material-symbols-outlined text-xl">shopping_cart</span>
+                            Añadir al Carrito
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <main class="pt-16">
+        <!-- Compact Hero Header Section -->
+        <section class="bg-black text-[#E5C76B] py-12 px-margin-mobile md:px-margin-desktop text-center border-b border-[#E5C76B]/20 relative overflow-hidden">
+            <div class="absolute inset-0 z-0">
+                <img src="img/landing.jpeg" alt="Colecciones La Estelar Joyería" class="w-full h-full object-cover object-center opacity-40">
+                <div class="absolute inset-0 bg-gradient-to-b from-black/80 via-black/60 to-black"></div>
+            </div>
+            <div class="max-w-3xl mx-auto space-y-3 relative z-10">
+                <span class="text-xs uppercase tracking-widest text-white/70 font-semibold">Catálogo Oficial</span>
+                <h1 class="font-display-lg text-headline-lg-mobile md:text-display-lg text-white">Colecciones Exclusivas</h1>
+                <p class="font-body-md text-white/80 max-w-xl mx-auto">Selecciona entre la máxima pureza del Oro 18k o la elegancia accesible de nuestro Oro Laminado 18k.</p>
+            </div>
+        </section>
+
+        <!-- Category Tabs Switcher Section -->
+        <section class="bg-surface-container-lowest py-6 px-margin-mobile md:px-margin-desktop border-b border-[#E5C76B]/20">
+            <div class="max-w-md mx-auto flex justify-center p-1.5 bg-stone-100 rounded-full border border-black/10 shadow-inner">
+                <button id="tab-laminado-btn" onclick="switchCategory('laminado')"
+                    class="flex-1 py-3 rounded-full text-xs md:text-sm font-semibold uppercase tracking-wider transition-all duration-300 bg-black text-[#E5C76B] shadow-md">
+                    Oro Laminado 18k
+                </button>
+                <button id="tab-18k-btn" onclick="switchCategory('18k')"
+                    class="flex-1 py-3 rounded-full text-xs md:text-sm font-semibold uppercase tracking-wider transition-all duration-300 text-black/70 hover:text-black">
+                    Oro 18k
+                </button>
+            </div>
+        </section>
+
+        <!-- Main Collections Content Container -->
+        <div class="max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop py-12">
+            
+            <!-- SECTION 1: ORO LAMINADO 18K -->
+            <section id="oro-laminado-section" class="scroll-mt-20 transition-all duration-500">
+                <div class="bg-gradient-to-r from-stone-900 to-black text-white p-6 md:p-8 rounded-2xl mb-8 flex flex-col md:flex-row justify-between items-center gap-4 border border-black/20 shadow-md">
+                    <div>
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="material-symbols-outlined text-sm text-[#E5C76B]">auto_awesome</span>
+                            <span class="text-xs uppercase tracking-widest text-[#E5C76B] font-bold">Estilo &amp; Brillo Accesible</span>
+                        </div>
+                        <h3 class="font-headline-lg-mobile md:font-headline-lg text-white">Colección Oro Laminado 18k</h3>
+                        <p class="text-xs md:text-sm text-white/70 mt-1 max-w-xl">Múltiples capas de oro de 18k sobre una base de alta resistencia. Misma apariencia, brillo y sofisticación a un precio excepcional.</p>
+                    </div>
+                </div>
+
+                <div id="laminado-grid" class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-gutter">
+                    <!-- Products injected here -->
+                </div>
+            </section>
+
+            <!-- SECTION 2: ORO 18K -->
+            <section id="oro-18k-section" class="scroll-mt-20 hidden transition-all duration-500">
+                <div class="bg-black text-[#E5C76B] p-6 md:p-8 rounded-2xl mb-8 flex flex-col md:flex-row justify-between items-center gap-4 border border-[#E5C76B]/30 shadow-lg">
+                    <div>
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="material-symbols-outlined text-sm">workspace_premium</span>
+                            <span class="text-xs uppercase tracking-widest text-[#E5C76B]/80 font-bold">Pureza &amp; Lujo Macizo</span>
+                        </div>
+                        <h3 class="font-headline-lg-mobile md:font-headline-lg text-white">Colección Oro 18k</h3>
+                        <p class="text-xs md:text-sm text-white/70 mt-1 max-w-xl">Piezas elaboradas en oro puro de 18 quilates. Durabilidad eterna, elegancia sin tiempo e inversión para toda la vida.</p>
+                    </div>
+                </div>
+
+                <div id="oro-18k-grid" class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-gutter">
+                    <!-- Products injected here -->
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-black text-white border-t border-[#E5C76B]/20 py-12 px-margin-mobile md:px-margin-desktop">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8 text-center md:text-left">
+            <div>
+                <h3 class="font-display-lg italic font-bold text-[#E5C76B] text-xl md:text-2xl mb-2">La Estelar Joyería 18k</h3>
+                <p class="text-xs text-white/70 max-w-sm">Elegancia, artesanía y la pureza del oro de 18k en cada detalle.</p>
+            </div>
+            <div class="mt-8 pt-6 border-t border-white/10 text-center text-xs text-white/50 w-full">
+                © 2026 La Estelar Joyería 18k. - Smarti.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Global States
+        let globalCatalog = [];
+        let shoppingCart = [];
+        let modalActiveProduct = null;
+        let modalActiveColor = null;
+
+        // ==========================================
+        // DRAWER LOGIC
+        // ==========================================
+        const menuBtn = document.getElementById('menu-btn');
+        const drawer = document.getElementById('nav-drawer');
+        const overlay = document.getElementById('drawer-overlay');
+        const closeBtn = document.getElementById('close-drawer');
+
+        function toggleDrawer() {
+            const isOpen = !drawer.classList.contains('-translate-x-full');
+            if (isOpen) {
+                drawer.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+                setTimeout(() => overlay.classList.remove('opacity-100'), 10);
+            } else {
+                drawer.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden');
+                setTimeout(() => overlay.classList.add('opacity-100'), 10);
+            }
+        }
+        menuBtn.addEventListener('click', toggleDrawer);
+        closeBtn.addEventListener('click', toggleDrawer);
+        overlay.addEventListener('click', toggleDrawer);
+
+        // ==========================================
+        // CART LOGIC
+        // ==========================================
+        const cartBtn = document.getElementById('cart-btn');
+        const cartDrawer = document.getElementById('cart-drawer');
+        const cartOverlay = document.getElementById('cart-overlay');
+        const closeCartBtn = document.getElementById('close-cart');
+
+        function toggleCart() {
+            const isOpen = !cartDrawer.classList.contains('translate-x-full');
+            if (isOpen) {
+                cartDrawer.classList.add('translate-x-full');
+                cartOverlay.classList.add('hidden');
+                setTimeout(() => cartOverlay.classList.remove('opacity-100'), 10);
+            } else {
+                cartDrawer.classList.remove('translate-x-full');
+                cartOverlay.classList.remove('hidden');
+                setTimeout(() => cartOverlay.classList.add('opacity-100'), 10);
+            }
+        }
+        cartBtn.addEventListener('click', toggleCart);
+        closeCartBtn.addEventListener('click', toggleCart);
+        cartOverlay.addEventListener('click', toggleCart);
+
+        // Catalog Tab logic
+        function switchCategory(cat) {
+            const laminadoBtn = document.getElementById('tab-laminado-btn');
+            const gold18kBtn = document.getElementById('tab-18k-btn');
+            const laminadoContent = document.getElementById('oro-laminado-section');
+            const gold18kContent = document.getElementById('oro-18k-section');
+
+            const activeBtnClasses = "flex-1 py-3 rounded-full text-xs md:text-sm font-semibold uppercase tracking-wider transition-all duration-300 bg-black text-[#E5C76B] shadow-md";
+            const inactiveBtnClasses = "flex-1 py-3 rounded-full text-xs md:text-sm font-semibold uppercase tracking-wider transition-all duration-300 text-black/70 hover:text-black";
+
+            if (cat === 'laminado') {
+                laminadoBtn.className = activeBtnClasses;
+                gold18kBtn.className = inactiveBtnClasses;
+                laminadoContent.classList.remove('hidden');
+                gold18kContent.classList.add('hidden');
+            } else {
+                gold18kBtn.className = activeBtnClasses;
+                laminadoBtn.className = inactiveBtnClasses;
+                gold18kContent.classList.remove('hidden');
+                laminadoContent.classList.add('hidden');
+            }
+        }
+
+        // ==========================================
+        // DYNAMIC CATALOG FETCHING
+        // ==========================================
+        window.addEventListener('DOMContentLoaded', () => {
+            if (window.location.hash === '#oro-18k') {
+                switchCategory('18k');
+            }
+            loadCatalog();
+        });
+
+        async function loadCatalog() {
+            try {
+                const response = await fetch('/api/get-catalog');
+                if (!response.ok) throw new Error('Failed to fetch catalog');
+                globalCatalog = await response.json();
+                renderProducts(globalCatalog);
+            } catch (error) {
+                console.error("Error loading catalog:", error);
+                document.getElementById('laminado-grid').innerHTML = `<p class="col-span-2 text-center py-12 text-black/50">Error al cargar el catálogo.</p>`;
+            }
+        }
+
+        function createProductCardHTML(product) {
+            const is18k = product.category === '18k';
+            const badgeClass = is18k ? 'bg-black/80 text-[#E5C76B] border-[#E5C76B]/30' : 'bg-stone-800/90 text-white border-white/20';
+            const badgeText = is18k ? '18K' : 'Laminado';
+            const subtitleText = is18k ? 'Oro 18k Macizo' : 'Oro Laminado 18k';
+            const borderClass = is18k ? 'border-[#E5C76B]/20' : 'border-black/10';
+            const imageUrl = product.image || (product.images && product.images.length > 0 ? product.images[0] : 'img/placeholder.jpg');
+            
+            const formattedPrice = new Intl.NumberFormat('es-CO', {
+                style: 'currency', currency: 'COP', minimumFractionDigits: 0
+            }).format(product.price);
+
+            return `
+                <button onclick="openProductModal('${product.id}')" class="col-span-1 block w-full text-left">
+                    <article class="group cursor-pointer rounded-2xl bg-surface-container-lowest transition-all duration-300 hover:shadow-[0_8px_40px_rgba(0,0,0,0.12)] hover:-translate-y-1 relative overflow-hidden border ${borderClass} flex flex-col h-full">
+                        <div class="aspect-square w-full overflow-hidden rounded-t-2xl relative">
+                            <span class="absolute top-2 right-2 z-20 backdrop-blur-sm text-[10px] font-bold px-2 py-0.5 rounded-full border pointer-events-none shadow-sm ${badgeClass}">
+                                ${badgeText}
+                            </span>
+                            <img src="${imageUrl}" alt="${product.name}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy">
+                        </div>
+                        <div class="p-3 md:p-6 text-center mt-auto">
+                            <h5 class="font-headline-lg-mobile text-base md:text-lg text-black mb-1">${product.name}</h5>
+                            <p class="text-[11px] text-black/50 font-medium uppercase tracking-wider mb-1">${subtitleText}</p>
+                            <p class="font-body-md text-[#735c00] font-semibold text-sm md:text-base">${formattedPrice} COP</p>
+                        </div>
+                    </article>
+                </button>
+            `;
+        }
+
+        function renderProducts(products) {
+            const laminadoContainer = document.getElementById('laminado-grid');
+            const oro18kContainer = document.getElementById('oro-18k-grid');
+
+            const laminadoProducts = products.filter(p => p.category === 'laminado');
+            if (laminadoContainer) {
+                laminadoContainer.innerHTML = laminadoProducts.length ? laminadoProducts.map(createProductCardHTML).join('') : `<p class="col-span-2 py-8 text-center text-black/50">Próximamente nuevos diseños.</p>`;
+            }
+
+            const oro18kProducts = products.filter(p => p.category === '18k');
+            if (oro18kContainer) {
+                oro18kContainer.innerHTML = oro18kProducts.length ? oro18kProducts.map(createProductCardHTML).join('') : `<p class="col-span-2 py-8 text-center text-black/50">Próximamente nuevos diseños.</p>`;
+            }
+        }
+
+        // ==========================================
+        // PRODUCT POPUP MODAL LOGIC
+        // ==========================================
+        const productModalOverlay = document.getElementById('product-modal-overlay');
+        const productModalContent = document.getElementById('product-modal-content');
+        const closeProductModalBtn = document.getElementById('close-product-modal');
+
+        function openProductModal(productId) {
+            const product = globalCatalog.find(p => p.id === productId);
+            if (!product) return;
+
+            modalActiveProduct = product;
+            modalActiveColor = product.colors && product.colors.length > 0 ? product.colors[0] : 'Estándar';
+
+            const is18k = product.category === '18k';
+            
+            // Populate Text Data
+            document.getElementById('modal-category').innerText = is18k ? 'Oro 18k Macizo' : 'Oro Laminado 18k';
+            document.getElementById('modal-category').classList.remove('animate-pulse', 'bg-stone-200');
+            document.getElementById('modal-title').innerText = product.name;
+            document.getElementById('modal-description').innerText = product.description || 'Una pieza única elaborada con la mejor calidad.';
+            document.getElementById('modal-price').innerText = new Intl.NumberFormat('es-CO', {
+                style: 'currency', currency: 'COP', minimumFractionDigits: 0
+            }).format(product.price) + ' COP';
+
+            // Populate Images
+            const imageContainer = document.getElementById('modal-image-container');
+            const images = product.images && product.images.length > 0 ? product.images : [product.image];
+            imageContainer.innerHTML = images.map(img => `
+                <div class="w-full aspect-square bg-surface-container-low rounded-2xl overflow-hidden relative border border-black/10">
+                    <img src="${img}" class="w-full h-full object-cover">
+                </div>
+            `).join('');
+
+            // Populate Variant Swatches (Colors)
+            const variantContainer = document.getElementById('modal-variants');
+            if (product.colors && product.colors.length > 0) {
+                variantContainer.innerHTML = product.colors.map(color => {
+                    const cleanColorId = color.replace('#', '');
+                    const isSelected = modalActiveColor === color;
+                    const activeBorder = isSelected ? 'border-[#E5C76B]' : 'border-black/20 hover:border-[#E5C76B]/60';
+                    
+                    return `
+                        <button onclick="selectModalColor('${color}')" id="swatch-${cleanColorId}" class="w-10 h-10 rounded-full border-2 ${activeBorder} transition-all p-0.5 relative group shadow-sm">
+                            <span class="block w-full h-full rounded-full shadow-inner border border-black/5" style="background-color: ${color}"></span>
+                        </button>
+                    `;
+                }).join('');
+            } else {
+                variantContainer.innerHTML = `<span class="text-sm text-black/50">Pieza única (Color Estándar)</span>`;
+            }
+
+            // Show Modal
+            productModalOverlay.classList.remove('hidden');
+            setTimeout(() => {
+                productModalOverlay.classList.remove('opacity-0');
+                productModalContent.classList.remove('scale-95');
+            }, 10);
+            
+            // Prevent background scrolling
+            document.body.style.overflow = 'hidden';
+        }
+
+        function selectModalColor(color) {
+            modalActiveColor = color;
+            // Update UI Borders visually
+            if(modalActiveProduct && modalActiveProduct.colors) {
+                modalActiveProduct.colors.forEach(c => {
+                    const btn = document.getElementById(`swatch-${c.replace('#', '')}`);
+                    if(btn) {
+                        btn.className = `w-10 h-10 rounded-full border-2 ${c === color ? 'border-[#E5C76B]' : 'border-black/20 hover:border-[#E5C76B]/60'} transition-all p-0.5 relative group shadow-sm`;
+                    }
+                });
+            }
+        }
+
+        function closeProductModal() {
+            productModalOverlay.classList.add('opacity-0');
+            productModalContent.classList.add('scale-95');
+            
+            setTimeout(() => {
+                productModalOverlay.classList.add('hidden');
+                document.body.style.overflow = 'auto'; // Restore scrolling
+            }, 300);
+        }
+
+        closeProductModalBtn.addEventListener('click', closeProductModal);
+        productModalOverlay.addEventListener('click', (e) => {
+            if (e.target === productModalOverlay) closeProductModal();
+        });
+
+
+        // ==========================================
+        // SHOPPING CART ACTIONS
+        // ==========================================
+        function addToCart() {
+            if(!modalActiveProduct) return;
+            
+            const existingItemIndex = shoppingCart.findIndex(item => item.id === modalActiveProduct.id && item.color === modalActiveColor);
+            
+            if(existingItemIndex > -1) {
+                shoppingCart[existingItemIndex].quantity += 1;
+            } else {
+                shoppingCart.push({
+                    id: modalActiveProduct.id,
+                    name: modalActiveProduct.name,
+                    price: modalActiveProduct.price,
+                    image: modalActiveProduct.image || (modalActiveProduct.images ? modalActiveProduct.images[0] : ''),
+                    category: modalActiveProduct.category,
+                    color: modalActiveColor,
+                    quantity: 1
+                });
+            }
+            
+            closeProductModal();
+            renderCart();
+            
+            // Automatically open cart to confirm addition
+            setTimeout(() => {
+                const cartDrawer = document.getElementById('cart-drawer');
+                const cartOverlay = document.getElementById('cart-overlay');
+                cartDrawer.classList.remove('translate-x-full');
+                cartOverlay.classList.remove('hidden');
+                setTimeout(() => cartOverlay.classList.add('opacity-100'), 10);
+            }, 350); // wait for modal to close smoothly
+        }
+
+        function renderCart() {
+            const container = document.getElementById('cart-items-container');
+            const totalElement = document.getElementById('cart-total-price');
+            const checkoutBtn = document.getElementById('checkout-btn');
+            const badge = document.getElementById('cart-badge');
+            
+            // Calculate total quantities for badge
+            const totalItems = shoppingCart.reduce((sum, item) => sum + item.quantity, 0);
+            if(totalItems > 0) {
+                badge.innerText = totalItems;
+                badge.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
+            }
+
+            if(shoppingCart.length === 0) {
+                container.innerHTML = `<div class="text-center mt-10"><p class="text-black/50 text-sm">Tu carrito está vacío.</p></div>`;
+                totalElement.innerText = "$0 COP";
+                checkoutBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                return;
+            }
+            
+            let totalCost = 0;
+            container.innerHTML = shoppingCart.map((item, index) => {
+                totalCost += item.price * item.quantity;
+                const formattedPrice = new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(item.price * item.quantity);
+                const subtitle = item.category === '18k' ? 'Oro 18k Macizo' : 'Oro Laminado 18k';
+                
+                // Show color swatch if it's a valid hex
+                const colorHtml = item.color.startsWith('#') 
+                    ? `<span class="inline-block w-2.5 h-2.5 rounded-full border border-black/20 ml-1 align-middle shadow-inner" style="background-color:${item.color}"></span>`
+                    : '';
+
+                return `
+                <article class="bg-white rounded-2xl p-3 border border-black/10 flex gap-4 shadow-sm relative">
+                    <button onclick="removeFromCart(${index})" class="absolute top-2 right-2 text-black/30 hover:text-red-600 transition-colors">
+                        <span class="material-symbols-outlined text-lg">close</span>
+                    </button>
+                    <div class="w-20 h-20 shrink-0 bg-stone-100 rounded-xl overflow-hidden border border-black/5">
+                        <img class="w-full h-full object-cover" src="${item.image}" alt="${item.name}">
+                    </div>
+                    <div class="flex-1 flex flex-col justify-between py-1 pr-4">
+                        <div>
+                            <h3 class="font-headline-lg-mobile text-base text-black leading-tight">${item.name}</h3>
+                            <p class="text-[10px] text-black/50 font-medium uppercase tracking-wider mt-1 flex items-center">${subtitle} ${colorHtml}</p>
+                        </div>
+                        <div class="flex justify-between items-end mt-2">
+                            <div class="flex items-center gap-2 bg-stone-100 border border-black/10 rounded-full px-2 py-0.5">
+                                <button onclick="updateCartQuantity(${index}, -1)" class="text-black/60 hover:text-black"><span class="material-symbols-outlined text-sm">remove</span></button>
+                                <span class="font-label-sm text-black text-xs font-semibold w-4 text-center">${item.quantity}</span>
+                                <button onclick="updateCartQuantity(${index}, 1)" class="text-black/60 hover:text-black"><span class="material-symbols-outlined text-sm">add</span></button>
+                            </div>
+                            <span class="font-body-md text-[#735c00] font-bold text-sm">${formattedPrice} COP</span>
+                        </div>
+                    </div>
+                </article>
+                `;
+            }).join('');
+            
+            totalElement.innerText = new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(totalCost) + " COP";
+            checkoutBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+        }
+
+        function removeFromCart(index) {
+            shoppingCart.splice(index, 1);
+            renderCart();
+        }
+
+        function updateCartQuantity(index, delta) {
+            shoppingCart[index].quantity += delta;
+            if(shoppingCart[index].quantity <= 0) {
+                removeFromCart(index);
+            } else {
+                renderCart();
+            }
+        }
+    </script>
+</body>
+
+</html>

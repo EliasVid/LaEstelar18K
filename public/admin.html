@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Estelar | Admin Dashboard</title>
+    <style>
+        :root {
+            --sidebar-width: 240px;
+            --accent-color: #000000;
+            --bg-light: #f9f9f9;
+            --border-color: #dddddd;
+            --danger-color: #cc0000;
+            --danger-hover: #aa0000;
+            --success-color: #1b5e20;
+            --header-height: 56px;
+            --brand-gold: #E5C76B;
+            --brand-dark: #121212;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: system-ui, sans-serif;
+            background: var(--bg-light);
+            color: #333;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* ===================== SIDEBAR ===================== */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--brand-dark);
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 20px 0;
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+            z-index: 200;
+            border-right: 1px solid rgba(229, 199, 107, 0.2);
+        }
+
+        .sidebar-brand {
+            padding: 10px 25px 25px;
+            font-size: 18px;
+            font-weight: bold;
+            border-bottom: 1px solid rgba(229, 199, 107, 0.2);
+            letter-spacing: 0.5px;
+            color: var(--brand-gold);
+            font-style: italic;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            margin-top: 20px;
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            padding: 14px 25px;
+            color: #b3b3b3;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .sidebar-link:hover,
+        .sidebar-link.active {
+            color: var(--brand-gold);
+            background: rgba(229, 199, 107, 0.1);
+        }
+
+        .sidebar-link.active {
+            border-left: 4px solid var(--brand-gold);
+            padding-left: 21px;
+        }
+
+        /* ===================== MOBILE HEADER ===================== */
+        .mobile-header {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--header-height);
+            background: var(--brand-dark);
+            color: var(--brand-gold);
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 16px;
+            z-index: 300;
+            border-bottom: 1px solid rgba(229, 199, 107, 0.2);
+        }
+
+        .mobile-header-brand {
+            font-size: 16px;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            font-style: italic;
+        }
+
+        .hamburger-btn {
+            background: none;
+            border: none;
+            color: var(--brand-gold);
+            font-size: 24px;
+            cursor: pointer;
+            padding: 4px 8px;
+            line-height: 1;
+            display: flex;
+            align-items: center;
+        }
+
+        .sidebar-backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 190;
+        }
+
+        .sidebar-backdrop.active {
+            display: block;
+        }
+
+        /* ===================== MAIN WORKSPACE ===================== */
+        .main-workspace {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            overflow-y: auto;
+            background: var(--bg-light);
+        }
+
+        .content-header {
+            padding: 30px 40px 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .content-body {
+            padding: 20px 40px 40px;
+        }
+
+        .tab-content-panel {
+            display: none;
+        }
+
+        .tab-content-panel.active {
+            display: block;
+        }
+
+        /* ===================== UI COMPONENTS ===================== */
+        .admin-card {
+            background: white;
+            max-width: 650px;
+            padding: 35px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+            border: 1px solid var(--border-color);
+        }
+
+        .form-title {
+            margin-bottom: 25px;
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        textarea {
+            resize: vertical;
+            font-family: inherit;
+        }
+
+        input[type="file"] {
+            display: block;
+            margin-top: 5px;
+        }
+
+        /* ===================== VARIANTS ===================== */
+        .variant-container {
+            background: #fdfdfd;
+            padding: 18px;
+            border-radius: 6px;
+            margin-top: 10px;
+            border-left: 4px solid var(--brand-gold);
+            border-top: 1px solid #eee;
+            border-right: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+        }
+
+        .dynamic-section-title {
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #555;
+            margin-bottom: 12px;
+        }
+
+        .picker-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr auto;
+            gap: 10px;
+            align-items: end;
+            margin-bottom: 15px;
+        }
+
+        .picker-row label {
+            margin-bottom: 4px;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .color-input-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: white;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 4px 8px;
+            height: 38px;
+        }
+
+        .color-input-wrapper input[type="color"] {
+            border: none;
+            width: 30px;
+            height: 100%;
+            padding: 0;
+            background: none;
+            cursor: pointer;
+        }
+
+        .color-preview {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            border: 1px solid #ccc;
+            vertical-align: middle;
+            margin-right: 6px;
+        }
+
+        /* ===================== MATRIX TABLE ===================== */
+        .matrix-title {
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            margin-top: 15px;
+            text-transform: uppercase;
+            color: #444;
+        }
+
+        .matrix-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 4px;
+            overflow: hidden;
+            border: 1px solid #ddd;
+        }
+
+        .matrix-table th,
+        .matrix-table td {
+            padding: 10px;
+            text-align: left;
+            font-size: 13px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .matrix-table th {
+            background: #fafafa;
+            font-weight: bold;
+            color: #555;
+            text-transform: uppercase;
+            font-size: 11px;
+        }
+
+        /* ===================== BUTTONS ===================== */
+        .btn-primary {
+            background: var(--accent-color);
+            color: var(--brand-gold);
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary:hover {
+            background: #333;
+        }
+
+        .btn-secondary {
+            background: #555;
+            color: white;
+            padding: 10px;
+            height: 38px;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-secondary:hover {
+            background: #333;
+        }
+
+        .btn-delete {
+            background: none;
+            border: none;
+            color: var(--danger-color);
+            cursor: pointer;
+            font-size: 16px;
+            padding: 0 5px;
+        }
+
+        .modal-actions-row {
+            display: flex;
+            gap: 12px;
+            margin-top: 25px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn-danger-outline {
+            background: transparent;
+            color: var(--danger-color);
+            border: 1px solid var(--danger-color);
+            padding: 12px 20px;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-danger-outline:hover {
+            background: var(--danger-color);
+            color: white;
+        }
+
+        .btn-danger-filled {
+            background: var(--danger-color);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .btn-danger-filled:hover {
+            background: var(--danger-hover);
+        }
+
+        /* ===================== INVENTORY TABLE ===================== */
+        .inventory-table-wrapper {
+            background: white;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+            overflow-x: auto;
+        }
+
+        .inventory-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            min-width: 480px;
+        }
+
+        .inventory-table th,
+        .inventory-table td {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 14px;
+        }
+
+        .inventory-table th {
+            background: #fcfcfc;
+            font-weight: bold;
+            color: #666;
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+
+        .inventory-table tbody tr:hover {
+            background: #fafafa;
+            cursor: pointer;
+        }
+
+        .prod-thumb {
+            width: 44px;
+            height: 44px;
+            object-fit: cover;
+            border-radius: 4px;
+            background: #eee;
+            display: block;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            font-size: 11px;
+            font-weight: bold;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        /*.badge.18k {
+            background: #ffe088;
+            color: #574500;
+        }*/
+
+        .badge.laminado {
+            background: #fdebdc;
+            color: #50260f;
+        }
+
+        /* ===================== MODALS ===================== */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(2px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease;
+            padding: 16px;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-body-scroller {
+            background: white;
+            width: 100%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            border-radius: 8px;
+            padding: 30px;
+            position: relative;
+        }
+
+        .confirm-modal-body {
+            background: white;
+            width: 100%;
+            max-width: 400px;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .confirm-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 12px;
+            color: #111;
+        }
+
+        .confirm-text {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+
+        .modal-close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 22px;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .modal-close-btn:hover {
+            color: #000;
+        }
+
+        /* ===================== RESPONSIVE ===================== */
+        @media (max-width: 768px) {
+            .mobile-header {
+                display: flex;
+            }
+
+            body {
+                flex-direction: column;
+                height: auto;
+                min-height: 100vh;
+                overflow: auto;
+            }
+
+            .sidebar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                height: 100%;
+                transform: translateX(-100%);
+                padding-top: var(--header-height);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main-workspace {
+                margin-top: var(--header-height);
+                height: auto;
+                min-height: calc(100vh - var(--header-height));
+                overflow-y: visible;
+            }
+
+            .content-header {
+                padding: 20px 16px 10px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 6px;
+            }
+
+            .content-header h2 {
+                font-size: 20px;
+            }
+
+            .content-body {
+                padding: 16px 16px 40px;
+            }
+
+            .admin-card {
+                max-width: 100%;
+                padding: 20px;
+            }
+
+            .picker-row {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .picker-row>div:nth-child(3) {
+                margin-top: 5px;
+            }
+
+            .inventory-table th,
+            .inventory-table td {
+                padding: 12px 14px;
+                font-size: 13px;
+            }
+
+            .modal-overlay {
+                padding: 0;
+                align-items: flex-end;
+            }
+
+            .modal-body-scroller {
+                max-height: 92vh;
+                border-radius: 12px 12px 0 0;
+                padding: 24px 20px;
+            }
+
+            .modal-actions-row {
+                flex-direction: column;
+            }
+
+            .modal-actions-row .btn-danger-outline,
+            .modal-actions-row .btn-primary {
+                flex: none;
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Mobile-only top bar -->
+    <header class="mobile-header">
+        <span class="mobile-header-brand">LA ESTELAR ADMIN</span>
+        <button class="hamburger-btn" id="hamburgerBtn" aria-label="Abrir menú">&#9776;</button>
+    </header>
+
+    <!-- Backdrop for mobile sidebar -->
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    <aside class="sidebar" id="mainSidebar">
+        <div>
+            <div class="sidebar-brand">LA ESTELAR 18K</div>
+            <ul class="sidebar-menu">
+                <li><a class="sidebar-link active" data-target="productsTab">📦 Catálogo</a></li>
+                <li><a class="sidebar-link" data-target="addProductTab">➕ Nueva Joya</a></li>
+            </ul>
+        </div>
+    </aside>
+
+    <main class="main-workspace">
+
+        <section id="productsTab" class="tab-content-panel active">
+            <div class="content-header">
+                <h2>Inventario de Joyas</h2>
+                <p style="font-size: 13px; color: #666;">Haz clic en cualquier fila para editar los detalles.</p>
+            </div>
+            <div class="content-body">
+                <div class="inventory-table-wrapper">
+                    <table class="inventory-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 70px;">Imagen</th>
+                                <th>Nombre</th>
+                                <th>Material</th>
+                                <th>Precio</th>
+                                <th>Stock</th>
+                            </tr>
+                        </thead>
+                        <tbody id="inventoryTableBody">
+                            <tr>
+                                <td colspan="5" style="text-align: center; color: #999; padding: 40px;">Cargando catálogo...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section id="addProductTab" class="tab-content-panel">
+            <div class="content-header">
+                <h2>Registrar Nueva Joya</h2>
+            </div>
+            <div class="content-body">
+                <div class="admin-card">
+                    <form id="catalogForm">
+                        <div class="form-group">
+                            <label>Nombre de la Pieza</label>
+                            <input type="text" class="prodNameField" required placeholder="Ej: Cadena Veneciana">
+                        </div>
+                        <div class="form-group">
+                            <label>Precio ($ COP)</label>
+                            <input type="number" class="prodPriceField" required placeholder="0">
+                        </div>
+                        <div class="form-group">
+                            <label>Material / Categoría</label>
+                            <select class="prodCategoryField" required>
+                                <option value="" disabled selected>Selecciona el material</option>
+                                <option value="18k">Oro 18k Macizo</option>
+                                <option value="laminado">Oro Laminado 18k</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Descripción</label>
+                            <textarea class="prodDescriptionField" rows="3" placeholder="Detalles de la joya..."></textarea>
+                        </div>
+
+                        <div class="dynamicAttributesContainer"></div>
+
+                        <div class="form-group" style="margin-top: 20px;">
+                            <label>Imágenes de la Joya</label>
+                            <input type="file" class="prodImageField" accept="image/png, image/jpeg, image/webp" multiple required>
+                        </div>
+                        <button type="submit" class="btn-primary" style="width:100%; margin-top:15px;">Publicar Joya</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Edit Product Modal -->
+    <div class="modal-overlay" id="editModalOverlay">
+        <div class="modal-body-scroller">
+            <button class="modal-close-btn" id="closeModalBtn">✕</button>
+            <h3 class="form-title" style="margin-bottom:15px;">Editar Joya</h3>
+            <form id="editFormInstance">
+                <input type="hidden" id="editProductId">
+                <div class="form-group">
+                    <label>Nombre</label>
+                    <input type="text" class="prodNameField" id="editProdName" required>
+                </div>
+                <div class="form-group">
+                    <label>Precio ($ COP)</label>
+                    <input type="number" class="prodPriceField" id="editProdPrice" required>
+                </div>
+                <div class="form-group">
+                    <label>Material / Categoría</label>
+                    <select class="prodCategoryField" id="editProdCategory" required>
+                        <option value="18k">Oro 18k Macizo</option>
+                        <option value="laminado">Oro Laminado 18k</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Descripción</label>
+                    <textarea class="prodDescriptionField" id="editProdDescription" rows="3"></textarea>
+                </div>
+
+                <div class="dynamicAttributesContainer" id="editDynamicAttributesContainer"></div>
+
+                <div class="form-group" style="margin-top: 20px;">
+                    <label>Reemplazar Imágenes (Dejar vacío para conservar actuales)</label>
+                    <input type="file" class="prodImageField" id="editProdImage" accept="image/png, image/jpeg, image/webp" multiple>
+                </div>
+
+                <div class="modal-actions-row">
+                    <button type="button" class="btn-danger-outline" id="triggerDeleteModalBtn" style="flex: 1;">Eliminar Pieza</button>
+                    <button type="submit" class="btn-primary" style="flex: 2;">Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Confirm Delete Modal -->
+    <div class="modal-overlay" id="confirmDeleteModalOverlay" style="z-index: 1100;">
+        <div class="confirm-modal-body">
+            <div class="confirm-title">¿Eliminar esta joya?</div>
+            <div class="confirm-text">Esta acción es irreversible. Se borrará permanentemente del catálogo de la tienda.</div>
+            <div style="display: flex; gap: 10px; justify-content: center;">
+                <button type="button" class="btn-secondary" id="cancelDeleteBtn" style="flex: 1; height: 42px;">Cancelar</button>
+                <button type="button" class="btn-danger-filled" id="executeDeleteBtn" style="flex: 1; height: 42px;">Eliminar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let loadedCatalogData = [];
+        let activeVariants = [];
+
+        // ===================== MOBILE SIDEBAR TOGGLE =====================
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const mainSidebar = document.getElementById('mainSidebar');
+        const sidebarBackdrop = document.getElementById('sidebarBackdrop');
+
+        function openSidebar() {
+            mainSidebar.classList.add('open');
+            sidebarBackdrop.classList.add('active');
+            hamburgerBtn.setAttribute('aria-expanded', 'true');
+        }
+
+        function closeSidebar() {
+            mainSidebar.classList.remove('open');
+            sidebarBackdrop.classList.remove('active');
+            hamburgerBtn.setAttribute('aria-expanded', 'false');
+        }
+
+        hamburgerBtn.addEventListener('click', () => {
+            mainSidebar.classList.contains('open') ? closeSidebar() : openSidebar();
+        });
+
+        sidebarBackdrop.addEventListener('click', closeSidebar);
+
+        // ===================== TAB ROUTER =====================
+        document.querySelectorAll('.sidebar-link').forEach(link => {
+            link.addEventListener('click', () => {
+                document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+                document.querySelectorAll('.tab-content-panel').forEach(p => p.classList.remove('active'));
+                
+                link.classList.add('active');
+                const blockTarget = link.dataset.target;
+                document.getElementById(blockTarget)?.classList.add('active');
+
+                closeSidebar();
+
+                if (blockTarget === 'productsTab') {
+                    fetchInventoryCatalog();
+                }
+            });
+        });
+
+        // ===================== INVENTORY =====================
+        async function fetchInventoryCatalog() {
+            const tbody = document.getElementById('inventoryTableBody');
+            try {
+                const response = await fetch('/api/get-catalog');
+                loadedCatalogData = await response.json();
+
+                if (loadedCatalogData.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:30px; color:#999;">No hay joyas en el catálogo.</td></tr>`;
+                    return;
+                }
+
+                tbody.innerHTML = loadedCatalogData.map(product => {
+                    const totalStock = (product.variants || []).reduce((acc, curr) => acc + curr.stock, 0);
+                    const sampleImage = product.image || (product.images && product.images.length > 0 ? product.images[0] : '');
+                    const badgeClass = product.category === '18k' ? '18k' : 'laminado';
+                    const categoryLabel = product.category === '18k' ? 'Oro 18k' : 'Laminado';
+
+                    return `
+                        <tr data-id="${product.id}">
+                            <td><img src="${sampleImage}" class="prod-thumb" alt="Preview"></td>
+                            <td style="font-weight:bold;">${product.name}</td>
+                            <td><span class="badge ${badgeClass}">${categoryLabel}</span></td>
+                            <td>$ ${product.price.toLocaleString('es-CO')}</td>
+                            <td><strong>${totalStock}</strong> uds</td>
+                        </tr>
+                    `;
+                }).join('');
+
+                tbody.querySelectorAll('tr').forEach(row => {
+                    row.addEventListener('click', () => {
+                        const productMatch = loadedCatalogData.find(p => p.id === row.dataset.id);
+                        if (productMatch) openEditModalWindow(productMatch);
+                    });
+                });
+
+            } catch (error) {
+                tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; color:red; padding:20px;">Error leyendo inventario.</td></tr>`;
+            }
+        }
+
+        // ===================== VARIANT ENGINE (Color Picker + Stock) =====================
+        const creationCategorySelect = document.querySelector('#addProductTab .prodCategoryField');
+        const creationDynamicContainer = document.querySelector('#addProductTab .dynamicAttributesContainer');
+
+        creationCategorySelect.addEventListener('change', (e) => {
+            activeVariants = [];
+            renderVariantControlEngine(e.target.value, creationDynamicContainer);
+        });
+
+        function renderVariantControlEngine(category, containerNode) {
+            const labelTitle = category === '18k' ? 'Oro 18k Macizo' : 'Oro Laminado 18k';
+
+            containerNode.innerHTML = `
+                <div class="variant-container">
+                    <div class="dynamic-section-title">Stock y Color (${labelTitle})</div>
+                    <div class="picker-row">
+                        <div>
+                            <label>Color / Tonalidad</label>
+                            <div class="color-input-wrapper"><input type="color" class="varColorPicker" value="#E5C76B"></div>
+                        </div>
+                        <div>
+                            <label>Cantidad Stock</label>
+                            <input type="number" class="varStockField" min="1" value="1">
+                        </div>
+                        <div>
+                            <button type="button" class="btn-secondary addVariantBtnInstance">Agregar</button>
+                        </div>
+                    </div>
+                    <div class="matrix-title">Variantes Registradas</div>
+                    <table class="matrix-table">
+                        <thead>
+                            <tr><th>Color (HEX)</th><th>Stock</th><th style="width:40px;"></th></tr>
+                        </thead>
+                        <tbody class="matrixTableBodyInstance"></tbody>
+                    </table>
+                </div>
+            `;
+
+            bindVariantPickerActions(containerNode);
+            refreshVariantMatrixDisplay(containerNode);
+        }
+
+        function bindVariantPickerActions(containerNode) {
+            containerNode.querySelector('.addVariantBtnInstance').addEventListener('click', () => {
+                const colorVal = containerNode.querySelector('.varColorPicker').value.toLowerCase();
+                const stockVal = parseInt(containerNode.querySelector('.varStockField').value, 10) || 0;
+
+                if (stockVal <= 0) return alert('Ingresa una cantidad válida.');
+
+                const dupIdx = activeVariants.findIndex(v => v.color === colorVal);
+                if (dupIdx > -1) {
+                    activeVariants[dupIdx].stock += stockVal;
+                } else {
+                    activeVariants.push({ color: colorVal, stock: stockVal });
+                }
+
+                refreshVariantMatrixDisplay(containerNode);
+                containerNode.querySelector('.varStockField').value = '1';
+            });
+        }
+
+        function refreshVariantMatrixDisplay(containerNode) {
+            const tbody = containerNode.querySelector('.matrixTableBodyInstance');
+            if (activeVariants.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="3" style="text-align:center; color:#999; font-size:12px; padding:12px;">Sin stock agregado.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = activeVariants.map((item, idx) => `
+                <tr>
+                    <td><span class="color-preview" style="background-color:${item.color};"></span><code>${item.color.toUpperCase()}</code></td>
+                    <td>${item.stock}</td>
+                    <td><button type="button" class="btn-delete" data-idx="${idx}">✕</button></td>
+                </tr>
+            `).join('');
+
+            tbody.querySelectorAll('.btn-delete').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    activeVariants.splice(parseInt(e.target.dataset.idx, 10), 1);
+                    refreshVariantMatrixDisplay(containerNode);
+                });
+            });
+        }
+
+        // ===================== EDIT MODAL =====================
+        const editModalOverlay = document.getElementById('editModalOverlay');
+        const editDynamicContainer = document.getElementById('editDynamicAttributesContainer');
+        const editCategorySelect = document.getElementById('editProdCategory');
+        const confirmDeleteModalOverlay = document.getElementById('confirmDeleteModalOverlay');
+
+        function openEditModalWindow(product) {
+            document.getElementById('editProductId').value = product.id;
+            document.getElementById('editProdName').value = product.name;
+            document.getElementById('editProdPrice').value = product.price;
+            document.getElementById('editProdDescription').value = product.description || '';
+            editCategorySelect.value = product.category;
+
+            activeVariants = JSON.parse(JSON.stringify(product.variants || []));
+            renderVariantControlEngine(product.category, editDynamicContainer);
+            editModalOverlay.classList.add('active');
+        }
+
+        editCategorySelect.addEventListener('change', (e) => {
+            activeVariants = [];
+            renderVariantControlEngine(e.target.value, editDynamicContainer);
+        });
+
+        document.getElementById('closeModalBtn').addEventListener('click', () => editModalOverlay.classList.remove('active'));
+
+        editModalOverlay.addEventListener('click', (e) => {
+            if (e.target === editModalOverlay) editModalOverlay.classList.remove('active');
+        });
+
+        confirmDeleteModalOverlay.addEventListener('click', (e) => {
+            if (e.target === confirmDeleteModalOverlay) confirmDeleteModalOverlay.classList.remove('active');
+        });
+
+        document.getElementById('triggerDeleteModalBtn').addEventListener('click', () => {
+            confirmDeleteModalOverlay.classList.add('active');
+        });
+
+        document.getElementById('cancelDeleteBtn').addEventListener('click', () => {
+            confirmDeleteModalOverlay.classList.remove('active');
+        });
+
+        // ===================== DELETE =====================
+        document.getElementById('executeDeleteBtn').addEventListener('click', async () => {
+            const targetedProductId = document.getElementById('editProductId').value;
+            try {
+                const response = await fetch('/api/delete-product', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id: targetedProductId })
+                });
+
+                if (response.ok) {
+                    alert('¡Joya eliminada correctamente!');
+                    confirmDeleteModalOverlay.classList.remove('active');
+                    editModalOverlay.classList.remove('active');
+                    fetchInventoryCatalog();
+                } else {
+                    throw new Error('Fallo en el servidor');
+                }
+            } catch {
+                alert('Error al intentar eliminar la joya.');
+            }
+        });
+
+        // ===================== ADD PRODUCT =====================
+        document.getElementById('catalogForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const form = e.target;
+            const submitBtn = form.querySelector('.btn-primary');
+
+            const name = form.querySelector('.prodNameField').value.trim();
+            const price = parseFloat(form.querySelector('.prodPriceField').value);
+            const category = form.querySelector('.prodCategoryField').value;
+            const description = form.querySelector('.prodDescriptionField').value.trim();
+            const files = Array.from(form.querySelector('.prodImageField').files);
+
+            if (!name) return alert('El nombre de la joya es obligatorio.');
+            if (isNaN(price) || price <= 0) return alert('Ingresa un precio válido.');
+            if (!category) return alert('Debes seleccionar un material.');
+            if (files.length === 0) return alert('Selecciona al menos una imagen.');
+            if (!activeVariants || activeVariants.length === 0) {
+                return alert('Agrega al menos un color y su respectiva cantidad.');
+            }
+
+            const originalBtnText = submitBtn.innerHTML;
+            submitBtn.disabled = true;
+            submitBtn.style.opacity = '0.6';
+            submitBtn.innerHTML = 'Creando...';
+
+            try {
+                const uploadResponses = await Promise.all(
+                    files.map(async (file) => {
+                        const formData = new FormData();
+                        formData.append("file", file);
+                        const res = await fetch("/api/upload", { method: "POST", body: formData });
+                        if (!res.ok) throw new Error("Upload failed");
+                        return res.json();
+                    })
+                );
+
+                const urls = uploadResponses.map(r => r.url);
+
+                const payload = {
+                    name,
+                    price,
+                    description,
+                    category,
+                    colors: [...new Set(activeVariants.map(v => v.color))],
+                    variants: activeVariants,
+                    imageUrl: urls[0],
+                    images: urls
+                };
+
+                const res = await fetch('/api/add-product', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (res.ok) {
+                    alert('¡Joya creada con éxito!');
+                    form.reset();
+                    creationDynamicContainer.innerHTML = '';
+                    activeVariants = [];
+                } else {
+                    alert('Error al guardar el producto.');
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Error de red al publicar.');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.style.opacity = '1';
+                submitBtn.innerHTML = originalBtnText;
+            }
+        });
+
+        // ===================== EDIT PRODUCT =====================
+        document.getElementById('editFormInstance').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const form = e.target;
+            const submitBtn = form.querySelector('button[type="submit"]');
+
+            const id = document.getElementById('editProductId').value;
+            const name = document.getElementById('editProdName').value.trim();
+            const price = parseFloat(document.getElementById('editProdPrice').value);
+            const category = editCategorySelect.value;
+            const description = document.getElementById('editProdDescription').value.trim();
+            const files = Array.from(document.getElementById('editProdImage').files);
+
+            if (!activeVariants || activeVariants.length === 0) {
+                return alert('La joya debe tener al menos una variante.');
+            }
+
+            const originalBtnText = submitBtn.innerHTML;
+            submitBtn.disabled = true;
+            submitBtn.style.opacity = '0.6';
+            submitBtn.innerHTML = 'Guardando...';
+
+            try {
+                let urls = [];
+                if (files.length > 0) {
+                    const uploadResponses = await Promise.all(
+                        files.map(async (file) => {
+                            const formData = new FormData();
+                            formData.append("file", file);
+                            const res = await fetch("/api/upload", { method: "POST", body: formData });
+                            if (!res.ok) throw new Error("Upload failed");
+                            return res.json();
+                        })
+                    );
+                    urls = uploadResponses.map(r => r.url);
+                }
+
+                const payload = {
+                    id,
+                    name,
+                    price,
+                    description,
+                    category,
+                    colors: [...new Set(activeVariants.map(v => v.color))],
+                    variants: activeVariants,
+                    imageUrl: urls.length > 0 ? urls[0] : null,
+                    images: urls.length > 0 ? urls : null
+                };
+
+                const res = await fetch('/api/edit-product', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (res.ok) {
+                    alert('¡Cambios guardados correctamente!');
+                    editModalOverlay.classList.remove('active');
+                    fetchInventoryCatalog();
+                } else {
+                    alert('Error al actualizar.');
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Error de red al actualizar.');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.style.opacity = '1';
+                submitBtn.innerHTML = originalBtnText;
+            }
+        });
+
+        // Initialize table
+        fetchInventoryCatalog();
+    </script>
+</body>
+
+</html>
