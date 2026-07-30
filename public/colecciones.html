@@ -218,7 +218,7 @@
                 <span class="font-body-md text-black/70 text-sm">Total Estimado</span>
                 <span id="cart-total-price" class="font-display-lg text-xl text-[#735c00] font-bold">$0 COP</span>
             </div>
-            <button id="checkout-btn" class="w-full bg-black text-[#E5C76B] border border-[#E5C76B]/40 py-3.5 rounded-full hover:bg-[#E5C76B] hover:text-black transition-all shadow-md uppercase tracking-widest font-semibold text-xs flex items-center justify-center gap-2 opacity-50 cursor-not-allowed">
+            <<button id="checkout-btn" onclick="checkoutToWhatsApp()" class="w-full bg-black text-[#E5C76B] border border-[#E5C76B]/40 py-3.5 rounded-full hover:bg-[#E5C76B] hover:text-black transition-all shadow-md uppercase tracking-widest font-semibold text-xs flex items-center justify-center gap-2 opacity-50 cursor-not-allowed">
                 Proceder al Pago
                 <span class="material-symbols-outlined text-lg">arrow_forward</span>
             </button>
@@ -674,6 +674,38 @@
             const encodedMessage = encodeURIComponent(message);
             
             // Open WhatsApp in a new tab
+            window.open(`https://wa.me/573009635047?text=${encodedMessage}`, '_blank');
+        }
+
+        function checkoutToWhatsApp() {
+            if (shoppingCart.length === 0) return; // Do nothing if cart is empty
+
+            let message = "¡Hola! Quisiera concretar la compra de mi carrito de La Estelar:\n\n";
+            let totalCost = 0;
+
+            shoppingCart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                totalCost += itemTotal;
+                
+                const formattedPrice = new Intl.NumberFormat('es-CO', { 
+                    style: 'currency', currency: 'COP', minimumFractionDigits: 0 
+                }).format(itemTotal);
+                
+                const subtitle = item.category === '18k' ? '18k Macizo' : 'Laminado';
+                
+                // Add color text if it's not the default
+                const colorText = (item.color && item.color !== 'Estándar') ? ` (Color: ${item.color})` : '';
+
+                message += `▪ ${item.quantity}x ${item.name} [${subtitle}]${colorText} - ${formattedPrice} COP\n`;
+            });
+
+            const formattedTotal = new Intl.NumberFormat('es-CO', { 
+                style: 'currency', currency: 'COP', minimumFractionDigits: 0 
+            }).format(totalCost);
+            
+            message += `\n*Total Estimado:* ${formattedTotal} COP\n\n¿Me indican los pasos para el pago y envío?`;
+
+            const encodedMessage = encodeURIComponent(message);
             window.open(`https://wa.me/573009635047?text=${encodedMessage}`, '_blank');
         }
 
