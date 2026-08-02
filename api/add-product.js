@@ -11,11 +11,11 @@ export default async function handler(request, response) {
   }
 
   // ADMIN CHECK
-  /*try {
+  try {
     verifyAdmin(request);
   } catch {
     return response.status(401).json({ error: "Unauthorized" });
-  }*/
+  }
 
   try {
     const {
