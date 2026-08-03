@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Módulo 3: Punto de Venta | La Estelar</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=block" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* === IMPORTED SIDEBAR CSS FROM ADMIN.HTML === */
+        :root {
+            --sidebar-width: 240px;
+            --brand-gold: #E5C76B;
+            --brand-dark: #121212;
+            --header-height: 56px;
+        }
+        body { 
+            font-family: 'DM Sans', sans-serif; 
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            background: #f9f9f9;
+        }
+
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--brand-dark);
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            padding: 20px 0;
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+            z-index: 200;
+            border-right: 1px solid rgba(229, 199, 107, 0.2);
+            overflow-y: auto;
+        }
+        .sidebar-brand {
+            padding: 10px 25px 25px;
+            font-size: 18px;
+            font-weight: bold;
+            border-bottom: 1px solid rgba(229, 199, 107, 0.2);
+            letter-spacing: 0.5px;
+            color: var(--brand-gold);
+            font-style: italic;
+        }
+        .sidebar-menu { list-style: none; margin-top: 10px; padding: 0;}
+        .sidebar-section-title {
+            padding: 15px 25px 5px;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #666;
+            font-weight: bold;
+        }
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 25px;
+            color: #b3b3b3;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+        .sidebar-link .material-symbols-outlined { margin-right: 12px; font-size: 20px; }
+        .sidebar-link:hover, .sidebar-link.active {
+            color: var(--brand-gold);
+            background: rgba(229, 199, 107, 0.1);
+        }
+        .sidebar-link.active {
+            border-left: 4px solid var(--brand-gold);
+            padding-left: 21px;
+        }
+
+        .main-workspace {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            overflow-y: auto;
+            background: #f9f9f9;
+        }
+
+        /* Mobile Sidebar adjustments */
+        .mobile-header { display: none; }
+        .sidebar-backdrop { display: none; }
+
+        @media (max-width: 768px) {
+            .mobile-header {
+                display: flex; position: fixed; top: 0; left: 0; right: 0; height: var(--header-height);
+                background: var(--brand-dark); color: var(--brand-gold); align-items: center;
+                justify-content: space-between; padding: 0 16px; z-index: 300;
+                border-bottom: 1px solid rgba(229, 199, 107, 0.2);
+            }
+            .mobile-header-brand { font-size: 16px; font-weight: bold; font-style: italic; }
+            .hamburger-btn { background: none; border: none; color: var(--brand-gold); font-size: 24px; }
+            body { flex-direction: column; height: auto; min-height: 100vh; overflow: auto; }
+            .sidebar {
+                position: fixed; top: 0; left: 0; height: 100%; transform: translateX(-100%);
+                padding-top: var(--header-height);
+            }
+            .sidebar.open { transform: translateX(0); }
+            .main-workspace { margin-top: var(--header-height); height: auto; overflow-y: visible; }
+            .sidebar-backdrop.active {
+                display: block; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 190;
+            }
+        }
+
+        /* === POS SPECIFIC CSS === */
+        .receipt-font { font-family: 'Space Mono', monospace; }
+        @media print {
+            body * { visibility: hidden; }
+            #printable-receipt, #printable-receipt * { visibility: visible; }
+            #printable-receipt { position: absolute; left: 0; top: 0; width: 80mm; margin: 0; padding: 10px; }
+            .no-print { display: none !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Mobile-only top bar -->
+    <header class="mobile-header no-print">
+        <span class="mobile-header-brand">LA ESTELAR ADMIN</span>
+        <button class="hamburger-btn" id="hamburgerBtn">&#9776;</button>
+    </header>
+    <div class="sidebar-backdrop no-print" id="sidebarBackdrop"></div>
+
+    <!-- PERSISTENT SIDEBAR -->
+    <aside class="sidebar no-print" id="mainSidebar">
+        <div>
+            <div class="sidebar-brand">LA ESTELAR 18K</div>
+            <ul class="sidebar-menu">
+                <li class="sidebar-section-title">Catálogo Web</li>
+                <li>
+                    <a href="admin.html" class="sidebar-link">
+                        <span class="material-symbols-outlined">storefront</span> Catálogo
+                    </a>
+                </li>
+                
+                <li class="sidebar-section-title" style="margin-top: 15px;">Gestión & ERP</li>
+                <li>
+                    <a href="admin-inventory.html" class="sidebar-link">
+                        <span class="material-symbols-outlined">inventory_2</span> Inventario
+                    </a>
+                </li>
+                <li>
+                    <a href="admin-tejidos.html" class="sidebar-link">
+                        <span class="material-symbols-outlined">join_inner</span> Tejidos
+                    </a>
+                </li>
+                <li>
+                    <!-- ACTIVE CLASS applied here because we are ON the POS page -->
+                    <a href="#" class="sidebar-link active">
+                        <span class="material-symbols-outlined">point_of_sale</span> Ventas POS
+                    </a>
+                </li>
+                <li>
+                    <a href="admin-finances.html" class="sidebar-link">
+                        <span class="material-symbols-outlined">monitoring</span> Finanzas
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="main-workspace p-4 md:p-8 no-print">
+        <div class="max-w-7xl mx-auto flex flex-col lg:flex-row gap-8 w-full">
+            
+            <!-- Left Side: POS Catalog -->
+            <div class="flex-1 flex flex-col h-[calc(100vh-4rem)] md:h-[calc(100vh-8rem)]">
+                <header class="flex items-center justify-between mb-6 pb-4 border-b border-stone-200 shrink-0">
+                    <div>
+                        <h1 class="text-3xl font-bold text-black flex items-center gap-3">
+                            <span class="material-symbols-outlined text-4xl text-[#cca830]">point_of_sale</span>
+                            Terminal de Ventas
+                        </h1>
+                    </div>
+                </header>
+
+                <div class="flex gap-4 mb-4 shrink-0">
+                    <input type="text" id="search-input" onkeyup="filterPOS()" placeholder="Buscar producto..." class="flex-1 bg-white border border-stone-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-[#cca830] outline-none">
+                    <select id="filter-type" onchange="filterPOS()" class="bg-white border border-stone-200 rounded-xl px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-[#cca830]">
+                        <option value="all">Todo el Catálogo</option>
+                        <option value="product">Productos Terminados</option>
+                        <option value="tejido">Tejidos (Hechos a mano)</option>
+                        <option value="material">Insumos Individuales</option>
+                    </select>
+                </div>
+
+                <div class="bg-white rounded-2xl shadow-sm border border-stone-100 flex-1 overflow-hidden flex flex-col">
+                    <div class="overflow-y-auto p-2" id="pos-items">
+                        <div class="text-center py-10 text-stone-400 text-sm" id="pos-loading">Cargando inventario...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side: The Ticket -->
+            <div class="w-full lg:w-[400px] shrink-0 flex flex-col h-[calc(100vh-4rem)] md:h-[calc(100vh-8rem)]">
+                <div class="bg-stone-900 text-white rounded-2xl shadow-lg flex flex-col h-full overflow-hidden border border-stone-800">
+                    <div class="p-6 shrink-0 bg-black/20 flex justify-between items-center">
+                        <h3 class="font-display-lg italic text-[#cca830] text-xl">Ticket Actual</h3>
+                        <button onclick="clearCart()" class="text-stone-500 hover:text-white text-xs uppercase tracking-wider font-bold">Limpiar</button>
+                    </div>
+
+                    <div class="flex-1 overflow-y-auto p-6 space-y-4" id="cart-items">
+                        <p class="text-stone-500 text-sm italic text-center mt-10">El ticket está vacío.</p>
+                    </div>
+
+                    <div class="p-6 bg-black shrink-0 border-t border-stone-800 space-y-4">
+                        <div class="flex justify-between items-center bg-stone-800/50 p-3 rounded-xl border border-stone-700">
+                            <div>
+                                <p class="text-sm font-bold text-white">Empaques (Bolsas)</p>
+                                <p class="text-[10px] text-stone-400">Distribuye +$7.000 c/u en el recibo</p>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <button onclick="updateBags(-1)" class="text-[#cca830] hover:text-white"><span class="material-symbols-outlined">remove_circle</span></button>
+                                <span id="bag-count" class="font-bold text-lg w-4 text-center">0</span>
+                                <button onclick="updateBags(1)" class="text-[#cca830] hover:text-white"><span class="material-symbols-outlined">add_circle</span></button>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-between items-end pt-2">
+                            <span class="text-stone-400 text-sm font-bold uppercase tracking-wider">Total a Cobrar</span>
+                            <span id="cart-total" class="text-3xl font-bold text-[#cca830] tracking-tighter">$0</span>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-3 pt-4">
+                            <button onclick="printReceipt()" class="bg-stone-800 text-stone-300 text-xs font-bold uppercase tracking-widest py-3 rounded-xl hover:bg-stone-700 transition-colors flex items-center justify-center gap-2">
+                                <span class="material-symbols-outlined text-sm">print</span> Imprimir
+                            </button>
+                            <button id="btn-sell" onclick="registerSale()" class="bg-[#cca830] text-black text-xs font-bold uppercase tracking-widest py-3 rounded-xl hover:bg-[#b5952a] transition-colors flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(204,168,48,0.3)]">
+                                <span class="material-symbols-outlined text-sm">payments</span> Vender
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- HIDDEN THERMAL RECEIPT -->
+    <div id="printable-receipt" class="bg-white text-black p-4 hidden">
+        <div class="text-center mb-6 border-b-2 border-black border-dashed pb-4">
+            <h2 class="font-bold text-xl uppercase tracking-widest">La Estelar</h2>
+            <p class="text-[10px] receipt-font mb-2">Joyería 18k</p>
+            <p class="text-[10px] receipt-font" id="receipt-date"></p>
+        </div>
+        <table class="w-full text-xs receipt-font mb-4">
+            <thead>
+                <tr class="border-b border-black">
+                    <th class="text-left pb-1">Cant</th>
+                    <th class="text-left pb-1">Desc</th>
+                    <th class="text-right pb-1">Valor</th>
+                </tr>
+            </thead>
+            <tbody id="receipt-items"></tbody>
+        </table>
+        <div class="border-t-2 border-black border-dashed pt-3 mb-6">
+            <div class="flex justify-between font-bold text-sm receipt-font">
+                <span>TOTAL:</span>
+                <span id="receipt-total">$0</span>
+            </div>
+        </div>
+        <div class="text-center text-[10px] receipt-font space-y-1">
+            <p>¡Gracias por tu compra!</p>
+        </div>
+    </div>
+
+    <script>
+        // --- Mobile Menu Toggle ---
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const mainSidebar = document.getElementById('mainSidebar');
+        const sidebarBackdrop = document.getElementById('sidebarBackdrop');
+
+        hamburgerBtn.addEventListener('click', () => {
+            mainSidebar.classList.toggle('open');
+            sidebarBackdrop.classList.toggle('active');
+        });
+        sidebarBackdrop.addEventListener('click', () => {
+            mainSidebar.classList.remove('open');
+            sidebarBackdrop.classList.remove('active');
+        });
+
+        // --- Core POS Logic ---
+        const formatter = new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 });
+        let masterCatalog = [];
+        let posCart = [];
+        let bags = 0;
+        let currentSalePayload = null; 
+
+        async function loadPOSData() {
+            try {
+                const invRes = await fetch('/api/get-inventory');
+                const inventory = await invRes.json();
+                const tejRes = await fetch('/api/get-tejidos');
+                const tejidos = await tejRes.json();
+
+                const activeInventory = Array.isArray(inventory) ? inventory.filter(i => i.stock > 0) : [];
+                const activeTejidos = Array.isArray(tejidos) ? tejidos : [];
+
+                masterCatalog = [...activeInventory, ...activeTejidos];
+                document.getElementById('pos-loading').classList.add('hidden');
+                renderCatalog(masterCatalog);
+            } catch (err) {
+                document.getElementById('pos-loading').innerText = "Error cargando la base de datos.";
+            }
+        }
+
+        function renderCatalog(items) {
+            const container = document.getElementById('pos-items');
+            if (items.length === 0) return container.innerHTML = `<div class="text-center py-10 text-stone-400 text-sm">No hay resultados.</div>`;
+
+            container.innerHTML = items.map(item => {
+                const isTejido = item.class === 'tejido';
+                const badgeColor = isTejido ? 'bg-purple-100 text-purple-700' : (item.class === 'product' ? 'bg-blue-100 text-blue-700' : 'bg-stone-200 text-stone-600');
+                const badgeText = isTejido ? 'TEJIDO' : (item.class === 'product' ? 'PRODUCTO' : 'INSUMO');
+                const stockText = isTejido ? 'Bajo Demanda' : `Stock: ${item.stock}`;
+                const displayPrice = isTejido ? item.salePrice + 8000 : item.salePrice;
+
+                return `
+                <div class="flex items-center justify-between p-4 border-b border-stone-100 hover:bg-stone-50 transition-colors">
+                    <div>
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded ${badgeColor}">${badgeText}</span>
+                            <span class="text-[10px] text-stone-400">${stockText}</span>
+                        </div>
+                        <h4 class="font-bold text-sm text-black">${item.name}</h4>
+                        <p class="text-xs font-semibold text-[#cca830]">${formatter.format(displayPrice)} COP</p>
+                    </div>
+                    <button onclick="addToCart('${item.id}')" class="bg-black text-white hover:bg-[#cca830] hover:text-black w-10 h-10 rounded-xl flex items-center justify-center transition-colors">
+                        <span class="material-symbols-outlined text-lg">add</span>
+                    </button>
+                </div>
+                `;
+            }).join('');
+        }
+
+        function filterPOS() {
+            const query = document.getElementById('search-input').value.toLowerCase();
+            const type = document.getElementById('filter-type').value;
+            renderCatalog(masterCatalog.filter(item => item.name.toLowerCase().includes(query) && (type === 'all' || item.class === type)));
+        }
+
+        function addToCart(id) {
+            const item = masterCatalog.find(i => i.id === id);
+            if (!item) return;
+            const existing = posCart.find(i => i.id === id);
+            
+            if (existing && item.class !== 'tejido' && existing.qty >= item.stock) {
+                return alert(`Stock máximo alcanzado. Solo hay ${item.stock} disponibles.`);
+            }
+            if (existing) existing.qty += 1;
+            else posCart.push({ ...item, qty: 1 });
+            updateCartUI();
+        }
+
+        function updateCartQty(id, delta) {
+            const index = posCart.findIndex(i => i.id === id);
+            if (index === -1) return;
+            const item = posCart[index];
+            if (delta > 0 && item.class !== 'tejido' && item.qty >= masterCatalog.find(i => i.id === id).stock) {
+                return alert("Stock máximo alcanzado.");
+            }
+            item.qty += delta;
+            if (item.qty <= 0) posCart.splice(index, 1);
+            updateCartUI();
+        }
+
+        function updateBags(delta) { bags += delta; updateCartUI(); }
+        function clearCart() { posCart = []; bags = 0; updateCartUI(); }
+
+        function updateCartUI() {
+            const container = document.getElementById('cart-items');
+            const totalItems = posCart.reduce((sum, item) => sum + item.qty, 0);
+
+            if (totalItems === 0) bags = 0;
+            else {
+                if (bags < 1) bags = 1; 
+                if (bags > totalItems) bags = totalItems;
+            }
+            document.getElementById('bag-count').innerText = bags;
+
+            if (posCart.length === 0) {
+                container.innerHTML = `<p class="text-stone-500 text-sm italic text-center mt-10">El ticket está vacío.</p>`;
+                document.getElementById('cart-total').innerText = "$0";
+                currentSalePayload = null;
+                return;
+            }
+
+            const bagFeePerItem = totalItems > 0 ? ((bags * 7000) / totalItems) : 0;
+            let grandTotal = 0;
+            let totalCost = 0;
+
+            container.innerHTML = posCart.map(item => {
+                const laborFee = item.class === 'tejido' ? 8000 : 0;
+                const baseUnit = item.salePrice + laborFee;
+                const paddedUnit = baseUnit + bagFeePerItem;
+                const lineTotal = paddedUnit * item.qty;
+                
+                grandTotal += lineTotal;
+                totalCost += (item.costPrice * item.qty);
+
+                return `
+                <div class="bg-stone-800 p-3 rounded-xl border border-stone-700 flex justify-between items-center gap-2">
+                    <div class="flex-1 min-w-0">
+                        <p class="text-xs font-bold text-white truncate">${item.name}</p>
+                        <p class="text-[10px] text-stone-400 mt-0.5">C/U: ${formatter.format(paddedUnit)}</p>
+                    </div>
+                    <div class="flex items-center gap-2 bg-black rounded-lg px-1 py-1">
+                        <button onclick="updateCartQty('${item.id}', -1)" class="text-stone-500 hover:text-white px-1">-</button>
+                        <span class="text-xs font-bold w-4 text-center">${item.qty}</span>
+                        <button onclick="updateCartQty('${item.id}', 1)" class="text-stone-500 hover:text-white px-1">+</button>
+                    </div>
+                    <div class="text-right shrink-0 min-w-[70px]"><p class="text-xs font-bold text-[#cca830]">${formatter.format(lineTotal)}</p></div>
+                </div>`;
+            }).join('');
+
+            document.getElementById('cart-total').innerText = formatter.format(grandTotal);
+
+            currentSalePayload = {
+                cart: posCart.map(item => ({ id: item.id, name: item.name, class: item.class, qty: item.qty, costPrice: item.costPrice })),
+                bags: bags,
+                totalRevenue: grandTotal,
+                totalCost: totalCost,
+                totalProfit: grandTotal - totalCost
+            };
+        }
+
+        async function registerSale() {
+            if (!currentSalePayload || currentSalePayload.cart.length === 0) return alert("Ticket vacío.");
+            
+            const btn = document.getElementById('btn-sell');
+            btn.innerHTML = `<span class="material-symbols-outlined animate-spin text-sm">refresh</span> Procesando...`;
+            btn.disabled = true;
+
+            try {
+                const res = await fetch('/api/register-sale', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(currentSalePayload)
+                });
+                
+                if (!res.ok) throw new Error("Error al registrar la venta");
+
+                alert("¡Venta registrada con éxito!");
+                
+                if(confirm("¿Deseas imprimir el recibo de esta venta?")) {
+                    printReceipt();
+                }
+                
+                clearCart();
+                loadPOSData(); 
+            } catch (error) {
+                alert(error.message);
+            } finally {
+                btn.innerHTML = `<span class="material-symbols-outlined text-sm">payments</span> Vender`;
+                btn.disabled = false;
+            }
+        }
+
+        function printReceipt() {
+            if (posCart.length === 0) return alert("El ticket está vacío.");
+            
+            const date = new Date();
+            document.getElementById('receipt-date').innerText = date.toLocaleDateString('es-CO') + " " + date.toLocaleTimeString('es-CO', {hour: '2-digit', minute:'2-digit'});
+
+            const totalItems = posCart.reduce((sum, item) => sum + item.qty, 0);
+            const bagFeePerItem = (bags * 7000) / totalItems;
+            
+            document.getElementById('receipt-items').innerHTML = posCart.map(item => {
+                const laborFee = item.class === 'tejido' ? 8000 : 0;
+                const printedUnitPrice = Math.round(item.salePrice + laborFee + bagFeePerItem);
+                return `<tr>
+                    <td class="align-top py-1">${item.qty}</td>
+                    <td class="align-top py-1 pr-2">${item.name}</td>
+                    <td class="align-top text-right py-1">${formatter.format(printedUnitPrice * item.qty)}</td>
+                </tr>`;
+            }).join('');
+            
+            document.getElementById('receipt-total').innerText = formatter.format(currentSalePayload.totalRevenue);
+
+            const receiptDiv = document.getElementById('printable-receipt');
+            receiptDiv.classList.remove('hidden');
+            window.print();
+            receiptDiv.classList.add('hidden');
+        }
+
+        window.addEventListener('DOMContentLoaded', loadPOSData);
+    </script>
+</body>
+</html>

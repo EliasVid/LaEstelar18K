@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>La Estelar | Admin Dashboard</title>
+    <!-- Added Material Symbols font -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=block" rel="stylesheet">
     <style>
         :root {
             --sidebar-width: 240px;
@@ -41,12 +43,12 @@
             color: #ffffff;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
             padding: 20px 0;
             flex-shrink: 0;
             transition: transform 0.3s ease;
             z-index: 200;
             border-right: 1px solid rgba(229, 199, 107, 0.2);
+            overflow-y: auto;
         }
 
         .sidebar-brand {
@@ -61,19 +63,33 @@
 
         .sidebar-menu {
             list-style: none;
-            margin-top: 20px;
+            margin-top: 10px;
+        }
+
+        .sidebar-section-title {
+            padding: 15px 25px 5px;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #666;
+            font-weight: bold;
         }
 
         .sidebar-link {
             display: flex;
             align-items: center;
-            padding: 14px 25px;
+            padding: 12px 25px;
             color: #b3b3b3;
             text-decoration: none;
             font-size: 14px;
             font-weight: 500;
             transition: all 0.2s ease;
             cursor: pointer;
+        }
+
+        .sidebar-link .material-symbols-outlined {
+            margin-right: 12px;
+            font-size: 20px;
         }
 
         .sidebar-link:hover,
@@ -451,11 +467,6 @@
             text-transform: uppercase;
         }
 
-        /*.badge.18k {
-            background: #ffe088;
-            color: #574500;
-        }*/
-
         .badge.laminado {
             background: #fdebdc;
             color: #50260f;
@@ -643,9 +654,41 @@
     <aside class="sidebar" id="mainSidebar">
         <div>
             <div class="sidebar-brand">LA ESTELAR 18K</div>
+            
             <ul class="sidebar-menu">
-                <li><a class="sidebar-link active" data-target="productsTab">📦 Catálogo</a></li>
-                <li><a class="sidebar-link" data-target="addProductTab">➕ Nueva Joya</a></li>
+                <li class="sidebar-section-title">Catálogo Web</li>
+                <li>
+                    <a class="sidebar-link active" data-target="productsTab">
+                        <span class="material-symbols-outlined">storefront</span> Catálogo
+                    </a>
+                </li>
+                <li>
+                    <a class="sidebar-link" data-target="addProductTab">
+                        <span class="material-symbols-outlined">add_circle</span> Nueva Joya
+                    </a>
+                </li>
+                
+                <li class="sidebar-section-title" style="margin-top: 15px;">Gestión & ERP</li>
+                <li>
+                    <a href="admin-inventory.html" class="sidebar-link">
+                        <span class="material-symbols-outlined">inventory_2</span> Inventario
+                    </a>
+                </li>
+                <li>
+                    <a href="admin-tejidos.html" class="sidebar-link">
+                        <span class="material-symbols-outlined">join_inner</span> Tejidos
+                    </a>
+                </li>
+                <li>
+                    <a href="admin-sales.html" class="sidebar-link">
+                        <span class="material-symbols-outlined">point_of_sale</span> Ventas POS
+                    </a>
+                </li>
+                <li>
+                    <a href="admin-finances.html" class="sidebar-link">
+                        <span class="material-symbols-outlined">monitoring</span> Finanzas
+                    </a>
+                </li>
             </ul>
         </div>
     </aside>
@@ -654,8 +697,8 @@
 
         <section id="productsTab" class="tab-content-panel active">
             <div class="content-header">
-                <h2>Inventario de Joyas</h2>
-                <p style="font-size: 13px; color: #666;">Haz clic en cualquier fila para editar los detalles.</p>
+                <h2>Catálogo de Joyas Público</h2>
+                <p style="font-size: 13px; color: #666;">Estas joyas son las que los clientes ven en la página principal.</p>
             </div>
             <div class="content-body">
                 <div class="inventory-table-wrapper">
@@ -666,7 +709,7 @@
                                 <th>Nombre</th>
                                 <th>Material</th>
                                 <th>Precio</th>
-                                <th>Stock</th>
+                                <th>Stock (Ref)</th>
                             </tr>
                         </thead>
                         <tbody id="inventoryTableBody">
@@ -681,7 +724,7 @@
 
         <section id="addProductTab" class="tab-content-panel">
             <div class="content-header">
-                <h2>Registrar Nueva Joya</h2>
+                <h2>Registrar Joya en Catálogo</h2>
             </div>
             <div class="content-body">
                 <div class="admin-card">
@@ -804,7 +847,12 @@
 
         // ===================== TAB ROUTER =====================
         document.querySelectorAll('.sidebar-link').forEach(link => {
-            link.addEventListener('click', () => {
+            link.addEventListener('click', (e) => {
+                
+                // IMPORTANT: If this link has an href (like our new modules), let the browser redirect normally!
+                if(link.hasAttribute('href')) return; 
+
+                // Otherwise, perform the standard SPA tab switching
                 document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
                 document.querySelectorAll('.tab-content-panel').forEach(p => p.classList.remove('active'));
                 
@@ -861,7 +909,7 @@
             }
         }
 
-        // ===================== VARIANT ENGINE (Color Picker + Stock) =====================
+        // ===================== VARIANT ENGINE =====================
         const creationCategorySelect = document.querySelector('#addProductTab .prodCategoryField');
         const creationDynamicContainer = document.querySelector('#addProductTab .dynamicAttributesContainer');
 
