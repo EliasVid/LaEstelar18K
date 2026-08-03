@@ -288,7 +288,7 @@
 
         async function loadFinances() {
             try {
-                const res = await fetch('/api/get-sales');
+                const res = await fetch('/api/sales');
                 globalSales = await res.json();
                 calculateDashboard();
             } catch (err) {

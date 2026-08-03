@@ -293,9 +293,9 @@
 
         async function loadPOSData() {
             try {
-                const invRes = await fetch('/api/get-inventory');
+                const invRes = await fetch('/api/inventory');
                 const inventory = await invRes.json();
-                const tejRes = await fetch('/api/get-tejidos');
+                const tejRes = await fetch('/api/tejidos');
                 const tejidos = await tejRes.json();
 
                 const activeInventory = Array.isArray(inventory) ? inventory.filter(i => i.stock > 0) : [];
@@ -317,7 +317,9 @@
                 const isTejido = item.class === 'tejido';
                 const badgeColor = isTejido ? 'bg-purple-100 text-purple-700' : (item.class === 'product' ? 'bg-blue-100 text-blue-700' : 'bg-stone-200 text-stone-600');
                 const badgeText = isTejido ? 'TEJIDO' : (item.class === 'product' ? 'PRODUCTO' : 'INSUMO');
-                const stockText = isTejido ? 'Bajo Demanda' : `Stock: ${item.stock}`;
+                
+                // AHORA TODOS MUESTRAN STOCK
+                const stockText = `Stock: ${item.stock}`;
                 const displayPrice = isTejido ? item.salePrice + 8000 : item.salePrice;
 
                 return `
@@ -325,12 +327,12 @@
                     <div>
                         <div class="flex items-center gap-2 mb-1">
                             <span class="text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded ${badgeColor}">${badgeText}</span>
-                            <span class="text-[10px] text-stone-400">${stockText}</span>
+                            <span class="text-[10px] font-bold ${item.stock === 0 ? 'text-red-500' : 'text-stone-400'}">${stockText}</span>
                         </div>
-                        <h4 class="font-bold text-sm text-black">${item.name}</h4>
-                        <p class="text-xs font-semibold text-[#cca830]">${formatter.format(displayPrice)} COP</p>
+                        <h4 class="font-bold text-sm ${item.stock === 0 ? 'text-stone-400 line-through' : 'text-black'}">${item.name}</h4>
+                        <p class="text-xs font-semibold ${item.stock === 0 ? 'text-stone-300' : 'text-[#cca830]'}">${formatter.format(displayPrice)} COP</p>
                     </div>
-                    <button onclick="addToCart('${item.id}')" class="bg-black text-white hover:bg-[#cca830] hover:text-black w-10 h-10 rounded-xl flex items-center justify-center transition-colors">
+                    <button onclick="addToCart('${item.id}')" ${item.stock === 0 ? 'disabled' : ''} class="bg-black text-white hover:bg-[#cca830] hover:text-black w-10 h-10 rounded-xl flex items-center justify-center transition-colors disabled:opacity-20 disabled:cursor-not-allowed">
                         <span class="material-symbols-outlined text-lg">add</span>
                     </button>
                 </div>
@@ -346,10 +348,11 @@
 
         function addToCart(id) {
             const item = masterCatalog.find(i => i.id === id);
-            if (!item) return;
+            if (!item || item.stock <= 0) return;
             const existing = posCart.find(i => i.id === id);
             
-            if (existing && item.class !== 'tejido' && existing.qty >= item.stock) {
+            // Ya no saltamos la validación para tejidos
+            if (existing && existing.qty >= item.stock) {
                 return alert(`Stock máximo alcanzado. Solo hay ${item.stock} disponibles.`);
             }
             if (existing) existing.qty += 1;
@@ -361,7 +364,10 @@
             const index = posCart.findIndex(i => i.id === id);
             if (index === -1) return;
             const item = posCart[index];
-            if (delta > 0 && item.class !== 'tejido' && item.qty >= masterCatalog.find(i => i.id === id).stock) {
+            const maxStock = masterCatalog.find(i => i.id === id).stock;
+            
+            // Ya no saltamos la validación para tejidos
+            if (delta > 0 && item.qty >= maxStock) {
                 return alert("Stock máximo alcanzado.");
             }
             item.qty += delta;
@@ -437,7 +443,7 @@
             btn.disabled = true;
 
             try {
-                const res = await fetch('/api/register-sale', {
+                const res = await fetch('/api/sales', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(currentSalePayload)

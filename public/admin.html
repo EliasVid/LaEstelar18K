@@ -21,621 +21,114 @@
             --brand-dark: #121212;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: system-ui, sans-serif;
-            background: var(--bg-light);
-            color: #333;
-            display: flex;
-            height: 100vh;
-            overflow: hidden;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: system-ui, sans-serif; background: var(--bg-light); color: #333; display: flex; height: 100vh; overflow: hidden; }
 
         /* ===================== SIDEBAR ===================== */
-        .sidebar {
-            width: var(--sidebar-width);
-            background: var(--brand-dark);
-            color: #ffffff;
-            display: flex;
-            flex-direction: column;
-            padding: 20px 0;
-            flex-shrink: 0;
-            transition: transform 0.3s ease;
-            z-index: 200;
-            border-right: 1px solid rgba(229, 199, 107, 0.2);
-            overflow-y: auto;
-        }
-
-        .sidebar-brand {
-            padding: 10px 25px 25px;
-            font-size: 18px;
-            font-weight: bold;
-            border-bottom: 1px solid rgba(229, 199, 107, 0.2);
-            letter-spacing: 0.5px;
-            color: var(--brand-gold);
-            font-style: italic;
-        }
-
-        .sidebar-menu {
-            list-style: none;
-            margin-top: 10px;
-        }
-
-        .sidebar-section-title {
-            padding: 15px 25px 5px;
-            font-size: 10px;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: #666;
-            font-weight: bold;
-        }
-
-        .sidebar-link {
-            display: flex;
-            align-items: center;
-            padding: 12px 25px;
-            color: #b3b3b3;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 500;
-            transition: all 0.2s ease;
-            cursor: pointer;
-        }
-
-        .sidebar-link .material-symbols-outlined {
-            margin-right: 12px;
-            font-size: 20px;
-        }
-
-        .sidebar-link:hover,
-        .sidebar-link.active {
-            color: var(--brand-gold);
-            background: rgba(229, 199, 107, 0.1);
-        }
-
-        .sidebar-link.active {
-            border-left: 4px solid var(--brand-gold);
-            padding-left: 21px;
-        }
+        .sidebar { width: var(--sidebar-width); background: var(--brand-dark); color: #ffffff; display: flex; flex-direction: column; padding: 20px 0; flex-shrink: 0; transition: transform 0.3s ease; z-index: 200; border-right: 1px solid rgba(229, 199, 107, 0.2); overflow-y: auto; }
+        .sidebar-brand { padding: 10px 25px 25px; font-size: 18px; font-weight: bold; border-bottom: 1px solid rgba(229, 199, 107, 0.2); letter-spacing: 0.5px; color: var(--brand-gold); font-style: italic; }
+        .sidebar-menu { list-style: none; margin-top: 10px; }
+        .sidebar-section-title { padding: 15px 25px 5px; font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: #666; font-weight: bold; }
+        .sidebar-link { display: flex; align-items: center; padding: 12px 25px; color: #b3b3b3; text-decoration: none; font-size: 14px; font-weight: 500; transition: all 0.2s ease; cursor: pointer; }
+        .sidebar-link .material-symbols-outlined { margin-right: 12px; font-size: 20px; }
+        .sidebar-link:hover, .sidebar-link.active { color: var(--brand-gold); background: rgba(229, 199, 107, 0.1); }
+        .sidebar-link.active { border-left: 4px solid var(--brand-gold); padding-left: 21px; }
 
         /* ===================== MOBILE HEADER ===================== */
-        .mobile-header {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: var(--header-height);
-            background: var(--brand-dark);
-            color: var(--brand-gold);
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 16px;
-            z-index: 300;
-            border-bottom: 1px solid rgba(229, 199, 107, 0.2);
-        }
-
-        .mobile-header-brand {
-            font-size: 16px;
-            font-weight: bold;
-            letter-spacing: 0.5px;
-            font-style: italic;
-        }
-
-        .hamburger-btn {
-            background: none;
-            border: none;
-            color: var(--brand-gold);
-            font-size: 24px;
-            cursor: pointer;
-            padding: 4px 8px;
-            line-height: 1;
-            display: flex;
-            align-items: center;
-        }
-
-        .sidebar-backdrop {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.6);
-            z-index: 190;
-        }
-
-        .sidebar-backdrop.active {
-            display: block;
-        }
+        .mobile-header { display: none; position: fixed; top: 0; left: 0; right: 0; height: var(--header-height); background: var(--brand-dark); color: var(--brand-gold); align-items: center; justify-content: space-between; padding: 0 16px; z-index: 300; border-bottom: 1px solid rgba(229, 199, 107, 0.2); }
+        .mobile-header-brand { font-size: 16px; font-weight: bold; letter-spacing: 0.5px; font-style: italic; }
+        .hamburger-btn { background: none; border: none; color: var(--brand-gold); font-size: 24px; cursor: pointer; padding: 4px 8px; line-height: 1; display: flex; align-items: center; }
+        .sidebar-backdrop { display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.6); z-index: 190; }
+        .sidebar-backdrop.active { display: block; }
 
         /* ===================== MAIN WORKSPACE ===================== */
-        .main-workspace {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            overflow-y: auto;
-            background: var(--bg-light);
-        }
-
-        .content-header {
-            padding: 30px 40px 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .content-body {
-            padding: 20px 40px 40px;
-        }
-
-        .tab-content-panel {
-            display: none;
-        }
-
-        .tab-content-panel.active {
-            display: block;
-        }
+        .main-workspace { flex-grow: 1; display: flex; flex-direction: column; height: 100%; overflow-y: auto; background: var(--bg-light); }
+        .content-header { padding: 30px 40px 10px; display: flex; justify-content: space-between; align-items: center; }
+        .content-body { padding: 20px 40px 40px; }
+        .tab-content-panel { display: none; }
+        .tab-content-panel.active { display: block; }
 
         /* ===================== UI COMPONENTS ===================== */
-        .admin-card {
-            background: white;
-            max-width: 650px;
-            padding: 35px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
-            border: 1px solid var(--border-color);
-        }
-
-        .form-title {
-            margin-bottom: 25px;
-            font-size: 22px;
-            font-weight: 800;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 6px;
-            font-weight: bold;
-            font-size: 14px;
-        }
-
-        input[type="text"],
-        input[type="number"],
-        select,
-        textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 14px;
-        }
-
-        textarea {
-            resize: vertical;
-            font-family: inherit;
-        }
-
-        input[type="file"] {
-            display: block;
-            margin-top: 5px;
-        }
+        .admin-card { background: white; max-width: 650px; padding: 35px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03); border: 1px solid var(--border-color); }
+        .form-title { margin-bottom: 25px; font-size: 22px; font-weight: 800; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 6px; font-weight: bold; font-size: 14px; }
+        input[type="text"], input[type="number"], select, textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; }
+        textarea { resize: vertical; font-family: inherit; }
+        input[type="file"] { display: block; margin-top: 5px; }
 
         /* ===================== VARIANTS ===================== */
-        .variant-container {
-            background: #fdfdfd;
-            padding: 18px;
-            border-radius: 6px;
-            margin-top: 10px;
-            border-left: 4px solid var(--brand-gold);
-            border-top: 1px solid #eee;
-            border-right: 1px solid #eee;
-            border-bottom: 1px solid #eee;
-        }
+        .variant-container { background: #fdfdfd; padding: 18px; border-radius: 6px; margin-top: 10px; border-left: 4px solid var(--brand-gold); border-top: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee; }
+        .dynamic-section-title { font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; color: #555; margin-bottom: 12px; }
+        .picker-row { display: grid; grid-template-columns: 1fr 1fr auto; gap: 10px; align-items: end; margin-bottom: 15px; }
+        .picker-row label { margin-bottom: 4px; font-size: 12px; color: #666; }
+        .color-input-wrapper { display: flex; align-items: center; gap: 6px; background: white; border: 1px solid #ccc; border-radius: 4px; padding: 4px 8px; height: 38px; }
+        .color-input-wrapper input[type="color"] { border: none; width: 30px; height: 100%; padding: 0; background: none; cursor: pointer; }
+        .color-preview { display: inline-block; width: 14px; height: 14px; border-radius: 50%; border: 1px solid #ccc; vertical-align: middle; margin-right: 6px; }
 
-        .dynamic-section-title {
-            font-size: 12px;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: #555;
-            margin-bottom: 12px;
-        }
-
-        .picker-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr auto;
-            gap: 10px;
-            align-items: end;
-            margin-bottom: 15px;
-        }
-
-        .picker-row label {
-            margin-bottom: 4px;
-            font-size: 12px;
-            color: #666;
-        }
-
-        .color-input-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            background: white;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            padding: 4px 8px;
-            height: 38px;
-        }
-
-        .color-input-wrapper input[type="color"] {
-            border: none;
-            width: 30px;
-            height: 100%;
-            padding: 0;
-            background: none;
-            cursor: pointer;
-        }
-
-        .color-preview {
-            display: inline-block;
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            border: 1px solid #ccc;
-            vertical-align: middle;
-            margin-right: 6px;
-        }
+        .size-checkbox-group { display: flex; flex-wrap: wrap; gap: 10px; }
+        .size-checkbox-label { background: #eee; padding: 6px 12px; border-radius: 4px; font-weight: 500; font-size: 13px; cursor: pointer; border: 1px solid transparent; transition: all 0.2s; user-select: none; }
+        .size-checkbox-label:hover { background: #e0e0e0; }
+        .size-checkbox-label input[type="checkbox"] { display: none; }
+        .size-checkbox-label.selected { background: var(--brand-dark); color: var(--brand-gold); border-color: var(--brand-dark); }
 
         /* ===================== MATRIX TABLE ===================== */
-        .matrix-title {
-            font-size: 13px;
-            font-weight: bold;
-            margin-bottom: 8px;
-            margin-top: 15px;
-            text-transform: uppercase;
-            color: #444;
-        }
-
-        .matrix-table {
-            width: 100%;
-            border-collapse: collapse;
-            background: white;
-            border-radius: 4px;
-            overflow: hidden;
-            border: 1px solid #ddd;
-        }
-
-        .matrix-table th,
-        .matrix-table td {
-            padding: 10px;
-            text-align: left;
-            font-size: 13px;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .matrix-table th {
-            background: #fafafa;
-            font-weight: bold;
-            color: #555;
-            text-transform: uppercase;
-            font-size: 11px;
-        }
+        .matrix-title { font-size: 13px; font-weight: bold; margin-bottom: 8px; margin-top: 15px; text-transform: uppercase; color: #444; }
+        .matrix-table { width: 100%; border-collapse: collapse; background: white; border-radius: 4px; overflow: hidden; border: 1px solid #ddd; }
+        .matrix-table th, .matrix-table td { padding: 10px; text-align: left; font-size: 13px; border-bottom: 1px solid #ddd; }
+        .matrix-table th { background: #fafafa; font-weight: bold; color: #555; text-transform: uppercase; font-size: 11px; }
 
         /* ===================== BUTTONS ===================== */
-        .btn-primary {
-            background: var(--accent-color);
-            color: var(--brand-gold);
-            border: none;
-            padding: 12px 20px;
-            border-radius: 4px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background 0.2s;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .btn-primary:hover {
-            background: #333;
-        }
-
-        .btn-secondary {
-            background: #555;
-            color: white;
-            padding: 10px;
-            height: 38px;
-            border: none;
-            border-radius: 4px;
-            font-weight: bold;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .btn-secondary:hover {
-            background: #333;
-        }
-
-        .btn-delete {
-            background: none;
-            border: none;
-            color: var(--danger-color);
-            cursor: pointer;
-            font-size: 16px;
-            padding: 0 5px;
-        }
-
-        .modal-actions-row {
-            display: flex;
-            gap: 12px;
-            margin-top: 25px;
-            border-top: 1px solid var(--border-color);
-            padding-top: 20px;
-            flex-wrap: wrap;
-        }
-
-        .btn-danger-outline {
-            background: transparent;
-            color: var(--danger-color);
-            border: 1px solid var(--danger-color);
-            padding: 12px 20px;
-            border-radius: 4px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .btn-danger-outline:hover {
-            background: var(--danger-color);
-            color: white;
-        }
-
-        .btn-danger-filled {
-            background: var(--danger-color);
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 4px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .btn-danger-filled:hover {
-            background: var(--danger-hover);
-        }
+        .btn-primary { background: var(--accent-color); color: var(--brand-gold); border: none; padding: 12px 20px; border-radius: 4px; font-weight: bold; cursor: pointer; transition: background 0.2s; text-transform: uppercase; letter-spacing: 0.5px; }
+        .btn-primary:hover { background: #333; }
+        .btn-secondary { background: #555; color: white; padding: 10px; height: 38px; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .btn-secondary:hover { background: #333; }
+        .btn-delete { background: none; border: none; color: var(--danger-color); cursor: pointer; font-size: 16px; padding: 0 5px; }
+        .modal-actions-row { display: flex; gap: 12px; margin-top: 25px; border-top: 1px solid var(--border-color); padding-top: 20px; flex-wrap: wrap; }
+        .btn-danger-outline { background: transparent; color: var(--danger-color); border: 1px solid var(--danger-color); padding: 12px 20px; border-radius: 4px; font-weight: bold; cursor: pointer; transition: all 0.2s; }
+        .btn-danger-outline:hover { background: var(--danger-color); color: white; }
+        .btn-danger-filled { background: var(--danger-color); color: white; border: none; padding: 12px 20px; border-radius: 4px; font-weight: bold; cursor: pointer; }
+        .btn-danger-filled:hover { background: var(--danger-hover); }
 
         /* ===================== INVENTORY TABLE ===================== */
-        .inventory-table-wrapper {
-            background: white;
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-            overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
-            overflow-x: auto;
-        }
-
-        .inventory-table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-            min-width: 480px;
-        }
-
-        .inventory-table th,
-        .inventory-table td {
-            padding: 16px 20px;
-            border-bottom: 1px solid var(--border-color);
-            font-size: 14px;
-        }
-
-        .inventory-table th {
-            background: #fcfcfc;
-            font-weight: bold;
-            color: #666;
-            font-size: 12px;
-            text-transform: uppercase;
-        }
-
-        .inventory-table tbody tr:hover {
-            background: #fafafa;
-            cursor: pointer;
-        }
-
-        .prod-thumb {
-            width: 44px;
-            height: 44px;
-            object-fit: cover;
-            border-radius: 4px;
-            background: #eee;
-            display: block;
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 4px 8px;
-            font-size: 11px;
-            font-weight: bold;
-            border-radius: 4px;
-            text-transform: uppercase;
-        }
-
-        .badge.laminado {
-            background: #fdebdc;
-            color: #50260f;
-        }
+        .inventory-table-wrapper { background: white; border-radius: 8px; border: 1px solid var(--border-color); overflow: hidden; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02); overflow-x: auto; }
+        .inventory-table { width: 100%; border-collapse: collapse; text-align: left; min-width: 480px; }
+        .inventory-table th, .inventory-table td { padding: 16px 20px; border-bottom: 1px solid var(--border-color); font-size: 14px; }
+        .inventory-table th { background: #fcfcfc; font-weight: bold; color: #666; font-size: 12px; text-transform: uppercase; }
+        .inventory-table tbody tr:hover { background: #fafafa; cursor: pointer; }
+        .prod-thumb { width: 44px; height: 44px; object-fit: cover; border-radius: 4px; background: #eee; display: block; }
+        .badge { display: inline-block; padding: 4px 8px; font-size: 11px; font-weight: bold; border-radius: 4px; text-transform: uppercase; }
+        .badge.laminado { background: #fdebdc; color: #50260f; }
+        .badge18k { background: #ffe088; color: #574500; }
 
         /* ===================== MODALS ===================== */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(2px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.2s ease;
-            padding: 16px;
-        }
-
-        .modal-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .modal-body-scroller {
-            background: white;
-            width: 100%;
-            max-width: 600px;
-            max-height: 90vh;
-            overflow-y: auto;
-            border-radius: 8px;
-            padding: 30px;
-            position: relative;
-        }
-
-        .confirm-modal-body {
-            background: white;
-            width: 100%;
-            max-width: 400px;
-            padding: 25px;
-            border-radius: 8px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-            border: 1px solid var(--border-color);
-            text-align: center;
-        }
-
-        .confirm-title {
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 12px;
-            color: #111;
-        }
-
-        .confirm-text {
-            font-size: 14px;
-            color: #555;
-            margin-bottom: 20px;
-            line-height: 1.4;
-        }
-
-        .modal-close-btn {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: none;
-            border: none;
-            font-size: 22px;
-            cursor: pointer;
-            color: #999;
-        }
-
-        .modal-close-btn:hover {
-            color: #000;
-        }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(2px); display: flex; align-items: center; justify-content: center; z-index: 1000; opacity: 0; pointer-events: none; transition: opacity 0.2s ease; padding: 16px; }
+        .modal-overlay.active { opacity: 1; pointer-events: auto; }
+        .modal-body-scroller { background: white; width: 100%; max-width: 600px; max-height: 90vh; overflow-y: auto; border-radius: 8px; padding: 30px; position: relative; }
+        .confirm-modal-body { background: white; width: 100%; max-width: 400px; padding: 25px; border-radius: 8px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); border: 1px solid var(--border-color); text-align: center; }
+        .confirm-title { font-size: 18px; font-weight: bold; margin-bottom: 12px; color: #111; }
+        .confirm-text { font-size: 14px; color: #555; margin-bottom: 20px; line-height: 1.4; }
+        .modal-close-btn { position: absolute; top: 20px; right: 20px; background: none; border: none; font-size: 22px; cursor: pointer; color: #999; }
+        .modal-close-btn:hover { color: #000; }
 
         /* ===================== RESPONSIVE ===================== */
         @media (max-width: 768px) {
-            .mobile-header {
-                display: flex;
-            }
-
-            body {
-                flex-direction: column;
-                height: auto;
-                min-height: 100vh;
-                overflow: auto;
-            }
-
-            .sidebar {
-                position: fixed;
-                top: 0;
-                left: 0;
-                height: 100%;
-                transform: translateX(-100%);
-                padding-top: var(--header-height);
-            }
-
-            .sidebar.open {
-                transform: translateX(0);
-            }
-
-            .main-workspace {
-                margin-top: var(--header-height);
-                height: auto;
-                min-height: calc(100vh - var(--header-height));
-                overflow-y: visible;
-            }
-
-            .content-header {
-                padding: 20px 16px 10px;
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 6px;
-            }
-
-            .content-header h2 {
-                font-size: 20px;
-            }
-
-            .content-body {
-                padding: 16px 16px 40px;
-            }
-
-            .admin-card {
-                max-width: 100%;
-                padding: 20px;
-            }
-
-            .picker-row {
-                grid-template-columns: 1fr;
-                gap: 12px;
-            }
-
-            .picker-row>div:nth-child(3) {
-                margin-top: 5px;
-            }
-
-            .inventory-table th,
-            .inventory-table td {
-                padding: 12px 14px;
-                font-size: 13px;
-            }
-
-            .modal-overlay {
-                padding: 0;
-                align-items: flex-end;
-            }
-
-            .modal-body-scroller {
-                max-height: 92vh;
-                border-radius: 12px 12px 0 0;
-                padding: 24px 20px;
-            }
-
-            .modal-actions-row {
-                flex-direction: column;
-            }
-
-            .modal-actions-row .btn-danger-outline,
-            .modal-actions-row .btn-primary {
-                flex: none;
-                width: 100%;
-                text-align: center;
-            }
+            .mobile-header { display: flex; }
+            body { flex-direction: column; height: auto; min-height: 100vh; overflow: auto; }
+            .sidebar { position: fixed; top: 0; left: 0; height: 100%; transform: translateX(-100%); padding-top: var(--header-height); }
+            .sidebar.open { transform: translateX(0); }
+            .main-workspace { margin-top: var(--header-height); height: auto; min-height: calc(100vh - var(--header-height)); overflow-y: visible; }
+            .content-header { padding: 20px 16px 10px; flex-direction: column; align-items: flex-start; gap: 6px; }
+            .content-header h2 { font-size: 20px; }
+            .content-body { padding: 16px 16px 40px; }
+            .admin-card { max-width: 100%; padding: 20px; }
+            .picker-row { grid-template-columns: 1fr; gap: 12px; }
+            .picker-row>div:nth-child(3) { margin-top: 5px; }
+            .inventory-table th, .inventory-table td { padding: 12px 14px; font-size: 13px; }
+            .modal-overlay { padding: 0; align-items: flex-end; }
+            .modal-body-scroller { max-height: 92vh; border-radius: 12px 12px 0 0; padding: 24px 20px; }
+            .modal-actions-row { flex-direction: column; }
+            .modal-actions-row .btn-danger-outline, .modal-actions-row .btn-primary { flex: none; width: 100%; text-align: center; }
         }
     </style>
 </head>
@@ -695,6 +188,7 @@
 
     <main class="main-workspace">
 
+        <!-- TAB: CATALOG -->
         <section id="productsTab" class="tab-content-panel active">
             <div class="content-header">
                 <h2>Catálogo de Joyas Público</h2>
@@ -707,9 +201,9 @@
                             <tr>
                                 <th style="width: 70px;">Imagen</th>
                                 <th>Nombre</th>
+                                <th>Tipo</th>
                                 <th>Material</th>
                                 <th>Precio</th>
-                                <th>Stock (Ref)</th>
                             </tr>
                         </thead>
                         <tbody id="inventoryTableBody">
@@ -722,6 +216,7 @@
             </div>
         </section>
 
+        <!-- TAB: ADD PRODUCT -->
         <section id="addProductTab" class="tab-content-panel">
             <div class="content-header">
                 <h2>Registrar Joya en Catálogo</h2>
@@ -733,23 +228,43 @@
                             <label>Nombre de la Pieza</label>
                             <input type="text" class="prodNameField" required placeholder="Ej: Cadena Veneciana">
                         </div>
+                        
+                        <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                            <div>
+                                <label>Tipo de Joya</label>
+                                <select class="prodTypeField" required>
+                                    <option value="" disabled selected>Selecciona el tipo</option>
+                                    <option value="Herraje">Herraje</option>
+                                    <option value="Dije">Dije</option>
+                                    <option value="Topos">Topos</option>
+                                    <option value="Cadena">Cadena</option>
+                                    <option value="Pulsos">Pulsos</option>
+                                    <option value="Anillo">Anillo</option>
+                                    <option value="Manilla">Manilla</option>
+                                    <option value="Anillo tejido">Anillo tejido</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label>Material</label>
+                                <select class="prodCategoryField" required>
+                                    <option value="" disabled selected>Selecciona material</option>
+                                    <option value="18k">Oro 18k Macizo</option>
+                                    <option value="laminado">Oro Laminado 18k</option>
+                                </select>
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <label>Precio ($ COP)</label>
                             <input type="number" class="prodPriceField" required placeholder="0">
                         </div>
-                        <div class="form-group">
-                            <label>Material / Categoría</label>
-                            <select class="prodCategoryField" required>
-                                <option value="" disabled selected>Selecciona el material</option>
-                                <option value="18k">Oro 18k Macizo</option>
-                                <option value="laminado">Oro Laminado 18k</option>
-                            </select>
-                        </div>
+
                         <div class="form-group">
                             <label>Descripción</label>
                             <textarea class="prodDescriptionField" rows="3" placeholder="Detalles de la joya..."></textarea>
                         </div>
 
+                        <!-- VARIANTS INJECTED HERE -->
                         <div class="dynamicAttributesContainer"></div>
 
                         <div class="form-group" style="margin-top: 20px;">
@@ -775,17 +290,35 @@
                     <label>Nombre</label>
                     <input type="text" class="prodNameField" id="editProdName" required>
                 </div>
+                
+                <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div>
+                        <label>Tipo de Joya</label>
+                        <select class="prodTypeField" id="editProdType" required>
+                            <option value="Herraje">Herraje</option>
+                            <option value="Dije">Dije</option>
+                            <option value="Topos">Topos</option>
+                            <option value="Cadena">Cadena</option>
+                            <option value="Pulsos">Pulsos</option>
+                            <option value="Anillo">Anillo</option>
+                            <option value="Manilla">Manilla</option>
+                            <option value="Anillo tejido">Anillo tejido</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>Material</label>
+                        <select class="prodCategoryField" id="editProdCategory" required>
+                            <option value="18k">Oro 18k Macizo</option>
+                            <option value="laminado">Oro Laminado 18k</option>
+                        </select>
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <label>Precio ($ COP)</label>
                     <input type="number" class="prodPriceField" id="editProdPrice" required>
                 </div>
-                <div class="form-group">
-                    <label>Material / Categoría</label>
-                    <select class="prodCategoryField" id="editProdCategory" required>
-                        <option value="18k">Oro 18k Macizo</option>
-                        <option value="laminado">Oro Laminado 18k</option>
-                    </select>
-                </div>
+
                 <div class="form-group">
                     <label>Descripción</label>
                     <textarea class="prodDescriptionField" id="editProdDescription" rows="3"></textarea>
@@ -820,7 +353,8 @@
 
     <script>
         let loadedCatalogData = [];
-        let activeVariants = [];
+        let activeColors = [];
+        let activeSizes = [];
 
         // ===================== MOBILE SIDEBAR TOGGLE =====================
         const hamburgerBtn = document.getElementById('hamburgerBtn');
@@ -839,40 +373,31 @@
             hamburgerBtn.setAttribute('aria-expanded', 'false');
         }
 
-        hamburgerBtn.addEventListener('click', () => {
-            mainSidebar.classList.contains('open') ? closeSidebar() : openSidebar();
-        });
-
+        hamburgerBtn.addEventListener('click', () => mainSidebar.classList.contains('open') ? closeSidebar() : openSidebar());
         sidebarBackdrop.addEventListener('click', closeSidebar);
 
         // ===================== TAB ROUTER =====================
         document.querySelectorAll('.sidebar-link').forEach(link => {
             link.addEventListener('click', (e) => {
-                
-                // IMPORTANT: If this link has an href (like our new modules), let the browser redirect normally!
-                if(link.hasAttribute('href')) return; 
+                if(link.hasAttribute('href') && link.getAttribute('href') !== '#') return; 
 
-                // Otherwise, perform the standard SPA tab switching
                 document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
                 document.querySelectorAll('.tab-content-panel').forEach(p => p.classList.remove('active'));
                 
                 link.classList.add('active');
                 const blockTarget = link.dataset.target;
                 document.getElementById(blockTarget)?.classList.add('active');
-
                 closeSidebar();
 
-                if (blockTarget === 'productsTab') {
-                    fetchInventoryCatalog();
-                }
+                if (blockTarget === 'productsTab') fetchInventoryCatalog();
             });
         });
 
-        // ===================== INVENTORY =====================
+        // ===================== FETCH CATALOG (GET) =====================
         async function fetchInventoryCatalog() {
             const tbody = document.getElementById('inventoryTableBody');
             try {
-                const response = await fetch('/api/get-catalog');
+                const response = await fetch('/api/catalog');
                 loadedCatalogData = await response.json();
 
                 if (loadedCatalogData.length === 0) {
@@ -881,7 +406,6 @@
                 }
 
                 tbody.innerHTML = loadedCatalogData.map(product => {
-                    const totalStock = (product.variants || []).reduce((acc, curr) => acc + curr.stock, 0);
                     const sampleImage = product.image || (product.images && product.images.length > 0 ? product.images[0] : '');
                     const badgeClass = product.category === '18k' ? '18k' : 'laminado';
                     const categoryLabel = product.category === '18k' ? 'Oro 18k' : 'Laminado';
@@ -890,9 +414,9 @@
                         <tr data-id="${product.id}">
                             <td><img src="${sampleImage}" class="prod-thumb" alt="Preview"></td>
                             <td style="font-weight:bold;">${product.name}</td>
+                            <td>${product.type || '-'}</td>
                             <td><span class="badge ${badgeClass}">${categoryLabel}</span></td>
                             <td>$ ${product.price.toLocaleString('es-CO')}</td>
-                            <td><strong>${totalStock}</strong> uds</td>
                         </tr>
                     `;
                 }).join('');
@@ -905,141 +429,234 @@
                 });
 
             } catch (error) {
-                tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; color:red; padding:20px;">Error leyendo inventario.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; color:red; padding:20px;">Error leyendo catálogo.</td></tr>`;
             }
         }
 
-        // ===================== VARIANT ENGINE =====================
-        const creationCategorySelect = document.querySelector('#addProductTab .prodCategoryField');
-        const creationDynamicContainer = document.querySelector('#addProductTab .dynamicAttributesContainer');
+        // ===================== DYNAMIC VARIANT ENGINE =====================
+        function setupDynamicEngine(typeSelectSelector, categorySelectSelector, containerSelector) {
+            const typeSel = document.querySelector(typeSelectSelector);
+            const catSel = document.querySelector(categorySelectSelector);
+            const container = document.querySelector(containerSelector);
 
-        creationCategorySelect.addEventListener('change', (e) => {
-            activeVariants = [];
-            renderVariantControlEngine(e.target.value, creationDynamicContainer);
-        });
+            const triggerRender = () => {
+                const type = typeSel.value;
+                const cat = catSel.value;
+                if (!type) return;
 
-        function renderVariantControlEngine(category, containerNode) {
-            const labelTitle = category === '18k' ? 'Oro 18k Macizo' : 'Oro Laminado 18k';
+                activeColors = [];
+                activeSizes = [];
+                container.innerHTML = '';
 
-            containerNode.innerHTML = `
-                <div class="variant-container">
-                    <div class="dynamic-section-title">Stock y Color (${labelTitle})</div>
-                    <div class="picker-row">
+                const group1 = ['Herraje', 'Dije', 'Topos']; // Nothing needed
+                const group2 = ['Cadena', 'Pulsos', 'Anillo']; // Need sizes
+                const group3 = ['Manilla', 'Anillo tejido']; // Need colors
+
+                if (group1.includes(type)) {
+                    container.innerHTML = `<div class="variant-container" style="text-align:center; color:#666; font-size:13px; padding:20px;">Este tipo de joya no requiere configurar tallas ni colores adicionales.</div>`;
+                } else if (group2.includes(type)) {
+                    renderSizeEngine(type, container);
+                } else if (group3.includes(type)) {
+                    renderColorEngine(cat, container);
+                }
+            };
+
+            typeSel.addEventListener('change', triggerRender);
+            catSel.addEventListener('change', triggerRender);
+        }
+
+        setupDynamicEngine('#addProductTab .prodTypeField', '#addProductTab .prodCategoryField', '#addProductTab .dynamicAttributesContainer');
+        setupDynamicEngine('#editProdType', '#editProdCategory', '#editDynamicAttributesContainer');
+
+        // --- SIZE ENGINE ---
+        function renderSizeEngine(type, containerNode) {
+            let html = `<div class="variant-container"><div class="dynamic-section-title">Tallas Disponibles (${type})</div>`;
+            
+            if (type === 'Cadena' || type === 'Anillo') {
+                const sizes = type === 'Cadena' ? ['40', '45', '50', '55', '60', '70'] : ['5', '5.5', '6', '6.5', '7', '7.5', '8', '8.5', '9'];
+                
+                html += `<div class="size-checkbox-group">`;
+                sizes.forEach(sz => {
+                    const isChecked = activeSizes.includes(sz);
+                    html += `
+                        <label class="size-checkbox-label ${isChecked ? 'selected' : ''}">
+                            <input type="checkbox" value="${sz}" ${isChecked ? 'checked' : ''}>
+                            ${sz}${type === 'Cadena' ? ' cm' : ''}
+                        </label>
+                    `;
+                });
+                html += `</div></div>`;
+                containerNode.innerHTML = html;
+
+                containerNode.querySelectorAll('.size-checkbox-label').forEach(lbl => {
+                    const cb = lbl.querySelector('input');
+                    cb.addEventListener('change', (e) => {
+                        if (e.target.checked) {
+                            lbl.classList.add('selected');
+                            if(!activeSizes.includes(e.target.value)) activeSizes.push(e.target.value);
+                        } else {
+                            lbl.classList.remove('selected');
+                            activeSizes = activeSizes.filter(s => s !== e.target.value);
+                        }
+                    });
+                });
+            } else if (type === 'Pulsos') {
+                html += `
+                    <div class="picker-row" style="grid-template-columns: 1fr 1fr auto;">
                         <div>
-                            <label>Color / Tonalidad</label>
-                            <div class="color-input-wrapper"><input type="color" class="varColorPicker" value="#E5C76B"></div>
+                            <label>Género</label>
+                            <select class="varGender"><option value="Hombre">Hombre</option><option value="Mujer">Mujer</option></select>
                         </div>
                         <div>
-                            <label>Cantidad Stock</label>
-                            <input type="number" class="varStockField" min="1" value="1">
+                            <label>Talla (Número)</label>
+                            <select class="varSize">${[8,9,10,11,12].map(n=>`<option value="${n}">${n}</option>`).join('')}</select>
                         </div>
                         <div>
-                            <button type="button" class="btn-secondary addVariantBtnInstance">Agregar</button>
+                            <button type="button" class="btn-secondary addSizeBtn">Agregar</button>
                         </div>
                     </div>
-                    <div class="matrix-title">Variantes Registradas</div>
+                    <div class="matrix-title">Tallas Registradas</div>
                     <table class="matrix-table">
-                        <thead>
-                            <tr><th>Color (HEX)</th><th>Stock</th><th style="width:40px;"></th></tr>
-                        </thead>
-                        <tbody class="matrixTableBodyInstance"></tbody>
+                        <tbody class="sizeTableBody"></tbody>
                     </table>
-                </div>
-            `;
+                </div>`;
+                containerNode.innerHTML = html;
 
-            bindVariantPickerActions(containerNode);
-            refreshVariantMatrixDisplay(containerNode);
+                containerNode.querySelector('.addSizeBtn').addEventListener('click', () => {
+                    const g = containerNode.querySelector('.varGender').value;
+                    const s = containerNode.querySelector('.varSize').value;
+                    const val = `${g} - ${s}`;
+                    if (!activeSizes.includes(val)) {
+                        activeSizes.push(val);
+                        refreshSizeMatrix(containerNode);
+                    }
+                });
+                refreshSizeMatrix(containerNode);
+            }
         }
 
-        function bindVariantPickerActions(containerNode) {
-            containerNode.querySelector('.addVariantBtnInstance').addEventListener('click', () => {
-                const colorVal = containerNode.querySelector('.varColorPicker').value.toLowerCase();
-                const stockVal = parseInt(containerNode.querySelector('.varStockField').value, 10) || 0;
-
-                if (stockVal <= 0) return alert('Ingresa una cantidad válida.');
-
-                const dupIdx = activeVariants.findIndex(v => v.color === colorVal);
-                if (dupIdx > -1) {
-                    activeVariants[dupIdx].stock += stockVal;
-                } else {
-                    activeVariants.push({ color: colorVal, stock: stockVal });
-                }
-
-                refreshVariantMatrixDisplay(containerNode);
-                containerNode.querySelector('.varStockField').value = '1';
-            });
-        }
-
-        function refreshVariantMatrixDisplay(containerNode) {
-            const tbody = containerNode.querySelector('.matrixTableBodyInstance');
-            if (activeVariants.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="3" style="text-align:center; color:#999; font-size:12px; padding:12px;">Sin stock agregado.</td></tr>`;
+        function refreshSizeMatrix(containerNode) {
+            const tbody = containerNode.querySelector('.sizeTableBody');
+            if(!tbody) return;
+            if (activeSizes.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="2" style="text-align:center; color:#999; font-size:12px; padding:12px;">Sin tallas agregadas.</td></tr>`;
                 return;
             }
-
-            tbody.innerHTML = activeVariants.map((item, idx) => `
+            tbody.innerHTML = activeSizes.map((sz, idx) => `
                 <tr>
-                    <td><span class="color-preview" style="background-color:${item.color};"></span><code>${item.color.toUpperCase()}</code></td>
-                    <td>${item.stock}</td>
-                    <td><button type="button" class="btn-delete" data-idx="${idx}">✕</button></td>
+                    <td>${sz}</td>
+                    <td style="width:40px;"><button type="button" class="btn-delete" data-idx="${idx}">✕</button></td>
                 </tr>
             `).join('');
 
             tbody.querySelectorAll('.btn-delete').forEach(btn => {
                 btn.addEventListener('click', (e) => {
-                    activeVariants.splice(parseInt(e.target.dataset.idx, 10), 1);
-                    refreshVariantMatrixDisplay(containerNode);
+                    activeSizes.splice(parseInt(e.target.dataset.idx, 10), 1);
+                    refreshSizeMatrix(containerNode);
                 });
             });
         }
 
-        // ===================== EDIT MODAL =====================
+        // --- COLOR ENGINE ---
+        function renderColorEngine(category, containerNode) {
+            const labelTitle = category === '18k' ? 'Oro 18k Macizo' : (category === 'laminado' ? 'Oro Laminado 18k' : '');
+            containerNode.innerHTML = `
+                <div class="variant-container">
+                    <div class="dynamic-section-title">Colores Disponibles ${labelTitle ? `(${labelTitle})` : ''}</div>
+                    <div class="picker-row" style="grid-template-columns: 1fr auto;">
+                        <div>
+                            <label>Seleccionar Color</label>
+                            <div class="color-input-wrapper"><input type="color" class="varColorPicker" value="#E5C76B"></div>
+                        </div>
+                        <div>
+                            <button type="button" class="btn-secondary addColorBtnInstance">Agregar</button>
+                        </div>
+                    </div>
+                    <div class="matrix-title">Colores Registrados</div>
+                    <table class="matrix-table">
+                        <tbody class="colorTableBody"></tbody>
+                    </table>
+                </div>
+            `;
+
+            containerNode.querySelector('.addColorBtnInstance').addEventListener('click', () => {
+                const colorVal = containerNode.querySelector('.varColorPicker').value.toLowerCase();
+                if (!activeColors.includes(colorVal)) {
+                    activeColors.push(colorVal);
+                    refreshColorMatrixDisplay(containerNode);
+                }
+            });
+            refreshColorMatrixDisplay(containerNode);
+        }
+
+        function refreshColorMatrixDisplay(containerNode) {
+            const tbody = containerNode.querySelector('.colorTableBody');
+            if(!tbody) return;
+            if (activeColors.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="2" style="text-align:center; color:#999; font-size:12px; padding:12px;">Sin colores agregados.</td></tr>`;
+                return;
+            }
+            tbody.innerHTML = activeColors.map((color, idx) => `
+                <tr>
+                    <td><span class="color-preview" style="background-color:${color};"></span><code>${color.toUpperCase()}</code></td>
+                    <td style="width:40px;"><button type="button" class="btn-delete" data-idx="${idx}">✕</button></td>
+                </tr>
+            `).join('');
+
+            tbody.querySelectorAll('.btn-delete').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    activeColors.splice(parseInt(e.target.dataset.idx, 10), 1);
+                    refreshColorMatrixDisplay(containerNode);
+                });
+            });
+        }
+
+        // ===================== EDIT MODAL & POPULATION =====================
         const editModalOverlay = document.getElementById('editModalOverlay');
-        const editDynamicContainer = document.getElementById('editDynamicAttributesContainer');
-        const editCategorySelect = document.getElementById('editProdCategory');
         const confirmDeleteModalOverlay = document.getElementById('confirmDeleteModalOverlay');
 
         function openEditModalWindow(product) {
             document.getElementById('editProductId').value = product.id;
             document.getElementById('editProdName').value = product.name;
+            document.getElementById('editProdType').value = product.type || '';
+            document.getElementById('editProdCategory').value = product.category || '';
             document.getElementById('editProdPrice').value = product.price;
             document.getElementById('editProdDescription').value = product.description || '';
-            editCategorySelect.value = product.category;
+            
+            activeColors = product.colors ? [...product.colors] : [];
+            activeSizes = product.sizes ? [...product.sizes] : [];
 
-            activeVariants = JSON.parse(JSON.stringify(product.variants || []));
-            renderVariantControlEngine(product.category, editDynamicContainer);
+            // Trigger the engine render manually for edit
+            const container = document.getElementById('editDynamicAttributesContainer');
+            container.innerHTML = '';
+            
+            const group1 = ['Herraje', 'Dije', 'Topos'];
+            const group2 = ['Cadena', 'Pulsos', 'Anillo'];
+            const group3 = ['Manilla', 'Anillo tejido'];
+
+            if (group1.includes(product.type)) {
+                container.innerHTML = `<div class="variant-container" style="text-align:center; color:#666; font-size:13px; padding:20px;">Este tipo de joya no requiere configurar tallas ni colores adicionales.</div>`;
+            } else if (group2.includes(product.type)) {
+                renderSizeEngine(product.type, container);
+            } else if (group3.includes(product.type)) {
+                renderColorEngine(product.category, container);
+            }
+
             editModalOverlay.classList.add('active');
         }
 
-        editCategorySelect.addEventListener('change', (e) => {
-            activeVariants = [];
-            renderVariantControlEngine(e.target.value, editDynamicContainer);
-        });
-
         document.getElementById('closeModalBtn').addEventListener('click', () => editModalOverlay.classList.remove('active'));
+        editModalOverlay.addEventListener('click', (e) => { if (e.target === editModalOverlay) editModalOverlay.classList.remove('active'); });
+        confirmDeleteModalOverlay.addEventListener('click', (e) => { if (e.target === confirmDeleteModalOverlay) confirmDeleteModalOverlay.classList.remove('active'); });
+        document.getElementById('triggerDeleteModalBtn').addEventListener('click', () => confirmDeleteModalOverlay.classList.add('active') );
+        document.getElementById('cancelDeleteBtn').addEventListener('click', () => confirmDeleteModalOverlay.classList.remove('active') );
 
-        editModalOverlay.addEventListener('click', (e) => {
-            if (e.target === editModalOverlay) editModalOverlay.classList.remove('active');
-        });
-
-        confirmDeleteModalOverlay.addEventListener('click', (e) => {
-            if (e.target === confirmDeleteModalOverlay) confirmDeleteModalOverlay.classList.remove('active');
-        });
-
-        document.getElementById('triggerDeleteModalBtn').addEventListener('click', () => {
-            confirmDeleteModalOverlay.classList.add('active');
-        });
-
-        document.getElementById('cancelDeleteBtn').addEventListener('click', () => {
-            confirmDeleteModalOverlay.classList.remove('active');
-        });
-
-        // ===================== DELETE =====================
+        // ===================== DELETE PRODUCT (DELETE) =====================
         document.getElementById('executeDeleteBtn').addEventListener('click', async () => {
             const targetedProductId = document.getElementById('editProductId').value;
             try {
-                const response = await fetch('/api/delete-product', {
-                    method: 'POST',
+                const response = await fetch('/api/catalog', {
+                    method: 'DELETE',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ id: targetedProductId })
                 });
@@ -1049,44 +666,41 @@
                     confirmDeleteModalOverlay.classList.remove('active');
                     editModalOverlay.classList.remove('active');
                     fetchInventoryCatalog();
-                } else {
-                    throw new Error('Fallo en el servidor');
-                }
-            } catch {
-                alert('Error al intentar eliminar la joya.');
-            }
+                } else { throw new Error('Fallo en el servidor'); }
+            } catch { alert('Error al intentar eliminar la joya.'); }
         });
 
-        // ===================== ADD PRODUCT =====================
+        // ===================== ADD PRODUCT (POST) =====================
         document.getElementById('catalogForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const form = e.target;
             const submitBtn = form.querySelector('.btn-primary');
 
             const name = form.querySelector('.prodNameField').value.trim();
-            const price = parseFloat(form.querySelector('.prodPriceField').value);
+            const type = form.querySelector('.prodTypeField').value;
             const category = form.querySelector('.prodCategoryField').value;
+            const price = parseFloat(form.querySelector('.prodPriceField').value);
             const description = form.querySelector('.prodDescriptionField').value.trim();
             const files = Array.from(form.querySelector('.prodImageField').files);
 
             if (!name) return alert('El nombre de la joya es obligatorio.');
+            if (!type) return alert('Selecciona un tipo de joya.');
+            if (!category) return alert('Selecciona el material.');
             if (isNaN(price) || price <= 0) return alert('Ingresa un precio válido.');
-            if (!category) return alert('Debes seleccionar un material.');
             if (files.length === 0) return alert('Selecciona al menos una imagen.');
-            if (!activeVariants || activeVariants.length === 0) {
-                return alert('Agrega al menos un color y su respectiva cantidad.');
-            }
 
-            const originalBtnText = submitBtn.innerHTML;
-            submitBtn.disabled = true;
-            submitBtn.style.opacity = '0.6';
-            submitBtn.innerHTML = 'Creando...';
+            const group2 = ['Cadena', 'Pulsos', 'Anillo'];
+            const group3 = ['Manilla', 'Anillo tejido'];
+
+            if (group2.includes(type) && activeSizes.length === 0) return alert('Debes seleccionar al menos una talla.');
+            if (group3.includes(type) && activeColors.length === 0) return alert('Debes agregar al menos un color.');
+
+            submitBtn.disabled = true; submitBtn.style.opacity = '0.6'; submitBtn.innerHTML = 'Creando...';
 
             try {
                 const uploadResponses = await Promise.all(
                     files.map(async (file) => {
-                        const formData = new FormData();
-                        formData.append("file", file);
+                        const formData = new FormData(); formData.append("file", file);
                         const res = await fetch("/api/upload", { method: "POST", body: formData });
                         if (!res.ok) throw new Error("Upload failed");
                         return res.json();
@@ -1096,17 +710,13 @@
                 const urls = uploadResponses.map(r => r.url);
 
                 const payload = {
-                    name,
-                    price,
-                    description,
-                    category,
-                    colors: [...new Set(activeVariants.map(v => v.color))],
-                    variants: activeVariants,
-                    imageUrl: urls[0],
+                    name, type, category, price, description,
+                    colors: group3.includes(type) ? activeColors : [],
+                    sizes: group2.includes(type) ? activeSizes : [],
                     images: urls
                 };
 
-                const res = await fetch('/api/add-product', {
+                const res = await fetch('/api/catalog', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
@@ -1115,22 +725,17 @@
                 if (res.ok) {
                     alert('¡Joya creada con éxito!');
                     form.reset();
-                    creationDynamicContainer.innerHTML = '';
-                    activeVariants = [];
-                } else {
-                    alert('Error al guardar el producto.');
-                }
+                    document.querySelector('#addProductTab .dynamicAttributesContainer').innerHTML = '';
+                    activeColors = []; activeSizes = [];
+                } else { alert('Error al guardar el producto.'); }
             } catch (err) {
-                console.error(err);
-                alert('Error de red al publicar.');
+                console.error(err); alert('Error de red al publicar.');
             } finally {
-                submitBtn.disabled = false;
-                submitBtn.style.opacity = '1';
-                submitBtn.innerHTML = originalBtnText;
+                submitBtn.disabled = false; submitBtn.style.opacity = '1'; submitBtn.innerHTML = 'Publicar Joya';
             }
         });
 
-        // ===================== EDIT PRODUCT =====================
+        // ===================== EDIT PRODUCT (PUT) =====================
         document.getElementById('editFormInstance').addEventListener('submit', async (e) => {
             e.preventDefault();
             const form = e.target;
@@ -1138,27 +743,26 @@
 
             const id = document.getElementById('editProductId').value;
             const name = document.getElementById('editProdName').value.trim();
+            const type = document.getElementById('editProdType').value;
+            const category = document.getElementById('editProdCategory').value;
             const price = parseFloat(document.getElementById('editProdPrice').value);
-            const category = editCategorySelect.value;
             const description = document.getElementById('editProdDescription').value.trim();
             const files = Array.from(document.getElementById('editProdImage').files);
 
-            if (!activeVariants || activeVariants.length === 0) {
-                return alert('La joya debe tener al menos una variante.');
-            }
+            const group2 = ['Cadena', 'Pulsos', 'Anillo'];
+            const group3 = ['Manilla', 'Anillo tejido'];
 
-            const originalBtnText = submitBtn.innerHTML;
-            submitBtn.disabled = true;
-            submitBtn.style.opacity = '0.6';
-            submitBtn.innerHTML = 'Guardando...';
+            if (group2.includes(type) && activeSizes.length === 0) return alert('Debes seleccionar al menos una talla.');
+            if (group3.includes(type) && activeColors.length === 0) return alert('Debes agregar al menos un color.');
+
+            submitBtn.disabled = true; submitBtn.style.opacity = '0.6'; submitBtn.innerHTML = 'Guardando...';
 
             try {
                 let urls = [];
                 if (files.length > 0) {
                     const uploadResponses = await Promise.all(
                         files.map(async (file) => {
-                            const formData = new FormData();
-                            formData.append("file", file);
+                            const formData = new FormData(); formData.append("file", file);
                             const res = await fetch("/api/upload", { method: "POST", body: formData });
                             if (!res.ok) throw new Error("Upload failed");
                             return res.json();
@@ -1168,19 +772,14 @@
                 }
 
                 const payload = {
-                    id,
-                    name,
-                    price,
-                    description,
-                    category,
-                    colors: [...new Set(activeVariants.map(v => v.color))],
-                    variants: activeVariants,
-                    imageUrl: urls.length > 0 ? urls[0] : null,
+                    id, name, type, category, price, description,
+                    colors: group3.includes(type) ? activeColors : [],
+                    sizes: group2.includes(type) ? activeSizes : [],
                     images: urls.length > 0 ? urls : null
                 };
 
-                const res = await fetch('/api/edit-product', {
-                    method: 'POST',
+                const res = await fetch('/api/catalog', {
+                    method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 });
@@ -1189,16 +788,11 @@
                     alert('¡Cambios guardados correctamente!');
                     editModalOverlay.classList.remove('active');
                     fetchInventoryCatalog();
-                } else {
-                    alert('Error al actualizar.');
-                }
+                } else { alert('Error al actualizar.'); }
             } catch (err) {
-                console.error(err);
-                alert('Error de red al actualizar.');
+                console.error(err); alert('Error de red al actualizar.');
             } finally {
-                submitBtn.disabled = false;
-                submitBtn.style.opacity = '1';
-                submitBtn.innerHTML = originalBtnText;
+                submitBtn.disabled = false; submitBtn.style.opacity = '1'; submitBtn.innerHTML = 'Guardar Cambios';
             }
         });
 

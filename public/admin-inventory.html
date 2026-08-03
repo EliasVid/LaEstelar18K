@@ -474,7 +474,7 @@
             }
 
             try {
-                const res = await fetch('/api/add-inventory', {
+                const res = await fetch('/api/inventory', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
@@ -501,7 +501,7 @@
             if(!confirm("¿Estás seguro de que deseas eliminar este elemento por completo? Se perderá permanentemente su historial de inventario.")) return;
 
             try {
-                const res = await fetch('/api/delete-inventory', {
+                const res = await fetch('/api/inventory', {
                     method: 'DELETE',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ id })
@@ -513,7 +513,7 @@
 
         async function loadInventory() {
             try {
-                const res = await fetch('/api/get-inventory');
+                const res = await fetch('/api/inventory');
                 const data = await res.json();
                 if (!Array.isArray(data)) throw new Error(data.error || "No se pudo cargar.");
 

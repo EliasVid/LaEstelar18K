@@ -302,7 +302,7 @@
 
         async function loadMaterials() {
             try {
-                const res = await fetch('/api/get-inventory');
+                const res = await fetch('/api/inventory');
                 const data = await res.json();
                 
                 if (!Array.isArray(data)) throw new Error("Error fetching inventory");
@@ -441,7 +441,7 @@
             const payload = { name, laborCost, salePrice, materialsUsed };
 
             try {
-                const res = await fetch('/api/add-tejido', {
+                const res = await fetch('/api/tejidos', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
