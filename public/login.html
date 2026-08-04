@@ -1,27 +1,93 @@
-<form id="loginForm">
-  <input type="password" id="password" placeholder="Password">
-  <button type="submit">Login</button>
-</form>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | La Estelar Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=block" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'DM Sans', sans-serif; }
+    </style>
+</head>
+<body class="bg-stone-50 min-h-screen flex items-center justify-center p-4">
 
-<script>
-document.getElementById("loginForm").addEventListener("submit", async (e) => {
-  e.preventDefault();
+    <div class="bg-white max-w-sm w-full p-8 md:p-10 rounded-3xl shadow-xl border border-stone-100">
+        
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <span class="material-symbols-outlined text-5xl text-[#cca830] mb-2">admin_panel_settings</span>
+            <h1 class="text-2xl font-bold text-black tracking-tight">Acceso Restringido</h1>
+            <p class="text-sm text-stone-500 mt-1 font-medium">Panel de Administración La Estelar</p>
+        </div>
 
-  const password = document.getElementById("password").value;
+        <!-- Form -->
+        <form id="loginForm" class="space-y-6">
+            <div>
+                <label class="block text-[11px] font-bold text-stone-500 uppercase tracking-wider mb-2">Contraseña de Administrador</label>
+                <div class="relative">
+                    <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-stone-400 text-lg">lock</span>
+                    <input type="password" id="password" required placeholder="••••••••" class="w-full bg-stone-50 border border-stone-200 rounded-xl pl-11 pr-4 py-3.5 text-sm focus:ring-2 focus:ring-[#cca830] focus:border-[#cca830] outline-none transition-all">
+                </div>
+                <p id="error-msg" class="text-red-500 text-xs font-bold mt-2 hidden text-center">Contraseña incorrecta. Intenta de nuevo.</p>
+            </div>
+            
+            <button type="submit" id="submitBtn" class="w-full bg-black text-[#cca830] text-xs font-bold uppercase tracking-widest py-4 rounded-xl hover:bg-stone-800 transition-all flex justify-center items-center gap-2 shadow-md">
+                <span>Ingresar al Panel</span>
+                <span class="material-symbols-outlined text-sm">arrow_forward</span>
+            </button>
+        </form>
 
-  const res = await fetch("/api/admin-login", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    credentials: "include",
-    body: JSON.stringify({ password })
-  });
+    </div>
 
-  if (res.ok) {
-    window.location.href = "/admin.html";
-  } else {
-    alert("Wrong password");
-  }
-});
-</script>
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const password = document.getElementById("password").value;
+            const btn = document.getElementById("submitBtn");
+            const errorMsg = document.getElementById("error-msg");
+
+            // UI Loading state
+            btn.disabled = true;
+            btn.innerHTML = `<span class="material-symbols-outlined animate-spin text-sm">refresh</span> <span>Verificando...</span>`;
+            errorMsg.classList.add('hidden');
+
+            try {
+                const res = await fetch("/api/admin-login", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    credentials: "include",
+                    body: JSON.stringify({ password })
+                });
+
+                if (res.ok) {
+                    btn.innerHTML = `<span class="material-symbols-outlined text-sm">check_circle</span> <span>Acceso Concedido</span>`;
+                    btn.classList.replace('bg-black', 'bg-green-600');
+                    btn.classList.replace('text-[#cca830]', 'text-white');
+                    
+                    // Small delay so the user sees the success state before the page flashes
+                    setTimeout(() => {
+                        window.location.href = "/admin.html";
+                    }, 500);
+                } else {
+                    // Show error and reset button
+                    errorMsg.classList.remove('hidden');
+                    document.getElementById("password").value = '';
+                    document.getElementById("password").focus();
+                    
+                    btn.disabled = false;
+                    btn.innerHTML = `<span>Ingresar al Panel</span> <span class="material-symbols-outlined text-sm">arrow_forward</span>`;
+                }
+            } catch (err) {
+                alert("Error de conexión con el servidor.");
+                btn.disabled = false;
+                btn.innerHTML = `<span>Ingresar al Panel</span> <span class="material-symbols-outlined text-sm">arrow_forward</span>`;
+            }
+        });
+    </script>
+</body>
+</html>
