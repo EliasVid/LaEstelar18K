@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Módulo 3: Punto de Venta | La Estelar</title>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=block" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=block"
+        rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* === IMPORTED SIDEBAR CSS === */
@@ -16,55 +21,284 @@
             --header-height: 56px;
             --border-color: #dddddd;
         }
-        body { font-family: 'DM Sans', sans-serif; display: flex; height: 100vh; overflow: hidden; background: #f9f9f9; margin: 0; }
-        .sidebar { width: var(--sidebar-width); background: var(--brand-dark); color: #ffffff; display: flex; flex-direction: column; padding: 20px 0; flex-shrink: 0; transition: transform 0.3s ease; z-index: 200; border-right: 1px solid rgba(229, 199, 107, 0.2); overflow-y: auto; }
-        .sidebar-brand { padding: 10px 25px 25px; font-size: 18px; font-weight: bold; border-bottom: 1px solid rgba(229, 199, 107, 0.2); letter-spacing: 0.5px; color: var(--brand-gold); font-style: italic; }
-        .sidebar-menu { list-style: none; margin-top: 10px; padding: 0;}
-        .sidebar-section-title { padding: 15px 25px 5px; font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: #666; font-weight: bold; }
-        .sidebar-link { display: flex; align-items: center; padding: 12px 25px; color: #b3b3b3; text-decoration: none; font-size: 14px; font-weight: 500; transition: all 0.2s ease; }
-        .sidebar-link .material-symbols-outlined { margin-right: 12px; font-size: 20px; }
-        .sidebar-link:hover, .sidebar-link.active { color: var(--brand-gold); background: rgba(229, 199, 107, 0.1); }
-        .sidebar-link.active { border-left: 4px solid var(--brand-gold); padding-left: 21px; }
 
-        .main-workspace { flex-grow: 1; display: flex; flex-direction: column; height: 100%; overflow-y: auto; background: #f9f9f9; }
+        body {
+            font-family: 'DM Sans', sans-serif;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            background: #f9f9f9;
+            margin: 0;
+        }
 
-        .mobile-header { display: none; }
-        .sidebar-backdrop { display: none; }
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--brand-dark);
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            padding: 20px 0;
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+            z-index: 200;
+            border-right: 1px solid rgba(229, 199, 107, 0.2);
+            overflow-y: auto;
+        }
+
+        .sidebar-brand {
+            padding: 10px 25px 25px;
+            font-size: 18px;
+            font-weight: bold;
+            border-bottom: 1px solid rgba(229, 199, 107, 0.2);
+            letter-spacing: 0.5px;
+            color: var(--brand-gold);
+            font-style: italic;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            margin-top: 10px;
+            padding: 0;
+        }
+
+        .sidebar-section-title {
+            padding: 15px 25px 5px;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #666;
+            font-weight: bold;
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 25px;
+            color: #b3b3b3;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .sidebar-link .material-symbols-outlined {
+            margin-right: 12px;
+            font-size: 20px;
+        }
+
+        .sidebar-link:hover,
+        .sidebar-link.active {
+            color: var(--brand-gold);
+            background: rgba(229, 199, 107, 0.1);
+        }
+
+        .sidebar-link.active {
+            border-left: 4px solid var(--brand-gold);
+            padding-left: 21px;
+        }
+
+        .main-workspace {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            overflow-y: auto;
+            background: #f9f9f9;
+        }
+
+        .mobile-header {
+            display: none;
+        }
+
+        .sidebar-backdrop {
+            display: none;
+        }
 
         @media (max-width: 768px) {
-            .mobile-header { display: flex; position: fixed; top: 0; left: 0; right: 0; height: var(--header-height); background: var(--brand-dark); color: var(--brand-gold); align-items: center; justify-content: space-between; padding: 0 16px; z-index: 300; border-bottom: 1px solid rgba(229, 199, 107, 0.2); }
-            .mobile-header-brand { font-size: 16px; font-weight: bold; font-style: italic; }
-            .hamburger-btn { background: none; border: none; color: var(--brand-gold); font-size: 24px; cursor: pointer; }
-            body { flex-direction: column; height: auto; min-height: 100vh; overflow: auto; }
-            .sidebar { position: fixed; top: 0; left: 0; height: 100%; transform: translateX(-100%); padding-top: var(--header-height); }
-            .sidebar.open { transform: translateX(0); }
-            .main-workspace { margin-top: var(--header-height); height: auto; overflow-y: visible; }
-            .sidebar-backdrop.active { display: block; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 190; }
+            .mobile-header {
+                display: flex;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: var(--header-height);
+                background: var(--brand-dark);
+                color: var(--brand-gold);
+                align-items: center;
+                justify-content: space-between;
+                padding: 0 16px;
+                z-index: 300;
+                border-bottom: 1px solid rgba(229, 199, 107, 0.2);
+            }
+
+            .mobile-header-brand {
+                font-size: 16px;
+                font-weight: bold;
+                font-style: italic;
+            }
+
+            .hamburger-btn {
+                background: none;
+                border: none;
+                color: var(--brand-gold);
+                font-size: 24px;
+                cursor: pointer;
+            }
+
+            body {
+                flex-direction: column;
+                height: auto;
+                min-height: 100vh;
+                overflow: auto;
+            }
+
+            .sidebar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                height: 100%;
+                transform: translateX(-100%);
+                padding-top: var(--header-height);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main-workspace {
+                margin-top: var(--header-height);
+                height: auto;
+                overflow-y: visible;
+            }
+
+            .sidebar-backdrop.active {
+                display: block;
+                position: fixed;
+                inset: 0;
+                background: rgba(0, 0, 0, 0.6);
+                z-index: 190;
+            }
         }
 
         /* === POS SPECIFIC CSS === */
-        .receipt-font { font-family: 'Space Mono', monospace; }
+        .receipt-font {
+            font-family: 'Space Mono', monospace;
+        }
+
         @media print {
-            body * { visibility: hidden; }
-            #printable-receipt, #printable-receipt * { visibility: visible; }
-            #printable-receipt { position: absolute; left: 0; top: 0; width: 80mm; margin: 0; padding: 10px; }
-            .no-print { display: none !important; }
+            body * {
+                visibility: hidden;
+            }
+
+            #printable-receipt,
+            #printable-receipt * {
+                visibility: visible;
+            }
+
+            #printable-receipt {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 80mm;
+                margin: 0;
+                padding: 10px;
+            }
+
+            .no-print {
+                display: none !important;
+            }
         }
 
         /* === MODAL STYLES === */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(2px); display: flex; align-items: center; justify-content: center; z-index: 1000; opacity: 0; pointer-events: none; transition: opacity 0.2s ease; padding: 16px; }
-        .modal-overlay.active { opacity: 1; pointer-events: auto; }
-        .modal-body-scroller { background: white; width: 100%; max-width: 700px; max-height: 90vh; overflow-y: auto; border-radius: 8px; padding: 30px; position: relative; }
-        .modal-close-btn { position: absolute; top: 20px; right: 20px; background: none; border: none; font-size: 22px; cursor: pointer; color: #999; }
-        .modal-close-btn:hover { color: #000; }
-        .form-title { margin-bottom: 25px; font-size: 22px; font-weight: 800; color: black; }
-        
-        .inventory-table-wrapper { background: white; border-radius: 8px; border: 1px solid var(--border-color); overflow: hidden; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02); overflow-x: auto; }
-        .inventory-table { width: 100%; border-collapse: collapse; text-align: left; min-width: 480px; }
-        .inventory-table th, .inventory-table td { padding: 16px 20px; border-bottom: 1px solid var(--border-color); font-size: 14px; }
-        .inventory-table th { background: #fcfcfc; font-weight: bold; color: #666; font-size: 12px; text-transform: uppercase; }
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(2px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease;
+            padding: 16px;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-body-scroller {
+            background: white;
+            width: 100%;
+            max-width: 700px;
+            max-height: 90vh;
+            overflow-y: auto;
+            border-radius: 8px;
+            padding: 30px;
+            position: relative;
+        }
+
+        .modal-close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 22px;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .modal-close-btn:hover {
+            color: #000;
+        }
+
+        .form-title {
+            margin-bottom: 25px;
+            font-size: 22px;
+            font-weight: 800;
+            color: black;
+        }
+
+        .inventory-table-wrapper {
+            background: white;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+            overflow-x: auto;
+        }
+
+        .inventory-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            min-width: 480px;
+        }
+
+        .inventory-table th,
+        .inventory-table td {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 14px;
+        }
+
+        .inventory-table th {
+            background: #fcfcfc;
+            font-weight: bold;
+            color: #666;
+            font-size: 12px;
+            text-transform: uppercase;
+        }
     </style>
 </head>
+
 <body class="text-stone-800">
 
     <header class="mobile-header no-print">
@@ -78,19 +312,23 @@
             <div class="sidebar-brand">LA ESTELAR 18K</div>
             <ul class="sidebar-menu">
                 <li class="sidebar-section-title">Catálogo Web</li>
-                <li><a href="admin.html" class="sidebar-link"><span class="material-symbols-outlined">storefront</span> Catálogo</a></li>
+                <li><a href="admin.html" class="sidebar-link"><span class="material-symbols-outlined">storefront</span>
+                        Catálogo</a></li>
                 <li class="sidebar-section-title" style="margin-top: 15px;">Gestión & ERP</li>
-                <li><a href="admin-inventory.html" class="sidebar-link"><span class="material-symbols-outlined">inventory_2</span> Inventario</a></li>
-                <li><a href="admin-tejidos.html" class="sidebar-link"><span class="material-symbols-outlined">join_inner</span> Tejidos</a></li>
-                <li><a href="#" class="sidebar-link active"><span class="material-symbols-outlined">point_of_sale</span> Ventas POS</a></li>
-                <li><a href="admin-finances.html" class="sidebar-link"><span class="material-symbols-outlined">monitoring</span> Finanzas</a></li>
+                <li><a href="admin-inventory.html" class="sidebar-link"><span
+                            class="material-symbols-outlined">inventory_2</span> Inventario</a></li>
+                <li><a href="admin-tejidos.html" class="sidebar-link"><span
+                            class="material-symbols-outlined">join_inner</span> Tejidos</a></li>
+                <li><a href="#" class="sidebar-link active"><span class="material-symbols-outlined">point_of_sale</span>
+                        Ventas POS</a></li>
+                <li><a href="admin-finances.html" class="sidebar-link"><span
+                            class="material-symbols-outlined">monitoring</span> Finanzas</a></li>
             </ul>
         </div>
     </aside>
 
     <main class="main-workspace p-4 md:p-8 no-print">
         <div class="max-w-7xl mx-auto flex flex-col lg:flex-row gap-8 w-full">
-            
             <div class="flex-1 flex flex-col h-[calc(100vh-4rem)] md:h-[calc(100vh-8rem)]">
                 <!-- HEADER CON BOTÓN DE HISTORIAL -->
                 <header class="flex items-center justify-between mb-6 pb-4 border-b border-stone-200 shrink-0">
@@ -101,15 +339,18 @@
                         </h1>
                     </div>
                     <div class="flex gap-3">
-                        <button onclick="openSalesHistoryModal()" class="bg-stone-800 text-stone-300 hover:text-white hover:bg-black px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-widest flex items-center gap-2 transition-colors shadow-sm">
+                        <button onclick="openSalesHistoryModal()"
+                            class="bg-stone-800 text-stone-300 hover:text-white hover:bg-black px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-widest flex items-center gap-2 transition-colors shadow-sm">
                             <span class="material-symbols-outlined text-sm">receipt_long</span> Historial
                         </button>
                     </div>
                 </header>
 
                 <div class="flex gap-4 mb-4 shrink-0">
-                    <input type="text" id="search-input" onkeyup="filterPOS()" placeholder="Buscar producto..." class="flex-1 bg-white border border-stone-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-[#cca830] outline-none">
-                    <select id="filter-type" onchange="filterPOS()" class="bg-white border border-stone-200 rounded-xl px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-[#cca830]">
+                    <input type="text" id="search-input" onkeyup="filterPOS()" placeholder="Buscar producto..."
+                        class="flex-1 bg-white border border-stone-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-[#cca830] outline-none">
+                    <select id="filter-type" onchange="filterPOS()"
+                        class="bg-white border border-stone-200 rounded-xl px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-[#cca830]">
                         <option value="all">Todo el Catálogo</option>
                         <option value="product">Productos Terminados</option>
                         <option value="tejido">Tejidos (Hechos a mano)</option>
@@ -117,44 +358,54 @@
                     </select>
                 </div>
 
-                <div class="bg-white rounded-2xl shadow-sm border border-stone-100 flex-1 overflow-hidden flex flex-col">
+                <div
+                    class="bg-white rounded-2xl shadow-sm border border-stone-100 flex-1 overflow-hidden flex flex-col">
                     <div class="overflow-y-auto p-2" id="pos-items">
-                        <div class="text-center py-10 text-stone-400 text-sm" id="pos-loading">Cargando inventario...</div>
+                        <div class="text-center py-10 text-stone-400 text-sm" id="pos-loading">Cargando inventario...
+                        </div>
                     </div>
                 </div>
             </div>
 
             <!-- Right Side: The Ticket -->
             <div class="w-full lg:w-[400px] shrink-0 flex flex-col h-[calc(100vh-4rem)] md:h-[calc(100vh-8rem)]">
-                <div class="bg-stone-900 text-white rounded-2xl shadow-lg flex flex-col h-full overflow-hidden border border-stone-800">
+                <div
+                    class="bg-stone-900 text-white rounded-2xl shadow-lg flex flex-col h-full overflow-hidden border border-stone-800">
                     <div class="p-6 shrink-0 bg-black/20 flex justify-between items-center">
                         <h3 class="font-display-lg italic text-[#cca830] text-xl">Ticket Actual</h3>
-                        <button onclick="clearCart()" class="text-stone-500 hover:text-white text-xs uppercase tracking-wider font-bold">Limpiar</button>
+                        <button onclick="clearCart()"
+                            class="text-stone-500 hover:text-white text-xs uppercase tracking-wider font-bold">Limpiar</button>
                     </div>
                     <div class="flex-1 overflow-y-auto p-6 space-y-4" id="cart-items">
                         <p class="text-stone-500 text-sm italic text-center mt-10">El ticket está vacío.</p>
                     </div>
                     <div class="p-6 bg-black shrink-0 border-t border-stone-800 space-y-4">
-                        <div class="flex justify-between items-center bg-stone-800/50 p-3 rounded-xl border border-stone-700">
+                        <div
+                            class="flex justify-between items-center bg-stone-800/50 p-3 rounded-xl border border-stone-700">
                             <div>
                                 <p class="text-sm font-bold text-white">Empaques (Bolsas)</p>
-                                <p class="text-[10px] text-stone-400">Distribuye +$7.000 c/u en el recibo</p>
+                                <p class="text-[10px] text-stone-400">Distribuye +$7.000 solo a joyas y tejidos</p>
                             </div>
                             <div class="flex items-center gap-3">
-                                <button onclick="updateBags(-1)" class="text-[#cca830] hover:text-white"><span class="material-symbols-outlined">remove_circle</span></button>
+                                <button onclick="updateBags(-1)" class="text-[#cca830] hover:text-white"><span
+                                        class="material-symbols-outlined">remove_circle</span></button>
                                 <span id="bag-count" class="font-bold text-lg w-4 text-center">0</span>
-                                <button onclick="updateBags(1)" class="text-[#cca830] hover:text-white"><span class="material-symbols-outlined">add_circle</span></button>
+                                <button onclick="updateBags(1)" class="text-[#cca830] hover:text-white"><span
+                                        class="material-symbols-outlined">add_circle</span></button>
                             </div>
                         </div>
                         <div class="flex justify-between items-end pt-2">
-                            <span class="text-stone-400 text-sm font-bold uppercase tracking-wider">Total a Cobrar</span>
+                            <span class="text-stone-400 text-sm font-bold uppercase tracking-wider">Total a
+                                Cobrar</span>
                             <span id="cart-total" class="text-3xl font-bold text-[#cca830] tracking-tighter">$0</span>
                         </div>
                         <div class="grid grid-cols-2 gap-3 pt-4">
-                            <button onclick="printReceipt()" class="bg-stone-800 text-stone-300 text-xs font-bold uppercase tracking-widest py-3 rounded-xl hover:bg-stone-700 transition-colors flex items-center justify-center gap-2">
+                            <button onclick="printReceipt()"
+                                class="bg-stone-800 text-stone-300 text-xs font-bold uppercase tracking-widest py-3 rounded-xl hover:bg-stone-700 transition-colors flex items-center justify-center gap-2">
                                 <span class="material-symbols-outlined text-sm">print</span> Imprimir
                             </button>
-                            <button id="btn-sell" onclick="registerSale()" class="bg-[#cca830] text-black text-xs font-bold uppercase tracking-widest py-3 rounded-xl hover:bg-[#b5952a] transition-colors flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(204,168,48,0.3)]">
+                            <button id="btn-sell" onclick="registerSale()"
+                                class="bg-[#cca830] text-black text-xs font-bold uppercase tracking-widest py-3 rounded-xl hover:bg-[#b5952a] transition-colors flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(204,168,48,0.3)]">
                                 <span class="material-symbols-outlined text-sm">payments</span> Vender
                             </button>
                         </div>
@@ -169,12 +420,13 @@
         <div class="modal-body-scroller">
             <button class="modal-close-btn" onclick="closeSalesHistoryModal()">✕</button>
             <h3 class="form-title">Historial de Ventas</h3>
-            
             <!-- BUSCADOR DE HISTORIAL -->
             <div class="mb-5 flex gap-3">
                 <div class="relative flex-1">
                     <span class="material-symbols-outlined absolute left-3 top-3 text-stone-400">search</span>
-                    <input type="text" id="history-search-input" onkeyup="filterSalesHistory()" placeholder="Buscar producto vendido (ej: Cadena)..." class="w-full bg-stone-50 border border-stone-200 rounded-xl pl-10 pr-4 py-3 text-sm focus:ring-2 focus:ring-[#cca830] outline-none transition-all">
+                    <input type="text" id="history-search-input" onkeyup="filterSalesHistory()"
+                        placeholder="Buscar producto vendido (ej: Cadena)..."
+                        class="w-full bg-stone-50 border border-stone-200 rounded-xl pl-10 pr-4 py-3 text-sm focus:ring-2 focus:ring-[#cca830] outline-none transition-all">
                 </div>
             </div>
 
@@ -188,7 +440,10 @@
                         </tr>
                     </thead>
                     <tbody id="salesHistoryTableBody">
-                        <tr><td colspan="3" style="text-align: center; color: #999; padding: 40px;">Cargando historial...</td></tr>
+                        <tr>
+                            <td colspan="3" style="text-align: center; color: #999; padding: 40px;">Cargando
+                                historial...</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -235,9 +490,7 @@
         let masterCatalog = [];
         let posCart = [];
         let bags = 0;
-        let currentSalePayload = null; 
-        
-        // Variable para guardar el historial completo temporalmente y poder filtrarlo
+        let currentSalePayload = null;
         let globalSalesHistory = [];
 
         async function loadPOSData() {
@@ -247,7 +500,6 @@
                 const tejRes = await fetch('/api/tejidos');
                 const tejidos = await tejRes.json();
 
-                // SOLO CARGAMOS ELEMENTOS CON STOCK MAYOR A 0
                 const activeInventory = Array.isArray(inventory) ? inventory.filter(i => i.stock > 0) : [];
                 const activeTejidos = Array.isArray(tejidos) ? tejidos.filter(i => i.stock > 0) : [];
 
@@ -270,20 +522,20 @@
                 const displayPrice = isTejido ? item.salePrice + 8000 : item.salePrice;
 
                 return `
-                <div class="flex items-center justify-between p-4 border-b border-stone-100 hover:bg-stone-50 transition-colors">
-                    <div>
-                        <div class="flex items-center gap-2 mb-1">
-                            <span class="text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded ${badgeColor}">${badgeText}</span>
-                            <span class="text-[10px] font-bold text-stone-400">Stock: ${item.stock}</span>
-                        </div>
-                        <h4 class="font-bold text-sm text-black">${item.name}</h4>
-                        <p class="text-xs font-semibold text-[#cca830]">${formatter.format(displayPrice)} COP</p>
-                    </div>
-                    <button onclick="addToCart('${item.id}')" class="bg-black text-white hover:bg-[#cca830] hover:text-black w-10 h-10 rounded-xl flex items-center justify-center transition-colors">
-                        <span class="material-symbols-outlined text-lg">add</span>
-                    </button>
-                </div>
-                `;
+<div class="flex items-center justify-between p-4 border-b border-stone-100 hover:bg-stone-50 transition-colors">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded ${badgeColor}">${badgeText}</span>
+<span class="text-[10px] font-bold text-stone-400">Stock: ${item.stock}</span>
+</div>
+<h4 class="font-bold text-sm text-black">${item.name}</h4>
+<p class="text-xs font-semibold text-[#cca830]">${formatter.format(displayPrice)} COP</p>
+</div>
+<button onclick="addToCart('${item.id}')" class="bg-black text-white hover:bg-[#cca830] hover:text-black w-10 h-10 rounded-xl flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined text-lg">add</span>
+</button>
+</div>
+`;
             }).join('');
         }
 
@@ -297,7 +549,6 @@
             const item = masterCatalog.find(i => i.id === id);
             if (!item || item.stock <= 0) return;
             const existing = posCart.find(i => i.id === id);
-            
             if (existing && existing.qty >= item.stock) {
                 return alert(`Stock máximo alcanzado. Solo hay ${item.stock} disponibles.`);
             }
@@ -311,7 +562,6 @@
             if (index === -1) return;
             const item = posCart[index];
             const maxStock = masterCatalog.find(i => i.id === id).stock;
-            
             if (delta > 0 && item.qty >= maxStock) {
                 return alert("Stock máximo alcanzado.");
             }
@@ -325,12 +575,14 @@
 
         function updateCartUI() {
             const container = document.getElementById('cart-items');
-            const totalItems = posCart.reduce((sum, item) => sum + item.qty, 0);
+            // Novedad: Solo contamos como items elegibles para bolsa a los que NO son insumos
+            const totalBagEligibleItems = posCart.reduce((sum, item) => item.class !== 'material' ? sum + item.qty : sum, 0);
 
-            if (totalItems === 0) bags = 0;
-            else {
-                if (bags < 1) bags = 1; 
-                if (bags > totalItems) bags = totalItems;
+            if (totalBagEligibleItems === 0) {
+                bags = 0; // Si solo hay balines, no hay bolsas
+            } else {
+                if (bags < 1) bags = 1;
+                if (bags > totalBagEligibleItems) bags = totalBagEligibleItems;
             }
             document.getElementById('bag-count').innerText = bags;
 
@@ -341,32 +593,35 @@
                 return;
             }
 
-            const bagFeePerItem = totalItems > 0 ? ((bags * 7000) / totalItems) : 0;
+            const bagFeePerItem = totalBagEligibleItems > 0 ? ((bags * 7000) / totalBagEligibleItems) : 0;
             let grandTotal = 0;
             let totalCost = 0;
 
             container.innerHTML = posCart.map(item => {
                 const laborFee = item.class === 'tejido' ? 8000 : 0;
                 const baseUnit = item.salePrice + laborFee;
-                const paddedUnit = baseUnit + bagFeePerItem;
+
+                // Solo le aplicamos el costo de la bolsa a los productos y tejidos, no a los insumos (balines)
+                const itemBagFee = item.class !== 'material' ? bagFeePerItem : 0;
+                const paddedUnit = baseUnit + itemBagFee;
+
                 const lineTotal = paddedUnit * item.qty;
-                
                 grandTotal += lineTotal;
                 totalCost += (item.costPrice * item.qty);
 
                 return `
-                <div class="bg-stone-800 p-3 rounded-xl border border-stone-700 flex justify-between items-center gap-2">
-                    <div class="flex-1 min-w-0">
-                        <p class="text-xs font-bold text-white truncate">${item.name}</p>
-                        <p class="text-[10px] text-stone-400 mt-0.5">C/U: ${formatter.format(paddedUnit)}</p>
-                    </div>
-                    <div class="flex items-center gap-2 bg-black rounded-lg px-1 py-1">
-                        <button onclick="updateCartQty('${item.id}', -1)" class="text-stone-500 hover:text-white px-1">-</button>
-                        <span class="text-xs font-bold w-4 text-center">${item.qty}</span>
-                        <button onclick="updateCartQty('${item.id}', 1)" class="text-stone-500 hover:text-white px-1">+</button>
-                    </div>
-                    <div class="text-right shrink-0 min-w-[70px]"><p class="text-xs font-bold text-[#cca830]">${formatter.format(lineTotal)}</p></div>
-                </div>`;
+<div class="bg-stone-800 p-3 rounded-xl border border-stone-700 flex justify-between items-center gap-2">
+<div class="flex-1 min-w-0">
+<p class="text-xs font-bold text-white truncate">${item.name}</p>
+<p class="text-[10px] text-stone-400 mt-0.5">C/U: ${formatter.format(paddedUnit)}</p>
+</div>
+<div class="flex items-center gap-2 bg-black rounded-lg px-1 py-1">
+<button onclick="updateCartQty('${item.id}', -1)" class="text-stone-500 hover:text-white px-1">-</button>
+<span class="text-xs font-bold w-4 text-center">${item.qty}</span>
+<button onclick="updateCartQty('${item.id}', 1)" class="text-stone-500 hover:text-white px-1">+</button>
+</div>
+<div class="text-right shrink-0 min-w-[70px]"><p class="text-xs font-bold text-[#cca830]">${formatter.format(lineTotal)}</p></div>
+</div>`;
             }).join('');
 
             document.getElementById('cart-total').innerText = formatter.format(grandTotal);
@@ -382,7 +637,6 @@
 
         async function registerSale() {
             if (!currentSalePayload || currentSalePayload.cart.length === 0) return alert("Ticket vacío.");
-            
             const btn = document.getElementById('btn-sell');
             btn.innerHTML = `<span class="material-symbols-outlined animate-spin text-sm">refresh</span> Procesando...`;
             btn.disabled = true;
@@ -393,17 +647,10 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(currentSalePayload)
                 });
-                
                 if (!res.ok) throw new Error("Error al registrar la venta");
-
-                alert("¡Venta registrada con éxito!");
-                
-                if(confirm("¿Deseas imprimir el recibo de esta venta?")) {
-                    printReceipt();
-                }
                 
                 clearCart();
-                loadPOSData(); 
+                loadPOSData();
             } catch (error) {
                 alert(error.message);
             } finally {
@@ -414,23 +661,23 @@
 
         function printReceipt() {
             if (posCart.length === 0) return alert("El ticket está vacío.");
-            
             const date = new Date();
-            document.getElementById('receipt-date').innerText = date.toLocaleDateString('es-CO') + " " + date.toLocaleTimeString('es-CO', {hour: '2-digit', minute:'2-digit'});
+            document.getElementById('receipt-date').innerText = date.toLocaleDateString('es-CO') + " " + date.toLocaleTimeString('es-CO', { hour: '2-digit', minute: '2-digit' });
 
-            const totalItems = posCart.reduce((sum, item) => sum + item.qty, 0);
-            const bagFeePerItem = (bags * 7000) / totalItems;
-            
+            const totalBagEligibleItems = posCart.reduce((sum, item) => item.class !== 'material' ? sum + item.qty : sum, 0);
+            const bagFeePerItem = totalBagEligibleItems > 0 ? ((bags * 7000) / totalBagEligibleItems) : 0;
+
             document.getElementById('receipt-items').innerHTML = posCart.map(item => {
                 const laborFee = item.class === 'tejido' ? 8000 : 0;
-                const printedUnitPrice = Math.round(item.salePrice + laborFee + bagFeePerItem);
+                const itemBagFee = item.class !== 'material' ? bagFeePerItem : 0;
+                const printedUnitPrice = Math.round(item.salePrice + laborFee + itemBagFee);
+
                 return `<tr>
-                    <td class="align-top py-1">${item.qty}</td>
-                    <td class="align-top py-1 pr-2">${item.name}</td>
-                    <td class="align-top text-right py-1">${formatter.format(printedUnitPrice * item.qty)}</td>
-                </tr>`;
+<td class="align-top py-1">${item.qty}</td>
+<td class="align-top py-1 pr-2">${item.name}</td>
+<td class="align-top text-right py-1">${formatter.format(printedUnitPrice * item.qty)}</td>
+</tr>`;
             }).join('');
-            
             document.getElementById('receipt-total').innerText = formatter.format(currentSalePayload.totalRevenue);
 
             const receiptDiv = document.getElementById('printable-receipt');
@@ -443,76 +690,61 @@
         async function openSalesHistoryModal() {
             document.getElementById('salesHistoryModalOverlay').classList.add('active');
             document.getElementById('history-search-input').value = ''; // Resetear buscador
-            
             const tbody = document.getElementById('salesHistoryTableBody');
             tbody.innerHTML = `<tr><td colspan="3" style="text-align: center; color: #999; padding: 40px;">Cargando historial...</td></tr>`;
-            
             try {
                 const res = await fetch('/api/sales');
                 const sales = await res.json();
-                
-                if(!Array.isArray(sales) || sales.length === 0) {
+                if (!Array.isArray(sales) || sales.length === 0) {
                     globalSalesHistory = [];
                     renderSalesHistoryTable(globalSalesHistory);
                     return;
                 }
-                
                 globalSalesHistory = sales;
                 renderSalesHistoryTable(globalSalesHistory);
-                
             } catch (err) {
                 tbody.innerHTML = `<tr><td colspan="3" style="text-align: center; color: red; padding: 20px;">Error al cargar el historial.</td></tr>`;
             }
         }
 
-        // Nueva función para renderizar la tabla que usaremos también al filtrar
         function renderSalesHistoryTable(salesToRender) {
             const tbody = document.getElementById('salesHistoryTableBody');
-            
             if (salesToRender.length === 0) {
                 tbody.innerHTML = `<tr><td colspan="3" style="text-align: center; color: #999; padding: 40px;">No se encontraron ventas.</td></tr>`;
                 return;
             }
-            
             tbody.innerHTML = [...salesToRender].reverse().map(sale => {
                 const d = new Date(sale.date);
                 const formattedDate = d.toLocaleDateString('es-CO', { day: '2-digit', month: 'short', year: 'numeric' });
-                const formattedTime = d.toLocaleTimeString('es-CO', { hour: '2-digit', minute:'2-digit' });
-                
+                const formattedTime = d.toLocaleTimeString('es-CO', { hour: '2-digit', minute: '2-digit' });
                 const itemsHtml = sale.cart.map(i => {
                     const classLabel = i.class === 'tejido' ? 'Tejido' : (i.class === 'product' ? 'Prod' : 'Insumo');
                     return `<div style="margin-bottom:4px;"><b>${i.qty}x</b> ${i.name} <span style="color:#888; font-size:10px; font-weight:bold; background:#eee; padding:2px 4px; border-radius:3px; margin-left:4px;">${classLabel}</span></div>`;
                 }).join('');
-                
                 const bagsHtml = sale.bags > 0 ? `<div style="margin-bottom:4px; color:#666; font-size:12px; border-top: 1px dashed #eee; padding-top:4px; margin-top:4px;">+ ${sale.bags} Empaque(s)</div>` : '';
 
                 return `
-                    <tr class="hover:bg-stone-50 transition-colors">
-                        <td style="white-space: nowrap;">
-                            <div style="font-weight:bold; color:#333;">${formattedDate}</div>
-                            <div style="font-size:12px; color:#888;">${formattedTime}</div>
-                        </td>
-                        <td style="font-size: 13px;">${itemsHtml}${bagsHtml}</td>
-                        <td style="text-align: right; font-weight: bold; color: #1b5e20;">${formatter.format(sale.totalRevenue)}</td>
-                    </tr>
-                `;
+<tr class="hover:bg-stone-50 transition-colors">
+<td style="white-space: nowrap;">
+<div style="font-weight:bold; color:#333;">${formattedDate}</div>
+<div style="font-size:12px; color:#888;">${formattedTime}</div>
+</td>
+<td style="font-size: 13px;">${itemsHtml}${bagsHtml}</td>
+<td style="text-align: right; font-weight: bold; color: #1b5e20;">${formatter.format(sale.totalRevenue)}</td>
+</tr>
+`;
             }).join('');
         }
 
-        // Nueva función activada al escribir en el buscador
         function filterSalesHistory() {
             const query = document.getElementById('history-search-input').value.toLowerCase();
-            
             if (query.trim() === '') {
                 renderSalesHistoryTable(globalSalesHistory);
                 return;
             }
-
             const filteredSales = globalSalesHistory.filter(sale => {
-                // Si ALGÚN item en el carrito de la venta incluye la palabra buscada, mantenemos esa venta
                 return sale.cart.some(item => item.name.toLowerCase().includes(query));
             });
-
             renderSalesHistoryTable(filteredSales);
         }
 
@@ -523,4 +755,5 @@
         window.addEventListener('DOMContentLoaded', loadPOSData);
     </script>
 </body>
+
 </html>
