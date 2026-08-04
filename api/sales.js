@@ -4,10 +4,11 @@ import { getRedisClient } from "./_redis.js";
 
 const SALES_KEY = "data/sales_history.json";
 const INVENTORY_KEY = "data/inventory_master.json";
+const TEJIDOS_KEY = "data/tejidos_master.json"; // NUEVO: Para marcar tejidos como vendidos
 
 export default async function handler(req, res) {
   // ==========================================
-  // GET: Obtener historial de ventas (Finanzas)
+  // GET: Obtener historial de ventas
   // ==========================================
   if (req.method === "GET") {
     try {
@@ -17,13 +18,12 @@ export default async function handler(req, res) {
       const data = await result.Body.transformToString();
       return res.status(200).json(JSON.parse(data));
     } catch (e) {
-      // Si el archivo no existe (ej. no hay ventas aún), retornamos un array vacío
       return res.status(200).json([]);
     }
   }
 
   // ==========================================
-  // POST: Registrar una nueva venta (POS)
+  // POST: Registrar una nueva venta
   // ==========================================
   else if (req.method === "POST") {
     try {
@@ -35,7 +35,7 @@ export default async function handler(req, res) {
       try {
         const result = await r2.send(new GetObjectCommand({ Bucket: process.env.R2_BUCKET, Key: SALES_KEY }));
         sales = JSON.parse(await result.Body.transformToString());
-      } catch (e) {} // El archivo podría no existir aún
+      } catch (e) {} 
 
       const newSale = {
         id: "sale_" + Date.now().toString(),
@@ -50,38 +50,49 @@ export default async function handler(req, res) {
         Body: JSON.stringify(sales, null, 2), ContentType: "application/json" 
       }));
 
-      // 2. DESCONTAR STOCK EN REDIS (Para Productos e Insumos)
-      // Nota: Los "tejidos" se arman bajo demanda o ya descontaron sus insumos al crearse
+      // 2. DESCONTAR STOCK EN REDIS DE TODO (Incluyendo Tejidos)
       const pipeline = redis.pipeline();
       cart.forEach(item => {
-        if (item.class !== 'tejido') {
-          pipeline.decrby(`inv_stock:${item.id}`, item.qty);
-        }
+        pipeline.decrby(`inv_stock:${item.id}`, item.qty);
       });
       await pipeline.exec();
 
-      // 3. ACTUALIZAR EL CONTADOR 'SOLD' EN EL INVENTARIO MAESTRO
+      // 3. ACTUALIZAR EL CONTADOR 'SOLD' EN LOS ARCHIVOS
+      let inventory = [];
+      let invUpdated = false;
       try {
         const invRes = await r2.send(new GetObjectCommand({ Bucket: process.env.R2_BUCKET, Key: INVENTORY_KEY }));
-        const inventory = JSON.parse(await invRes.Body.transformToString());
-        let invUpdated = false;
+        inventory = JSON.parse(await invRes.Body.transformToString());
+      } catch (e) {}
 
-        cart.forEach(cartItem => {
+      let tejidos = [];
+      let tejUpdated = false;
+      try {
+        const tejRes = await r2.send(new GetObjectCommand({ Bucket: process.env.R2_BUCKET, Key: TEJIDOS_KEY }));
+        tejidos = JSON.parse(await tejRes.Body.transformToString());
+      } catch (e) {}
+
+      cart.forEach(cartItem => {
+        if (cartItem.class === 'tejido') {
+          const match = tejidos.find(i => i.id === cartItem.id);
+          if (match) { 
+            match.sold = (match.sold || 0) + cartItem.qty; 
+            tejUpdated = true; 
+          }
+        } else {
           const match = inventory.find(i => i.id === cartItem.id);
           if (match) { 
             match.sold = (match.sold || 0) + cartItem.qty; 
             invUpdated = true; 
           }
-        });
-
-        if (invUpdated) {
-          await r2.send(new PutObjectCommand({ 
-            Bucket: process.env.R2_BUCKET, Key: INVENTORY_KEY, 
-            Body: JSON.stringify(inventory) 
-          }));
         }
-      } catch (e) { 
-        console.error("Error updating inventory sold counter", e); 
+      });
+
+      if (invUpdated) {
+        await r2.send(new PutObjectCommand({ Bucket: process.env.R2_BUCKET, Key: INVENTORY_KEY, Body: JSON.stringify(inventory) }));
+      }
+      if (tejUpdated) {
+        await r2.send(new PutObjectCommand({ Bucket: process.env.R2_BUCKET, Key: TEJIDOS_KEY, Body: JSON.stringify(tejidos) }));
       }
 
       return res.status(200).json({ success: true });
@@ -91,6 +102,5 @@ export default async function handler(req, res) {
     }
   }
 
-  // Si no es GET ni POST
   return res.status(405).json({ error: "Method not allowed" });
 }
