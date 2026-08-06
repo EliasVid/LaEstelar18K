@@ -490,7 +490,7 @@
         let masterCatalog = [];
         let posCart = [];
         let bags = 0;
-        let currentSalePayload = null;
+        let currentSalePayload = null; 
         let globalSalesHistory = [];
 
         async function loadPOSData() {
@@ -519,23 +519,25 @@
                 const isTejido = item.class === 'tejido';
                 const badgeColor = isTejido ? 'bg-purple-100 text-purple-700' : (item.class === 'product' ? 'bg-blue-100 text-blue-700' : 'bg-stone-200 text-stone-600');
                 const badgeText = isTejido ? 'TEJIDO' : (item.class === 'product' ? 'PRODUCTO' : 'INSUMO');
-                const displayPrice = isTejido ? item.salePrice + 8000 : item.salePrice;
+                
+                // CORRECCIÓN: Usar directamente el salePrice sin sumarle nada extra
+                const displayPrice = item.salePrice;
 
                 return `
-<div class="flex items-center justify-between p-4 border-b border-stone-100 hover:bg-stone-50 transition-colors">
-<div>
-<div class="flex items-center gap-2 mb-1">
-<span class="text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded ${badgeColor}">${badgeText}</span>
-<span class="text-[10px] font-bold text-stone-400">Stock: ${item.stock}</span>
-</div>
-<h4 class="font-bold text-sm text-black">${item.name}</h4>
-<p class="text-xs font-semibold text-[#cca830]">${formatter.format(displayPrice)} COP</p>
-</div>
-<button onclick="addToCart('${item.id}')" class="bg-black text-white hover:bg-[#cca830] hover:text-black w-10 h-10 rounded-xl flex items-center justify-center transition-colors">
-<span class="material-symbols-outlined text-lg">add</span>
-</button>
-</div>
-`;
+                <div class="flex items-center justify-between p-4 border-b border-stone-100 hover:bg-stone-50 transition-colors">
+                    <div>
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded ${badgeColor}">${badgeText}</span>
+                            <span class="text-[10px] font-bold text-stone-400">Stock: ${item.stock}</span>
+                        </div>
+                        <h4 class="font-bold text-sm text-black">${item.name}</h4>
+                        <p class="text-xs font-semibold text-[#cca830]">${formatter.format(displayPrice)} COP</p>
+                    </div>
+                    <button onclick="addToCart('${item.id}')" class="bg-black text-white hover:bg-[#cca830] hover:text-black w-10 h-10 rounded-xl flex items-center justify-center transition-colors">
+                        <span class="material-symbols-outlined text-lg">add</span>
+                    </button>
+                </div>
+                `;
             }).join('');
         }
 
@@ -575,13 +577,12 @@
 
         function updateCartUI() {
             const container = document.getElementById('cart-items');
-            // Novedad: Solo contamos como items elegibles para bolsa a los que NO son insumos
             const totalBagEligibleItems = posCart.reduce((sum, item) => item.class !== 'material' ? sum + item.qty : sum, 0);
 
             if (totalBagEligibleItems === 0) {
-                bags = 0; // Si solo hay balines, no hay bolsas
+                bags = 0;
             } else {
-                if (bags < 1) bags = 1;
+                if (bags < 1) bags = 1; 
                 if (bags > totalBagEligibleItems) bags = totalBagEligibleItems;
             }
             document.getElementById('bag-count').innerText = bags;
@@ -598,10 +599,8 @@
             let totalCost = 0;
 
             container.innerHTML = posCart.map(item => {
-                const laborFee = item.class === 'tejido' ? 8000 : 0;
-                const baseUnit = item.salePrice + laborFee;
-
-                // Solo le aplicamos el costo de la bolsa a los productos y tejidos, no a los insumos (balines)
+                // CORRECCIÓN: El precio base es exactamente el salePrice registrado en la base de datos
+                const baseUnit = item.salePrice;
                 const itemBagFee = item.class !== 'material' ? bagFeePerItem : 0;
                 const paddedUnit = baseUnit + itemBagFee;
 
@@ -610,18 +609,18 @@
                 totalCost += (item.costPrice * item.qty);
 
                 return `
-<div class="bg-stone-800 p-3 rounded-xl border border-stone-700 flex justify-between items-center gap-2">
-<div class="flex-1 min-w-0">
-<p class="text-xs font-bold text-white truncate">${item.name}</p>
-<p class="text-[10px] text-stone-400 mt-0.5">C/U: ${formatter.format(paddedUnit)}</p>
-</div>
-<div class="flex items-center gap-2 bg-black rounded-lg px-1 py-1">
-<button onclick="updateCartQty('${item.id}', -1)" class="text-stone-500 hover:text-white px-1">-</button>
-<span class="text-xs font-bold w-4 text-center">${item.qty}</span>
-<button onclick="updateCartQty('${item.id}', 1)" class="text-stone-500 hover:text-white px-1">+</button>
-</div>
-<div class="text-right shrink-0 min-w-[70px]"><p class="text-xs font-bold text-[#cca830]">${formatter.format(lineTotal)}</p></div>
-</div>`;
+                <div class="bg-stone-800 p-3 rounded-xl border border-stone-700 flex justify-between items-center gap-2">
+                    <div class="flex-1 min-w-0">
+                        <p class="text-xs font-bold text-white truncate">${item.name}</p>
+                        <p class="text-[10px] text-stone-400 mt-0.5">C/U: ${formatter.format(paddedUnit)}</p>
+                    </div>
+                    <div class="flex items-center gap-2 bg-black rounded-lg px-1 py-1">
+                        <button onclick="updateCartQty('${item.id}', -1)" class="text-stone-500 hover:text-white px-1">-</button>
+                        <span class="text-xs font-bold w-4 text-center">${item.qty}</span>
+                        <button onclick="updateCartQty('${item.id}', 1)" class="text-stone-500 hover:text-white px-1">+</button>
+                    </div>
+                    <div class="text-right shrink-0 min-w-[70px]"><p class="text-xs font-bold text-[#cca830]">${formatter.format(lineTotal)}</p></div>
+                </div>`;
             }).join('');
 
             document.getElementById('cart-total').innerText = formatter.format(grandTotal);
@@ -648,9 +647,13 @@
                     body: JSON.stringify(currentSalePayload)
                 });
                 if (!res.ok) throw new Error("Error al registrar la venta");
-                
+
+                alert("¡Venta registrada con éxito!");
+                if(confirm("¿Deseas imprimir el recibo de esta venta?")) {
+                    printReceipt();
+                }
                 clearCart();
-                loadPOSData();
+                loadPOSData(); 
             } catch (error) {
                 alert(error.message);
             } finally {
@@ -662,21 +665,21 @@
         function printReceipt() {
             if (posCart.length === 0) return alert("El ticket está vacío.");
             const date = new Date();
-            document.getElementById('receipt-date').innerText = date.toLocaleDateString('es-CO') + " " + date.toLocaleTimeString('es-CO', { hour: '2-digit', minute: '2-digit' });
+            document.getElementById('receipt-date').innerText = date.toLocaleDateString('es-CO') + " " + date.toLocaleTimeString('es-CO', {hour: '2-digit', minute:'2-digit'});
 
             const totalBagEligibleItems = posCart.reduce((sum, item) => item.class !== 'material' ? sum + item.qty : sum, 0);
             const bagFeePerItem = totalBagEligibleItems > 0 ? ((bags * 7000) / totalBagEligibleItems) : 0;
 
             document.getElementById('receipt-items').innerHTML = posCart.map(item => {
-                const laborFee = item.class === 'tejido' ? 8000 : 0;
+                // CORRECCIÓN: El precio a imprimir no suma laborFee
                 const itemBagFee = item.class !== 'material' ? bagFeePerItem : 0;
-                const printedUnitPrice = Math.round(item.salePrice + laborFee + itemBagFee);
+                const printedUnitPrice = Math.round(item.salePrice + itemBagFee);
 
                 return `<tr>
-<td class="align-top py-1">${item.qty}</td>
-<td class="align-top py-1 pr-2">${item.name}</td>
-<td class="align-top text-right py-1">${formatter.format(printedUnitPrice * item.qty)}</td>
-</tr>`;
+                <td class="align-top py-1">${item.qty}</td>
+                <td class="align-top py-1 pr-2">${item.name}</td>
+                <td class="align-top text-right py-1">${formatter.format(printedUnitPrice * item.qty)}</td>
+                </tr>`;
             }).join('');
             document.getElementById('receipt-total').innerText = formatter.format(currentSalePayload.totalRevenue);
 
@@ -689,13 +692,13 @@
         // --- SALES HISTORY MODAL LOGIC CON BUSCADOR ---
         async function openSalesHistoryModal() {
             document.getElementById('salesHistoryModalOverlay').classList.add('active');
-            document.getElementById('history-search-input').value = ''; // Resetear buscador
+            document.getElementById('history-search-input').value = ''; 
             const tbody = document.getElementById('salesHistoryTableBody');
             tbody.innerHTML = `<tr><td colspan="3" style="text-align: center; color: #999; padding: 40px;">Cargando historial...</td></tr>`;
             try {
                 const res = await fetch('/api/sales');
                 const sales = await res.json();
-                if (!Array.isArray(sales) || sales.length === 0) {
+                if(!Array.isArray(sales) || sales.length === 0) {
                     globalSalesHistory = [];
                     renderSalesHistoryTable(globalSalesHistory);
                     return;
@@ -716,7 +719,7 @@
             tbody.innerHTML = [...salesToRender].reverse().map(sale => {
                 const d = new Date(sale.date);
                 const formattedDate = d.toLocaleDateString('es-CO', { day: '2-digit', month: 'short', year: 'numeric' });
-                const formattedTime = d.toLocaleTimeString('es-CO', { hour: '2-digit', minute: '2-digit' });
+                const formattedTime = d.toLocaleTimeString('es-CO', { hour: '2-digit', minute:'2-digit' });
                 const itemsHtml = sale.cart.map(i => {
                     const classLabel = i.class === 'tejido' ? 'Tejido' : (i.class === 'product' ? 'Prod' : 'Insumo');
                     return `<div style="margin-bottom:4px;"><b>${i.qty}x</b> ${i.name} <span style="color:#888; font-size:10px; font-weight:bold; background:#eee; padding:2px 4px; border-radius:3px; margin-left:4px;">${classLabel}</span></div>`;
@@ -724,15 +727,15 @@
                 const bagsHtml = sale.bags > 0 ? `<div style="margin-bottom:4px; color:#666; font-size:12px; border-top: 1px dashed #eee; padding-top:4px; margin-top:4px;">+ ${sale.bags} Empaque(s)</div>` : '';
 
                 return `
-<tr class="hover:bg-stone-50 transition-colors">
-<td style="white-space: nowrap;">
-<div style="font-weight:bold; color:#333;">${formattedDate}</div>
-<div style="font-size:12px; color:#888;">${formattedTime}</div>
-</td>
-<td style="font-size: 13px;">${itemsHtml}${bagsHtml}</td>
-<td style="text-align: right; font-weight: bold; color: #1b5e20;">${formatter.format(sale.totalRevenue)}</td>
-</tr>
-`;
+                <tr class="hover:bg-stone-50 transition-colors">
+                    <td style="white-space: nowrap;">
+                        <div style="font-weight:bold; color:#333;">${formattedDate}</div>
+                        <div style="font-size:12px; color:#888;">${formattedTime}</div>
+                    </td>
+                    <td style="font-size: 13px;">${itemsHtml}${bagsHtml}</td>
+                    <td style="text-align: right; font-weight: bold; color: #1b5e20;">${formatter.format(sale.totalRevenue)}</td>
+                </tr>
+                `;
             }).join('');
         }
 
