@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" style="">
 
 <head>
     <meta charset="UTF-8">
@@ -7,143 +7,12 @@
     <title>La Estelar | Joyería 18k</title>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=block" rel="stylesheet">
-    
-    <!-- Carga de Tailwind CDN segura -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script id="tailwind-config">
-        try {
-            tailwind.config = {
-                darkMode: "class",
-                theme: {
-                    extend: {
-                        "colors": {
-                            "outline-variant": "#d7c2ba",
-                            "inverse-primary": "#fbb797",
-                            "on-tertiary-fixed-variant": "#574500",
-                            "surface-container": "#fdebdc",
-                            "outline": "#84746c",
-                            "surface-variant": "#f1dfd1",
-                            "surface-bright": "#fff8f4",
-                            "on-surface-variant": "#52443e",
-                            "on-tertiary-fixed": "#241a00",
-                            "on-tertiary": "#ffffff",
-                            "on-secondary-container": "#6d6354",
-                            "inverse-on-surface": "#ffeee0",
-                            "surface-container-low": "#fff1e7",
-                            "on-surface": "#231a11",
-                            "on-primary-container": "#50260f",
-                            "tertiary-fixed": "#ffe088",
-                            "surface-container-lowest": "#ffffff",
-                            "secondary-fixed": "#efe0cd",
-                            "primary-fixed": "#ffdbcb",
-                            "on-tertiary-container": "#4f3e00",
-                            "on-primary-fixed": "#341100",
-                            "tertiary-container": "#cca830",
-                            "surface-container-high": "#f7e5d7",
-                            "on-secondary-fixed-variant": "#4f4538",
-                            "on-error-container": "#93000a",
-                            "on-primary-fixed-variant": "#6a3b22",
-                            "on-primary": "#ffffff",
-                            "primary-fixed-dim": "#fbb797",
-                            "secondary-container": "#efe0cd",
-                            "surface-container-highest": "#f1dfd1",
-                            "on-background": "#231a11",
-                            "error": "#ba1a1a",
-                            "on-secondary-fixed": "#221a0f",
-                            "on-secondary": "#ffffff",
-                            "error-container": "#ffdad6",
-                            "tertiary-fixed-dim": "#e9c349",
-                            "background": "#fff8f4",
-                            "on-error": "#ffffff",
-                            "tertiary": "#735c00",
-                            "secondary": "#675d4e",
-                            "secondary-fixed-dim": "#d2c4b2",
-                            "primary": "#855137",
-                            "surface-tint": "#855137",
-                            "surface-dim": "#e8d7c9",
-                            "primary-container": "#c98b6d",
-                            "surface": "#fff8f4",
-                            "inverse-surface": "#392f25",
-                            "brand-gold": "#E5C76B"
-                        },
-                        "borderRadius": {
-                            "DEFAULT": "0.25rem",
-                            "lg": "0.5rem",
-                            "xl": "0.75rem",
-                            "full": "9999px"
-                        },
-                        "spacing": {
-                            "gutter": "24px",
-                            "margin-desktop": "64px",
-                            "stack-md": "32px",
-                            "margin-mobile": "16px",
-                            "base": "8px",
-                            "section-gap": "80px",
-                            "stack-sm": "12px"
-                        },
-                        "fontFamily": {
-                            "display-lg": ["Libre Caslon Text", "serif"],
-                            "body-md": ["DM Sans", "sans-serif"],
-                            "headline-lg": ["Libre Caslon Text", "serif"],
-                            "body-lg": ["DM Sans", "sans-serif"],
-                            "headline-lg-mobile": ["Libre Caslon Text", "serif"],
-                            "label-sm": ["DM Sans", "sans-serif"]
-                        },
-                        "fontSize": {
-                            "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "400" }],
-                            "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
-                            "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "400" }],
-                            "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
-                            "headline-lg-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "400" }],
-                            "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }]
-                        }
-                    }
-                }
-            }
-        } catch (_e) { console.error("Error cargando Tailwind"); }
-    </script>
+
+    <link rel="stylesheet" href="css/index.css">
+
     <style>
-        /* Ocultar barra de scroll en galerías */
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-
-        /* Estilos del Tab Switcher (Interruptor) */
-        .tab-container {
-            display: inline-flex;
-            background-color: #f5f5f4;
-            padding: 0.35rem;
-            border-radius: 9999px;
-            box-shadow: inset 0 2px 4px 0 rgba(0,0,0,0.05);
-            border: 1px solid rgba(0,0,0,0.1);
-        }
-        .tab-btn-base {
-            padding: 0.5rem 1.5rem;
-            border-radius: 9999px;
-            font-size: 0.7rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            text-align: center;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-        }
-        @media (min-width: 768px) {
-            .tab-btn-base { padding: 0.6rem 2.5rem; font-size: 0.75rem; }
-        }
-        .tab-btn-active {
-            background-color: #000000;
-            color: #E5C76B;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.15);
-        }
-        .tab-btn-inactive {
-            background-color: transparent;
-            color: rgba(0, 0, 0, 0.5);
-        }
-        .tab-btn-inactive:hover {
-            color: #000000;
-            background-color: rgba(0,0,0,0.04);
-        }
     </style>
 </head>
 
@@ -155,12 +24,13 @@
         </button>
         <div class="flex-1 flex justify-center px-1 overflow-hidden">
             <a href="index.html" class="hover:opacity-90 transition-opacity max-w-full">
-                <h1 class="font-display-lg text-[22px] sm:text-2xl whitespace-nowrap italic font-bold text-[#E5C76B] text-center tracking-tighter sm:tracking-wide">La Estelar Joyería 18k</h1>
+                <h1 class="font-display-lg text-[22px] sm:text-2xl md:text-headline-lg whitespace-nowrap italic font-bold text-[#E5C76B] text-center tracking-tighter sm:tracking-wide">
+                    La Estelar Joyería 18k</h1>
             </a>
         </div>
-        <button id="cart-btn" class="hover:opacity-80 transition-opacity scale-95 active:scale-90 transition-transform p-2 text-[#E5C76B] relative" aria-label="Bolsa de compras">
+        <button onclick="toggleCart()" class="hover:opacity-80 transition-opacity scale-95 active:scale-90 transition-transform p-2 text-[#E5C76B] relative" aria-label="Bolsa de compras">
             <span class="material-symbols-outlined text-2xl" data-icon="shopping_bag">shopping_bag</span>
-            <span id="cart-badge" class="absolute top-1.5 right-1.5 bg-red-600 text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center hidden">0</span>
+            <span id="header-cart-badge" class="absolute top-1.5 right-1.5 bg-red-600 text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center hidden">0</span>
         </button>
     </header>
 
@@ -168,7 +38,7 @@
     <div id="drawer-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[90] hidden opacity-0 transition-opacity duration-300"></div>
     <aside id="nav-drawer" class="fixed top-0 left-0 h-full w-80 bg-[#121212] border-r border-[#E5C76B]/20 shadow-2xl rounded-r-3xl z-[100] transform -translate-x-full transition-transform duration-300 ease-in-out flex flex-col py-8 text-white">
         <div class="px-6 mb-6 flex justify-between items-center">
-            <h2 class="text-[#E5C76B] font-display-lg italic text-2xl">Menú</h2>
+            <h2 class="text-[#E5C76B] font-display-lg italic text-headline-lg">Menú</h2>
             <button id="close-drawer" class="text-white/70 hover:text-[#E5C76B] transition-colors" aria-label="Cerrar menú">
                 <span class="material-symbols-outlined">close</span>
             </button>
@@ -209,60 +79,44 @@
                 <span id="cart-total-price" class="font-display-lg text-xl text-[#735c00] font-bold">$0 COP</span>
             </div>
             <button id="checkout-btn" onclick="checkoutToWhatsApp()" class="w-full bg-black text-[#E5C76B] border border-[#E5C76B]/40 py-3.5 rounded-full hover:bg-[#E5C76B] hover:text-black transition-all shadow-md uppercase tracking-widest font-semibold text-xs flex items-center justify-center gap-2 opacity-50 cursor-not-allowed">
-                <svg class="w-7 h-7 fill-current" viewBox="0 0 24 24">
-                <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
-                </svg>
-                Proceder al Pago
-                <span class="material-symbols-outlined text-lg">arrow_forward</span>
+                <span class="material-symbols-outlined text-lg">arrow_forward</span> Proceder al Pago
             </button>
         </div>
     </aside>
 
     <!-- PRODUCT POPUP MODAL -->
-    <div id="product-modal-overlay" class="fixed inset-0 bg-black/80 backdrop-blur-md z-[100] hidden opacity-0 transition-opacity duration-300 flex items-center justify-center p-3 sm:p-6 overflow-hidden">
-        <div id="product-modal-content" class="bg-surface-container-lowest w-full max-w-4xl rounded-2xl md:rounded-3xl shadow-2xl relative transform scale-95 transition-transform duration-300 flex flex-col md:flex-row max-h-[90vh] overflow-hidden">
-            
-            <button id="close-product-modal" class="absolute top-3 right-3 z-[110] bg-white/90 backdrop-blur-sm border border-black/10 hover:bg-stone-100 text-black w-8 h-8 flex items-center justify-center rounded-full transition-colors shadow-sm">
-                <span class="material-symbols-outlined text-lg">close</span>
-            </button>
+    <div id="product-modal-overlay" class="fixed inset-0 bg-black/80 backdrop-blur-md z-[100] hidden opacity-0 transition-opacity duration-300 flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
+        <button id="close-product-modal" class="absolute top-4 right-4 z-[110] bg-white/20 backdrop-blur-sm border border-white/20 hover:bg-white/30 text-white w-10 h-10 flex items-center justify-center rounded-full transition-colors shadow-sm">
+            <span class="material-symbols-outlined text-xl">close</span>
+        </button>
 
-            <!-- Left: Main Image + Thumbnails -->
-            <div class="w-full md:w-1/2 bg-surface-container-low border-b md:border-b-0 md:border-r border-[#E5C76B]/20 relative flex flex-col shrink-0 p-5 md:p-6">
-                <div class="w-full aspect-square bg-stone-100 rounded-xl overflow-hidden relative border border-black/10 shadow-sm shrink-0">
+        <div id="product-modal-content" class="bg-surface-container-lowest w-full max-w-4xl rounded-2xl md:rounded-3xl shadow-2xl relative transform scale-95 transition-transform duration-300 flex flex-col md:flex-row my-auto">
+            <div class="w-full md:w-1/2 bg-surface-container-low border-b md:border-b-0 md:border-r border-[#E5C76B]/20 flex flex-col p-5 md:p-6">
+                <div class="w-full aspect-square bg-stone-100 rounded-xl overflow-hidden relative border border-black/10 shadow-sm">
                     <div onclick="openImageZoom(document.getElementById('modal-main-img-tag').src)" title="Haz clic para hacer zoom" class="block w-full h-full cursor-zoom-in">
                         <img id="modal-main-img-tag" src="" class="w-full h-full object-cover transition-opacity duration-200">
                     </div>
                 </div>
-                <div id="modal-thumbnails-container" class="w-full flex gap-3 mt-4 overflow-x-auto no-scrollbar py-1 shrink-0"></div>
+                <div id="modal-thumbnails-container" class="w-full flex gap-3 mt-4 overflow-x-auto no-scrollbar py-1"></div>
             </div>
 
-            <!-- Right: Product Details -->
-            <div class="w-full md:w-1/2 p-5 md:p-6 flex flex-col overflow-y-auto">
-                <div class="flex flex-col gap-1 mb-2 pr-8 shrink-0">
+            <div class="w-full md:w-1/2 p-5 md:p-6 flex flex-col">
+                <div class="flex flex-col gap-1 mb-4 pr-2">
                     <span id="modal-category" class="text-[10px] uppercase tracking-widest text-[#735c00] font-bold animate-pulse bg-stone-200 h-3 w-24 rounded"></span>
                     <h2 id="modal-title" class="font-display-lg text-xl md:text-2xl text-black mt-1 leading-tight">Cargando...</h2>
                     <p id="modal-price" class="font-body-lg text-lg font-bold text-[#735c00] mt-0.5"></p>
                 </div>
-                
-                <div class="mb-4 border-l-2 border-[#E5C76B] pl-3 shrink-0">
+                <div class="mb-6 border-l-2 border-[#E5C76B] pl-3">
                     <p id="modal-description" class="text-sm text-on-surface-variant leading-relaxed"></p>
                 </div>
-                
-                <div class="h-px w-full bg-[#E5C76B]/20 mb-4 shrink-0"></div>
-
-                <div id="modal-variants-container" class="flex flex-col gap-4 mb-6 shrink-0"></div>
-
-                <div class="flex flex-col gap-2.5 mt-auto shrink-0 border-t border-black/5 pt-4">
-                    <button onclick="addToCart()" class="w-full bg-black text-[#E5C76B] border border-[#E5C76B]/40 hover:border-[#E5C76B] text-xs py-3 rounded-full hover:bg-[#E5C76B] hover:text-black transition-all duration-300 shadow-[0_4px_20px_rgba(229,199,107,0.2)] uppercase tracking-widest font-semibold flex items-center justify-center gap-2 active:scale-[0.98]">
-                        <span class="material-symbols-outlined text-lg">shopping_cart</span>
-                        Añadir al Carrito
+                <div class="h-px w-full bg-[#E5C76B]/20 mb-6"></div>
+                <div id="modal-variants-container" class="flex flex-col gap-4 mb-8"></div>
+                <div class="flex flex-col gap-3 mt-auto border-t border-black/5 pt-6">
+                    <button onclick="addToCart()" class="w-full bg-black text-[#E5C76B] border border-[#E5C76B]/40 hover:border-[#E5C76B] text-sm py-3.5 rounded-full hover:bg-[#E5C76B] hover:text-black transition-all duration-300 shadow-[0_4px_20px_rgba(229,199,107,0.2)] uppercase tracking-widest font-semibold flex items-center justify-center gap-2 active:scale-[0.98]">
+                        <span class="material-symbols-outlined text-xl">shopping_cart</span> Añadir al Carrito
                     </button>
-                    
-                    <button onclick="sendWhatsAppInquiry()" class="w-full bg-[#25D366] text-white hover:bg-[#20b858] text-xs h-[44px] rounded-full transition-all duration-300 uppercase tracking-widest font-semibold flex items-center justify-center gap-2 shadow-md active:scale-[0.98]">
-                        <svg class="w-[16px] h-[16px] fill-current -mt-0.5" viewBox="0 0 24 24">
-                            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
-                        </svg>
-                        <span class="mt-[1px]">Preguntar por WhatsApp</span>
+                    <button onclick="sendWhatsAppInquiry()" class="w-full bg-transparent border border-black text-black hover:bg-[#25D366] hover:border-[#25D366] hover:text-white text-sm py-3.5 rounded-full transition-all duration-300 uppercase tracking-widest font-semibold flex items-center justify-center gap-2 group">
+                        <span class="material-symbols-outlined text-lg">chat</span> Preguntar por WhatsApp
                     </button>
                 </div>
             </div>
@@ -277,65 +131,75 @@
         <img id="zoomed-image" src="" class="max-w-full max-h-full object-contain transform scale-95 transition-transform duration-300" alt="Zoomed image">
     </div>
 
-    <main class="pt-16">
-        <!-- Hero Header Section -->
-        <section class="bg-black text-[#E5C76B] py-12 px-margin-mobile md:px-margin-desktop text-center border-b border-[#E5C76B]/20 relative overflow-hidden">
+    <main>
+        <!-- Hero Section -->
+        <section class="relative w-full h-[80vh] md:h-[90vh] flex flex-col justify-center items-center text-center px-margin-mobile md:px-margin-desktop overflow-hidden bg-black">
             <div class="absolute inset-0 z-0">
-                <img src="img/landing.jpeg" alt="Colecciones La Estelar Joyería" class="w-full h-full object-cover object-center opacity-40">
-                <div class="absolute inset-0 bg-gradient-to-b from-black/80 via-black/60 to-black"></div>
+                <img src="img/landing.jpeg" alt="Woven gold rings on a hand" class="w-full h-full object-cover object-center opacity-85">
+                <div class="absolute inset-0 bg-gradient-to-b from-black/90 via-black/40 to-transparent"></div>
             </div>
-            <div class="max-w-3xl mx-auto space-y-3 relative z-10">
-                <span class="text-xs uppercase tracking-widest text-white/70 font-semibold">Catálogo Oficial</span>
-                <h1 class="font-display-lg text-2xl md:text-5xl text-white">Colecciones Exclusivas</h1>
-                <p class="font-body-md text-sm md:text-base text-white/80 max-w-xl mx-auto">Selecciona entre la máxima pureza del Oro 18k o la elegancia accesible de nuestro Oro Laminado 18k.</p>
+            <div class="relative z-10 max-w-3xl mx-auto flex flex-col items-center gap-stack-md text-center animate-fade-in-up pt-16">
+                <div class="space-y-stack-sm text-center">
+                    <h1 class="font-display-lg text-headline-lg-mobile md:text-display-lg text-white text-center">JOYAS DE ALTA CALIDAD</h1>
+                    <p class="font-body-lg text-[#E5C76B]/90 max-w-xl mx-auto text-center font-medium">Piezas únicas en oro de 18k y oro 18k laminado.</p>
+                </div>
+                <a href="colecciones.html">
+                    <button class="bg-black/80 backdrop-blur-sm text-[#E5C76B] border border-[#E5C76B]/50 hover:border-[#E5C76B] font-label-sm px-10 py-4 rounded-full hover:bg-[#E5C76B] hover:text-black transition-all duration-300 shadow-[0_4px_25px_rgba(229,199,107,0.25)] uppercase tracking-widest font-semibold active:scale-95">
+                        Ver Colección
+                    </button>
+                </a>
             </div>
         </section>
 
-        <!-- Category Tabs Switcher -->
-        <section class="bg-surface-container-lowest py-6 px-margin-mobile md:px-margin-desktop border-b border-[#E5C76B]/20 text-center">
-            <div class="tab-container">
-                <button id="tab-laminado-btn" onclick="switchCategory('laminado')" class="tab-btn-base tab-btn-active">
-                    Oro Laminado 18k
-                </button>
-                <button id="tab-18k-btn" onclick="switchCategory('18k')" class="tab-btn-base tab-btn-inactive">
-                    Oro 18k
-                </button>
+        <!-- Personaliza tu Pieza -->
+        <section class="py-section-gap px-margin-mobile md:px-margin-desktop bg-surface-container-lowest">
+            <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-margin-desktop items-center">
+                <div class="order-2 lg:order-1 space-y-stack-md">
+                    <h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-black">Personaliza tu Pieza</h2>
+                    <p class="font-body-lg text-on-surface-variant">Cada historia es única, y tu joya debería serlo también. Colabora con nuestros artesanos para crear un diseño a medida, eligiendo desde el grosor del hilo de oro hasta el color del tejido.</p>
+                    <ul class="space-y-stack-sm font-body-md text-on-surface-variant">
+                        <li class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-[#735c00] text-sm">circle</span>
+                            Selección de balines de oro 18k u oro 18k laminado
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-[#735c00] text-sm">circle</span>
+                            Variedad de hilos de seda natural
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-[#735c00] text-sm">circle</span>
+                            Tipo de tejido
+                        </li>
+                    </ul>
+                    <a href="personalizacion.html">
+                    <button class="mt-stack-md bg-black text-[#E5C76B] border border-black font-label-sm px-8 py-3 rounded-full hover:bg-[#735c00] hover:text-white hover:border-[#735c00] transition-colors duration-300 uppercase tracking-wider font-semibold">
+                        Iniciar Diseño Custom
+                    </button>
+                    </a>
+                </div>
+                <div class="order-1 lg:order-2">
+                    <div class="relative w-full aspect-square rounded-2xl overflow-hidden bg-surface-container shadow-[0_20px_60px_rgba(0,0,0,0.15)] border border-[#E5C76B]/30">
+                        <img class="w-full h-full object-cover" data-alt="Jeweler workbench" src="img/personalizar.jpeg">
+                    </div>
+                </div>
             </div>
         </section>
 
-        <!-- Main Collections Content Container -->
-        <div class="max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop py-12">
-            
-            <!-- SECTION 1: ORO LAMINADO 18K -->
-            <section id="oro-laminado-section" class="scroll-mt-20 transition-all duration-500">
-                <div class="bg-gradient-to-r from-stone-900 to-black text-white p-6 md:p-8 rounded-2xl mb-8 flex flex-col md:flex-row justify-between items-center gap-4 border border-black/20 shadow-md">
-                    <div>
-                        <div class="flex items-center gap-2 mb-1">
-                            <span class="material-symbols-outlined text-sm text-[#E5C76B]">auto_awesome</span>
-                            <span class="text-[10px] md:text-xs uppercase tracking-widest text-[#E5C76B] font-bold">Estilo &amp; Brillo Accesible</span>
-                        </div>
-                        <h3 class="font-headline-lg-mobile md:font-headline-lg text-white">Colección Oro Laminado 18k</h3>
-                        <p class="text-xs md:text-sm text-white/70 mt-1 max-w-xl">Múltiples capas de oro de 18k sobre una base de alta resistencia. Misma apariencia, brillo y sofisticación a un precio excepcional.</p>
-                    </div>
+        <!-- Más Vendidos (Dinámico) -->
+        <section class="py-section-gap px-margin-mobile md:px-margin-desktop bg-surface-container-lowest">
+            <div class="max-w-7xl mx-auto">
+                <div class="flex justify-between items-end mb-stack-md">
+                    <h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-black">Más Vendidos</h2>
+                    <a href="colecciones.html" class="font-label-sm text-[#735c00] hover:text-black transition-colors hidden md:block uppercase tracking-wider font-semibold">Ver todos</a>
                 </div>
-                <div id="laminado-container"></div>
-            </section>
-
-            <!-- SECTION 2: ORO 18K -->
-            <section id="oro-18k-section" class="scroll-mt-20 hidden transition-all duration-500">
-                <div class="bg-black text-[#E5C76B] p-6 md:p-8 rounded-2xl mb-8 flex flex-col md:flex-row justify-between items-center gap-4 border border-[#E5C76B]/30 shadow-lg">
-                    <div>
-                        <div class="flex items-center gap-2 mb-1">
-                            <span class="material-symbols-outlined text-sm">workspace_premium</span>
-                            <span class="text-[10px] md:text-xs uppercase tracking-widest text-[#E5C76B]/80 font-bold">Pureza &amp; Lujo Macizo</span>
-                        </div>
-                        <h3 class="font-headline-lg-mobile md:font-headline-lg text-white">Colección Oro 18k</h3>
-                        <p class="text-xs md:text-sm text-white/70 mt-1 max-w-xl">Piezas elaboradas en oro puro de 18 quilates. Durabilidad eterna, elegancia sin tiempo e inversión para toda la vida.</p>
-                    </div>
+                <div id="featured-products-container" class="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-gutter">
+                    <div class="col-span-full text-center py-10 text-stone-400">Cargando productos destacados...</div>
                 </div>
-                <div id="oro-18k-container"></div>
-            </section>
-        </div>
+                <div class="mt-stack-md text-center md:hidden">
+                    <a class="font-label-sm text-[#735c00] underline hover:text-black transition-colors" href="colecciones.html">Ver todos</a>
+                </div>
+            </div>
+        </section>
     </main>
 
     <!-- Footer -->
@@ -345,38 +209,35 @@
                 <h3 class="font-display-lg italic font-bold text-[#E5C76B] text-xl md:text-2xl mb-2">La Estelar Joyería 18k</h3>
                 <p class="text-xs text-white/70 max-w-sm">Elegancia, artesanía y la pureza del oro de 18k en cada detalle.</p>
             </div>
-            <!-- Social Links con WhatsApp en círculo verde -->
+            <!-- Social Links -->
             <div class="flex items-center justify-center gap-4">
-                <a href="https://wa.me/573009635047" target="_blank" rel="noopener noreferrer" class="bg-[#25D366] text-white w-10 h-10 rounded-full flex items-center justify-center hover:scale-110 transition-all shadow-md">
-                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                        <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
-                    </svg>
+                <a href="https://wa.me/573009635047" target="_blank" rel="noopener noreferrer" class="p-3 bg-white/5 rounded-full text-[#E5C76B] hover:bg-[#E5C76B] hover:text-black transition-all">
+                    <span class="material-symbols-outlined text-xl">chat</span>
                 </a>
                 <a href="https://www.instagram.com/laestelar_joyeria18k" target="_blank" rel="noopener noreferrer" class="p-3 bg-white/5 rounded-full text-[#E5C76B] hover:bg-[#E5C76B] hover:text-black transition-all">
                     <span class="material-symbols-outlined text-xl">photo_camera</span>
                 </a>
             </div>
         </div>
-        <div class="mt-8 pt-6 border-t border-white/10 text-center text-xs text-white/50 w-full">
+        <div class="mt-8 pt-6 border-t border-white/10 text-center text-xs text-white/50">
             © 2026 La Estelar Joyería 18k. - Smarti.
         </div>
     </footer>
 
-    <!-- Floating Actions Cluster -->
+    <!-- Botones Flotantes -->
     <div class="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-[90] flex flex-col gap-4">
-        <a href="https://wa.me/573009635047" target="_blank" rel="noopener noreferrer" 
-           class="bg-[#25D366] text-white w-14 h-14 rounded-full shadow-[0_4px_14px_rgba(37,211,102,0.4)] hover:scale-110 hover:shadow-[0_6px_20px_rgba(37,211,102,0.6)] transition-all duration-300 flex items-center justify-center group"
-           aria-label="Chatear por WhatsApp">
-            <svg class="w-7 h-7 fill-current" viewBox="0 0 24 24">
-                <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
-            </svg>
+        <!-- WhatsApp -->
+        <a href="https://wa.me/573009635047" target="_blank" rel="noopener noreferrer" class="bg-[#25D366] text-white w-14 h-14 rounded-full shadow-[0_4px_14px_rgba(37,211,102,0.4)] hover:scale-110 hover:shadow-[0_6px_20px_rgba(37,211,102,0.6)] transition-all duration-300 flex items-center justify-center group" aria-label="Chatear por WhatsApp">
+            <span class="material-symbols-outlined text-3xl">chat</span>
         </a>
+        <!-- Carrito -->
         <button onclick="toggleCart()" class="bg-black text-[#E5C76B] w-14 h-14 rounded-full shadow-[0_4px_14px_rgba(0,0,0,0.4)] hover:scale-110 hover:shadow-[0_6px_20px_rgba(0,0,0,0.6)] transition-all duration-300 flex items-center justify-center relative group" aria-label="Abrir Carrito">
             <span class="material-symbols-outlined text-3xl">shopping_bag</span>
             <span id="floating-cart-badge" class="absolute -top-1 -right-1 bg-red-600 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center hidden border-2 border-white z-10">0</span>
         </button>
     </div>
 
+    <!-- JAVASCRIPT GLOBAL (Menu, Modal, Carrito, Productos Dinámicos) -->
     <script>
         // ==========================================
         // DRAWER Y MENU LOGIC
@@ -403,67 +264,24 @@
         overlay.addEventListener('click', toggleDrawer);
 
         // ==========================================
-        // CARGA DINÁMICA
+        // CARGA DINÁMICA "MÁS VENDIDOS"
         // ==========================================
         let globalCatalog = [];
-        let shoppingCart = [];
-        let modalActiveProduct = null;
-        let modalActiveColor = null;
-        let modalActiveSize = null;
-
-        const cartDrawer = document.getElementById('cart-drawer');
-        const cartOverlay = document.getElementById('cart-overlay');
-        const closeCartBtn = document.getElementById('close-cart');
-
-        function toggleCart() {
-            const isOpen = !cartDrawer.classList.contains('translate-x-full');
-            if (isOpen) {
-                cartDrawer.classList.add('translate-x-full');
-                cartOverlay.classList.add('hidden');
-                setTimeout(() => cartOverlay.classList.remove('opacity-100'), 10);
-            } else {
-                cartDrawer.classList.remove('translate-x-full');
-                cartOverlay.classList.remove('hidden');
-                setTimeout(() => cartOverlay.classList.add('opacity-100'), 10);
-            }
-        }
-        closeCartBtn.addEventListener('click', toggleCart);
-        cartOverlay.addEventListener('click', toggleCart);
-
-        function switchCategory(cat) {
-            const laminadoBtn = document.getElementById('tab-laminado-btn');
-            const gold18kBtn = document.getElementById('tab-18k-btn');
-            const laminadoContent = document.getElementById('oro-laminado-section');
-            const gold18kContent = document.getElementById('oro-18k-section');
-
-            if (cat === 'laminado') {
-                laminadoBtn.className = "tab-btn-base tab-btn-active";
-                gold18kBtn.className = "tab-btn-base tab-btn-inactive";
-                laminadoContent.classList.remove('hidden');
-                gold18kContent.classList.add('hidden');
-            } else {
-                gold18kBtn.className = "tab-btn-base tab-btn-active";
-                laminadoBtn.className = "tab-btn-base tab-btn-inactive";
-                gold18kContent.classList.remove('hidden');
-                laminadoContent.classList.add('hidden');
-            }
-        }
-
-        window.addEventListener('DOMContentLoaded', () => {
-            if (window.location.hash === '#oro-18k') switchCategory('18k');
-            loadCatalog();
-        });
-
-        async function loadCatalog() {
+        
+        window.addEventListener('DOMContentLoaded', async () => {
             try {
-                const response = await fetch('/api/catalog');
+                const response = await fetch('/api/catalog'); 
                 if (!response.ok) throw new Error('Failed to fetch catalog');
                 globalCatalog = await response.json();
-                renderCategorizedProducts(globalCatalog);
+                
+                // Mostrar solo los primeros 6 productos en el Index
+                const featuredProducts = globalCatalog.slice(0, 6);
+                renderFeaturedProducts(featuredProducts);
             } catch (error) {
                 console.error("Error loading catalog:", error);
+                document.getElementById('featured-products-container').innerHTML = `<p class="col-span-full text-center py-10 text-stone-400">Próximamente nuevas colecciones.</p>`;
             }
-        }
+        });
 
         function createProductCardHTML(product) {
             const is18k = product.category === '18k';
@@ -472,7 +290,9 @@
             const borderClass = is18k ? 'border-[#E5C76B]/20' : 'border-black/10';
             const imageUrl = product.image || (product.images && product.images.length > 0 ? product.images[0] : 'img/placeholder.jpg');
             
-            const formattedPrice = new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(product.price);
+            const formattedPrice = new Intl.NumberFormat('es-CO', {
+                style: 'currency', currency: 'COP', minimumFractionDigits: 0
+            }).format(product.price);
 
             return `
                 <button onclick="openProductModal('${product.id}')" class="block w-full text-left">
@@ -492,51 +312,25 @@
             `;
         }
 
-        function renderCategorizedProducts(products) {
-            const laminadoContainer = document.getElementById('laminado-container');
-            const oro18kContainer = document.getElementById('oro-18k-container');
-
-            const laminadoProducts = products.filter(p => p.category === 'laminado');
-            const oro18kProducts = products.filter(p => p.category === '18k');
-
-            if(laminadoContainer) laminadoContainer.innerHTML = buildGroupedHTML(laminadoProducts);
-            if(oro18kContainer) oro18kContainer.innerHTML = buildGroupedHTML(oro18kProducts);
-        }
-
-        function buildGroupedHTML(productsArray) {
-            if (productsArray.length === 0) return `<p class="py-8 text-center text-black/50">Próximamente nuevos diseños.</p>`;
-            
-            const grouped = {};
-            productsArray.forEach(p => {
-                const t = p.type || 'Otros Diseños';
-                if (!grouped[t]) grouped[t] = [];
-                grouped[t].push(p);
-            });
-
-            let html = '';
-            for (const [type, prods] of Object.entries(grouped)) {
-                if(type=="Topos"){
-                    html += `
-                    <div class="mb-12">
-                        <h4 class="text-xl font-display-lg italic font-bold text-black border-b border-[#E5C76B]/40 pb-2 mb-6">${type}</h4>
-                        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-gutter">
-                            ${prods.map(createProductCardHTML).join('')}
-                        </div>
-                    </div>
-                    `;
-                }else{
-                    html += `
-                        <div class="mb-12">
-                            <h4 class="text-xl font-display-lg italic font-bold text-black border-b border-[#E5C76B]/40 pb-2 mb-6">${type}s</h4>
-                            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-gutter">
-                                ${prods.map(createProductCardHTML).join('')}
-                            </div>
-                        </div>
-                    `;
-                }
+        function renderFeaturedProducts(products) {
+            const container = document.getElementById('featured-products-container');
+            if (products.length === 0) {
+                container.innerHTML = `<p class="col-span-full py-8 text-center text-black/50">Próximamente nuevos diseños.</p>`;
+                return;
             }
-            return html;
+            container.innerHTML = products.map(createProductCardHTML).join('');
         }
+
+        // ==========================================
+        // MODAL Y VARIANTES
+        // ==========================================
+        let modalActiveProduct = null;
+        let modalActiveColor = null;
+        let modalActiveSize = null;
+
+        const productModalOverlay = document.getElementById('product-modal-overlay');
+        const productModalContent = document.getElementById('product-modal-content');
+        const closeProductModalBtn = document.getElementById('close-product-modal');
 
         function setModalMainImage(src, btnEl) {
             const mainImgTag = document.getElementById('modal-main-img-tag');
@@ -551,10 +345,6 @@
             });
             btnEl.className = "modal-thumb-btn w-16 h-16 shrink-0 rounded-lg overflow-hidden border-2 transition-all border-[#E5C76B] shadow-md scale-105 opacity-100";
         }
-
-        const productModalOverlay = document.getElementById('product-modal-overlay');
-        const productModalContent = document.getElementById('product-modal-content');
-        const closeProductModalBtn = document.getElementById('close-product-modal');
 
         function openProductModal(productId) {
             const product = globalCatalog.find(p => p.id === productId);
@@ -665,27 +455,6 @@
             document.body.style.overflow = 'hidden';
         }
 
-        const imageZoomOverlay = document.getElementById('image-zoom-overlay');
-        const zoomedImage = document.getElementById('zoomed-image');
-
-        function openImageZoom(src) {
-            zoomedImage.src = src;
-            imageZoomOverlay.classList.remove('hidden');
-            setTimeout(() => {
-                imageZoomOverlay.classList.remove('opacity-0');
-                zoomedImage.classList.remove('scale-95');
-            }, 10);
-        }
-
-        function closeImageZoom() {
-            imageZoomOverlay.classList.add('opacity-0');
-            zoomedImage.classList.add('scale-95');
-            setTimeout(() => {
-                imageZoomOverlay.classList.add('hidden');
-                zoomedImage.src = '';
-            }, 300);
-        }
-
         function selectModalSize(size) {
             modalActiveSize = size;
             if(modalActiveProduct && modalActiveProduct.sizes) {
@@ -716,9 +485,54 @@
         }
 
         closeProductModalBtn.addEventListener('click', closeProductModal);
-        productModalOverlay.addEventListener('click', (e) => {
-            if (e.target === productModalOverlay) closeProductModal();
-        });
+        productModalOverlay.addEventListener('click', (e) => { if (e.target === productModalOverlay) closeProductModal(); });
+
+        // ==========================================
+        // IMAGE ZOOM
+        // ==========================================
+        const imageZoomOverlay = document.getElementById('image-zoom-overlay');
+        const zoomedImage = document.getElementById('zoomed-image');
+
+        function openImageZoom(src) {
+            zoomedImage.src = src;
+            imageZoomOverlay.classList.remove('hidden');
+            setTimeout(() => {
+                imageZoomOverlay.classList.remove('opacity-0');
+                zoomedImage.classList.remove('scale-95');
+            }, 10);
+        }
+
+        function closeImageZoom() {
+            imageZoomOverlay.classList.add('opacity-0');
+            zoomedImage.classList.add('scale-95');
+            setTimeout(() => {
+                imageZoomOverlay.classList.add('hidden');
+                zoomedImage.src = '';
+            }, 300);
+        }
+
+        // ==========================================
+        // SHOPPING CART
+        // ==========================================
+        let shoppingCart = [];
+        const cartDrawer = document.getElementById('cart-drawer');
+        const cartOverlay = document.getElementById('cart-overlay');
+        const closeCartBtn = document.getElementById('close-cart');
+
+        function toggleCart() {
+            const isOpen = !cartDrawer.classList.contains('translate-x-full');
+            if (isOpen) {
+                cartDrawer.classList.add('translate-x-full');
+                cartOverlay.classList.add('hidden');
+                setTimeout(() => cartOverlay.classList.remove('opacity-100'), 10);
+            } else {
+                cartDrawer.classList.remove('translate-x-full');
+                cartOverlay.classList.remove('hidden');
+                setTimeout(() => cartOverlay.classList.add('opacity-100'), 10);
+            }
+        }
+        closeCartBtn.addEventListener('click', toggleCart);
+        cartOverlay.addEventListener('click', toggleCart);
 
         function addToCart() {
             if(!modalActiveProduct) return;
@@ -753,7 +567,6 @@
             const container = document.getElementById('cart-items-container');
             const totalElement = document.getElementById('cart-total-price');
             const checkoutBtn = document.getElementById('checkout-btn');
-            
             const headerBadge = document.getElementById('header-cart-badge');
             const floatingBadge = document.getElementById('floating-cart-badge');
             
@@ -840,7 +653,7 @@
                 const itemTotal = item.price * item.quantity;
                 totalCost += itemTotal;
                 const formattedPrice = new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(itemTotal);
-                const subtitle = item.category === '18k' ? '18k Macizo' : 'Oro Laminado';
+                const subtitle = item.category === '18k' ? '18k Macizo' : 'Laminado';
                 
                 let variantPieces = [];
                 if (item.color && item.color !== 'Estándar') variantPieces.push(`Color: ${item.color}`);

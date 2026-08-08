@@ -8,100 +8,9 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=block" rel="stylesheet">
     
-    <!-- Carga de Tailwind CDN segura -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script id="tailwind-config">
-        try {
-            tailwind.config = {
-                darkMode: "class",
-                theme: {
-                    extend: {
-                        "colors": {
-                            "outline-variant": "#d7c2ba",
-                            "inverse-primary": "#fbb797",
-                            "on-tertiary-fixed-variant": "#574500",
-                            "surface-container": "#fdebdc",
-                            "outline": "#84746c",
-                            "surface-variant": "#f1dfd1",
-                            "surface-bright": "#fff8f4",
-                            "on-surface-variant": "#52443e",
-                            "on-tertiary-fixed": "#241a00",
-                            "on-tertiary": "#ffffff",
-                            "on-secondary-container": "#6d6354",
-                            "inverse-on-surface": "#ffeee0",
-                            "surface-container-low": "#fff1e7",
-                            "on-surface": "#231a11",
-                            "on-primary-container": "#50260f",
-                            "tertiary-fixed": "#ffe088",
-                            "surface-container-lowest": "#ffffff",
-                            "secondary-fixed": "#efe0cd",
-                            "primary-fixed": "#ffdbcb",
-                            "on-tertiary-container": "#4f3e00",
-                            "on-primary-fixed": "#341100",
-                            "tertiary-container": "#cca830",
-                            "surface-container-high": "#f7e5d7",
-                            "on-secondary-fixed-variant": "#4f4538",
-                            "on-error-container": "#93000a",
-                            "on-primary-fixed-variant": "#6a3b22",
-                            "on-primary": "#ffffff",
-                            "primary-fixed-dim": "#fbb797",
-                            "secondary-container": "#efe0cd",
-                            "surface-container-highest": "#f1dfd1",
-                            "on-background": "#231a11",
-                            "error": "#ba1a1a",
-                            "on-secondary-fixed": "#221a0f",
-                            "on-secondary": "#ffffff",
-                            "error-container": "#ffdad6",
-                            "tertiary-fixed-dim": "#e9c349",
-                            "background": "#fff8f4",
-                            "on-error": "#ffffff",
-                            "tertiary": "#735c00",
-                            "secondary": "#675d4e",
-                            "secondary-fixed-dim": "#d2c4b2",
-                            "primary": "#855137",
-                            "surface-tint": "#855137",
-                            "surface-dim": "#e8d7c9",
-                            "primary-container": "#c98b6d",
-                            "surface": "#fff8f4",
-                            "inverse-surface": "#392f25",
-                            "brand-gold": "#E5C76B"
-                        },
-                        "borderRadius": {
-                            "DEFAULT": "0.25rem",
-                            "lg": "0.5rem",
-                            "xl": "0.75rem",
-                            "full": "9999px"
-                        },
-                        "spacing": {
-                            "gutter": "24px",
-                            "margin-desktop": "64px",
-                            "stack-md": "32px",
-                            "margin-mobile": "16px",
-                            "base": "8px",
-                            "section-gap": "80px",
-                            "stack-sm": "12px"
-                        },
-                        "fontFamily": {
-                            "display-lg": ["Libre Caslon Text", "serif"],
-                            "body-md": ["DM Sans", "sans-serif"],
-                            "headline-lg": ["Libre Caslon Text", "serif"],
-                            "body-lg": ["DM Sans", "sans-serif"],
-                            "headline-lg-mobile": ["Libre Caslon Text", "serif"],
-                            "label-sm": ["DM Sans", "sans-serif"]
-                        },
-                        "fontSize": {
-                            "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "400" }],
-                            "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
-                            "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "400" }],
-                            "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
-                            "headline-lg-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "400" }],
-                            "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }]
-                        }
-                    }
-                }
-            }
-        } catch (_e) { console.error("Error cargando Tailwind"); }
-    </script>
+    <!-- Hoja de estilos estática local (Libre de bloqueos de red) -->
+    <link rel="stylesheet" href="css/index.css">
+
     <style>
         /* Ocultar barra de scroll en galerías */
         .no-scrollbar::-webkit-scrollbar { display: none; }
@@ -209,11 +118,7 @@
                 <span id="cart-total-price" class="font-display-lg text-xl text-[#735c00] font-bold">$0 COP</span>
             </div>
             <button id="checkout-btn" onclick="checkoutToWhatsApp()" class="w-full bg-black text-[#E5C76B] border border-[#E5C76B]/40 py-3.5 rounded-full hover:bg-[#E5C76B] hover:text-black transition-all shadow-md uppercase tracking-widest font-semibold text-xs flex items-center justify-center gap-2 opacity-50 cursor-not-allowed">
-                <svg class="w-7 h-7 fill-current" viewBox="0 0 24 24">
-                <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
-                </svg>
-                Proceder al Pago
-                <span class="material-symbols-outlined text-lg">arrow_forward</span>
+                <span class="material-symbols-outlined text-lg">arrow_forward</span> Proceder al Pago
             </button>
         </div>
     </aside>
@@ -249,13 +154,11 @@
                 </div>
                 
                 <div class="h-px w-full bg-[#E5C76B]/20 mb-4 shrink-0"></div>
-
                 <div id="modal-variants-container" class="flex flex-col gap-4 mb-6 shrink-0"></div>
 
                 <div class="flex flex-col gap-2.5 mt-auto shrink-0 border-t border-black/5 pt-4">
                     <button onclick="addToCart()" class="w-full bg-black text-[#E5C76B] border border-[#E5C76B]/40 hover:border-[#E5C76B] text-xs py-3 rounded-full hover:bg-[#E5C76B] hover:text-black transition-all duration-300 shadow-[0_4px_20px_rgba(229,199,107,0.2)] uppercase tracking-widest font-semibold flex items-center justify-center gap-2 active:scale-[0.98]">
-                        <span class="material-symbols-outlined text-lg">shopping_cart</span>
-                        Añadir al Carrito
+                        <span class="material-symbols-outlined text-lg">shopping_cart</span> Añadir al Carrito
                     </button>
                     
                     <button onclick="sendWhatsAppInquiry()" class="w-full bg-[#25D366] text-white hover:bg-[#20b858] text-xs h-[44px] rounded-full transition-all duration-300 uppercase tracking-widest font-semibold flex items-center justify-center gap-2 shadow-md active:scale-[0.98]">
@@ -278,7 +181,7 @@
     </div>
 
     <main class="pt-16">
-        <!-- Hero Header Section -->
+        <!-- Compact Hero Header Section -->
         <section class="bg-black text-[#E5C76B] py-12 px-margin-mobile md:px-margin-desktop text-center border-b border-[#E5C76B]/20 relative overflow-hidden">
             <div class="absolute inset-0 z-0">
                 <img src="img/landing.jpeg" alt="Colecciones La Estelar Joyería" class="w-full h-full object-cover object-center opacity-40">
@@ -291,7 +194,7 @@
             </div>
         </section>
 
-        <!-- Category Tabs Switcher -->
+        <!-- Category Tabs Switcher Section -->
         <section class="bg-surface-container-lowest py-6 px-margin-mobile md:px-margin-desktop border-b border-[#E5C76B]/20 text-center">
             <div class="tab-container">
                 <button id="tab-laminado-btn" onclick="switchCategory('laminado')" class="tab-btn-base tab-btn-active">
@@ -754,7 +657,7 @@
             const totalElement = document.getElementById('cart-total-price');
             const checkoutBtn = document.getElementById('checkout-btn');
             
-            const headerBadge = document.getElementById('header-cart-badge');
+            const headerBadge = document.getElementById('cart-badge');
             const floatingBadge = document.getElementById('floating-cart-badge');
             
             const totalItems = shoppingCart.reduce((sum, item) => sum + item.quantity, 0);
@@ -777,16 +680,12 @@
             container.innerHTML = shoppingCart.map((item, index) => {
                 totalCost += item.price * item.quantity;
                 const formattedPrice = new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(item.price * item.quantity);
-                const subtitle = item.category === '18k' ? 'Oro 18k Macizo' : 'Oro Laminado 18k';
+                const subtitle = item.category === '18k' ? '18k Macizo' : 'Laminado';
                 
                 let variantPieces = [];
-                if (item.color && item.color !== 'Estándar') {
-                    variantPieces.push(item.color.startsWith('#') 
-                        ? `<span class="inline-block w-2.5 h-2.5 rounded-full border border-black/20 ml-1 align-middle shadow-inner" style="background-color:${item.color}"></span>`
-                        : item.color);
-                }
+                if (item.color && item.color !== 'Estándar') variantPieces.push(`Color: ${item.color}`);
                 if (item.size) variantPieces.push(`Talla: ${item.size}`);
-                const variantHtml = variantPieces.length > 0 ? `• <span class="ml-1">${variantPieces.join(' | ')}</span>` : '';
+                const variantText = variantPieces.length > 0 ? ` [${variantPieces.join(', ')}]` : '';
 
                 return `
                 <article class="bg-white rounded-2xl p-3 border border-black/10 flex gap-4 shadow-sm relative">
@@ -799,7 +698,7 @@
                     <div class="flex-1 flex flex-col justify-between py-1 pr-4">
                         <div>
                             <h3 class="font-headline-lg-mobile text-base text-black leading-tight">${item.name}</h3>
-                            <p class="text-[10px] text-black/50 font-medium uppercase tracking-wider mt-1 flex items-center flex-wrap">${subtitle} ${variantHtml}</p>
+                            <p class="text-[10px] text-black/50 font-medium uppercase tracking-wider mt-1 flex items-center flex-wrap">${subtitle} ${variantText}</p>
                         </div>
                         <div class="flex justify-between items-end mt-2">
                             <div class="flex items-center gap-2 bg-stone-100 border border-black/10 rounded-full px-2 py-0.5">
@@ -818,11 +717,18 @@
             checkoutBtn.classList.remove('opacity-50', 'cursor-not-allowed');
         }
 
-        function removeFromCart(index) { shoppingCart.splice(index, 1); renderCart(); }
+        function removeFromCart(index) {
+            shoppingCart.splice(index, 1);
+            renderCart();
+        }
+
         function updateCartQuantity(index, delta) {
             shoppingCart[index].quantity += delta;
-            if(shoppingCart[index].quantity <= 0) removeFromCart(index);
-            else renderCart();
+            if(shoppingCart[index].quantity <= 0) {
+                removeFromCart(index);
+            } else {
+                renderCart();
+            }
         }
 
         function sendWhatsAppInquiry() {
