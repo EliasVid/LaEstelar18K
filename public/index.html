@@ -8,253 +8,247 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=block" rel="stylesheet">
     
-    <!-- Carga limpia de Tailwind CDN (Sin plugins problemáticos para Edge) -->
+    <!-- Carga segura de Tailwind CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "outline-variant": "#d7c2ba",
-                        "inverse-primary": "#fbb797",
-                        "on-tertiary-fixed-variant": "#574500",
-                        "surface-container": "#fdebdc",
-                        "outline": "#84746c",
-                        "surface-variant": "#f1dfd1",
-                        "surface-bright": "#fff8f4",
-                        "on-surface-variant": "#52443e",
-                        "on-tertiary-fixed": "#241a00",
-                        "on-tertiary": "#ffffff",
-                        "on-secondary-container": "#6d6354",
-                        "inverse-on-surface": "#ffeee0",
-                        "surface-container-low": "#fff1e7",
-                        "on-surface": "#231a11",
-                        "on-primary-container": "#50260f",
-                        "tertiary-fixed": "#ffe088",
-                        "surface-container-lowest": "#ffffff",
-                        "secondary-fixed": "#efe0cd",
-                        "primary-fixed": "#ffdbcb",
-                        "on-tertiary-container": "#4f3e00",
-                        "on-primary-fixed": "#341100",
-                        "tertiary-container": "#cca830",
-                        "surface-container-high": "#f7e5d7",
-                        "on-secondary-fixed-variant": "#4f4538",
-                        "on-error-container": "#93000a",
-                        "on-primary-fixed-variant": "#6a3b22",
-                        "on-primary": "#ffffff",
-                        "primary-fixed-dim": "#fbb797",
-                        "secondary-container": "#efe0cd",
-                        "surface-container-highest": "#f1dfd1",
-                        "on-background": "#231a11",
-                        "error": "#ba1a1a",
-                        "on-secondary-fixed": "#221a0f",
-                        "on-secondary": "#ffffff",
-                        "error-container": "#ffdad6",
-                        "tertiary-fixed-dim": "#e9c349",
-                        "background": "#fff8f4",
-                        "on-error": "#ffffff",
-                        "tertiary": "#735c00",
-                        "secondary": "#675d4e",
-                        "secondary-fixed-dim": "#d2c4b2",
-                        "primary": "#855137",
-                        "surface-tint": "#855137",
-                        "surface-dim": "#e8d7c9",
-                        "primary-container": "#c98b6d",
-                        "surface": "#fff8f4",
-                        "inverse-surface": "#392f25",
-                        "brand-gold": "#E5C76B"
-                    },
-                    borderRadius: {
-                        "DEFAULT": "0.25rem",
-                        "lg": "0.5rem",
-                        "xl": "0.75rem",
-                        "full": "9999px"
-                    },
-                    spacing: {
-                        "gutter": "24px",
-                        "margin-desktop": "64px",
-                        "stack-md": "32px",
-                        "margin-mobile": "16px",
-                        "base": "8px",
-                        "section-gap": "80px",
-                        "stack-sm": "12px"
-                    },
-                    fontFamily: {
-                        "display-lg": ["Libre Caslon Text", "serif"],
-                        "body-md": ["DM Sans", "sans-serif"],
-                        "headline-lg": ["Libre Caslon Text", "serif"],
-                        "body-lg": ["DM Sans", "sans-serif"],
-                        "headline-lg-mobile": ["Libre Caslon Text", "serif"],
-                        "label-sm": ["DM Sans", "sans-serif"]
-                    },
-                    fontSize: {
-                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "400" }],
-                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
-                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "400" }],
-                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
-                        "headline-lg-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "400" }],
-                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }]
+    <script id="tailwind-config">
+        try {
+            tailwind.config = {
+                darkMode: "class",
+                theme: {
+                    extend: {
+                        colors: {
+                            "outline-variant": "#d7c2ba",
+                            "inverse-primary": "#fbb797",
+                            "on-tertiary-fixed-variant": "#574500",
+                            "surface-container": "#fdebdc",
+                            "outline": "#84746c",
+                            "surface-variant": "#f1dfd1",
+                            "surface-bright": "#fff8f4",
+                            "on-surface-variant": "#52443e",
+                            "on-tertiary-fixed": "#241a00",
+                            "on-tertiary": "#ffffff",
+                            "on-secondary-container": "#6d6354",
+                            "inverse-on-surface": "#ffeee0",
+                            "surface-container-low": "#fff1e7",
+                            "on-surface": "#231a11",
+                            "on-primary-container": "#50260f",
+                            "tertiary-fixed": "#ffe088",
+                            "surface-container-lowest": "#ffffff",
+                            "secondary-fixed": "#efe0cd",
+                            "primary-fixed": "#ffdbcb",
+                            "on-tertiary-container": "#4f3e00",
+                            "on-primary-fixed": "#341100",
+                            "tertiary-container": "#cca830",
+                            "surface-container-high": "#f7e5d7",
+                            "on-secondary-fixed-variant": "#4f4538",
+                            "on-error-container": "#93000a",
+                            "on-primary-fixed-variant": "#6a3b22",
+                            "on-primary": "#ffffff",
+                            "primary-fixed-dim": "#fbb797",
+                            "secondary-container": "#efe0cd",
+                            "surface-container-highest": "#f1dfd1",
+                            "on-background": "#231a11",
+                            "error": "#ba1a1a",
+                            "on-secondary-fixed": "#221a0f",
+                            "on-secondary": "#ffffff",
+                            "error-container": "#ffdad6",
+                            "tertiary-fixed-dim": "#e9c349",
+                            "background": "#fff8f4",
+                            "on-error": "#ffffff",
+                            "tertiary": "#735c00",
+                            "secondary": "#675d4e",
+                            "secondary-fixed-dim": "#d2c4b2",
+                            "primary": "#855137",
+                            "surface-tint": "#855137",
+                            "surface-dim": "#e8d7c9",
+                            "primary-container": "#c98b6d",
+                            "surface": "#fff8f4",
+                            "inverse-surface": "#392f25",
+                            "brand-gold": "#E5C76B"
+                        },
+                        borderRadius: {
+                            "DEFAULT": "0.25rem",
+                            "lg": "0.5rem",
+                            "xl": "0.75rem",
+                            "full": "9999px"
+                        },
+                        spacing: {
+                            "gutter": "24px",
+                            "margin-desktop": "64px",
+                            "stack-md": "32px",
+                            "margin-mobile": "16px",
+                            "base": "8px",
+                            "section-gap": "80px",
+                            "stack-sm": "12px"
+                        },
+                        fontFamily: {
+                            "display-lg": ["Libre Caslon Text", "serif"],
+                            "body-md": ["DM Sans", "sans-serif"],
+                            "headline-lg": ["Libre Caslon Text", "serif"],
+                            "body-lg": ["DM Sans", "sans-serif"],
+                            "headline-lg-mobile": ["Libre Caslon Text", "serif"],
+                            "label-sm": ["DM Sans", "sans-serif"]
+                        },
+                        fontSize: {
+                            "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "400" }],
+                            "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                            "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "400" }],
+                            "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                            "headline-lg-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "400" }],
+                            "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }]
+                        }
                     }
                 }
-            }
-        }
+            };
+        } catch (_e) { console.error("Tailwind no pudo inicializarse"); }
     </script>
     <style>
-        /* Hides the scrollbar on the image gallery for a native app feel */
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
 
 <body class="bg-surface-container-lowest text-on-background font-body-md antialiased min-h-screen pb-24 md:pb-0">
     <!-- TopAppBar -->
-    <header
-        class="flex justify-between items-center px-2 sm:px-margin-mobile md:px-margin-desktop h-16 w-full fixed top-0 z-50 transition-all duration-300 bg-black/50 backdrop-blur-md border-b border-[#E5C76B]/20">
-        <button
-            class="hover:opacity-80 transition-opacity scale-95 active:scale-90 transition-transform p-2 text-[#E5C76B]"
-            id="menu-btn" aria-label="Abrir menú">
+    <header class="flex justify-between items-center px-2 sm:px-margin-mobile md:px-margin-desktop h-16 w-full fixed top-0 z-50 transition-all duration-300 bg-black/50 backdrop-blur-md border-b border-[#E5C76B]/20">
+        <button class="hover:opacity-80 transition-opacity scale-95 active:scale-90 transition-transform p-2 text-[#E5C76B]" id="menu-btn" aria-label="Abrir menú">
             <span class="material-symbols-outlined text-2xl" data-icon="menu">menu</span>
         </button>
         <div class="flex-1 flex justify-center px-1 overflow-hidden">
             <a href="index.html" class="hover:opacity-90 transition-opacity max-w-full">
-                <h1
-                    class="font-display-lg text-[22px] sm:text-2xl md:text-headline-lg whitespace-nowrap italic font-bold text-[#E5C76B] text-center tracking-tighter sm:tracking-wide">
+                <h1 class="font-display-lg text-[22px] sm:text-2xl md:text-headline-lg whitespace-nowrap italic font-bold text-[#E5C76B] text-center tracking-tighter sm:tracking-wide">
                     La Estelar Joyería 18k</h1>
             </a>
         </div>
-        <a href="cart.html">
-            <button
-                class="hover:opacity-80 transition-opacity scale-95 active:scale-90 transition-transform p-2 text-[#E5C76B]"
-                aria-label="Bolsa de compras">
-                <span class="material-symbols-outlined text-2xl" data-icon="shopping_bag">shopping_bag</span>
-            </button>
-        </a>
+        <button onclick="toggleCart()" class="hover:opacity-80 transition-opacity scale-95 active:scale-90 transition-transform p-2 text-[#E5C76B] relative" aria-label="Bolsa de compras">
+            <span class="material-symbols-outlined text-2xl" data-icon="shopping_bag">shopping_bag</span>
+            <span id="header-cart-badge" class="absolute top-1.5 right-1.5 bg-red-600 text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center hidden">0</span>
+        </button>
     </header>
+
     <!-- NavigationDrawer -->
-    <div id="drawer-overlay"
-        class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden opacity-0 transition-opacity duration-300"></div>
-    <aside id="nav-drawer"
-        class="fixed top-0 left-0 h-full w-80 bg-[#121212] border-r border-[#E5C76B]/20 shadow-2xl rounded-r-3xl z-50 transform -translate-x-full transition-transform duration-300 ease-in-out flex flex-col py-8 text-white">
+    <div id="drawer-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[90] hidden opacity-0 transition-opacity duration-300"></div>
+    <aside id="nav-drawer" class="fixed top-0 left-0 h-full w-80 bg-[#121212] border-r border-[#E5C76B]/20 shadow-2xl rounded-r-3xl z-[100] transform -translate-x-full transition-transform duration-300 ease-in-out flex flex-col py-8 text-white">
         <div class="px-6 mb-6 flex justify-between items-center">
             <h2 class="text-[#E5C76B] font-display-lg italic text-headline-lg">Menú</h2>
-            <button id="close-drawer" class="text-white/70 hover:text-[#E5C76B] transition-colors"
-                aria-label="Cerrar menú">
+            <button id="close-drawer" class="text-white/70 hover:text-[#E5C76B] transition-colors" aria-label="Cerrar menú">
                 <span class="material-symbols-outlined">close</span>
             </button>
         </div>
         <nav class="flex-1 overflow-y-auto">
             <ul class="space-y-1">
-                <li>
-                    <a href="colecciones.html"
-                        class="flex items-center gap-4 text-white/80 px-6 py-3.5 hover:bg-[#E5C76B]/10 hover:text-[#E5C76B] transition-colors">
-                        <span class="material-symbols-outlined text-[#E5C76B]"
-                            data-icon="auto_awesome">auto_awesome</span>
-                        <span class="font-body-md">Oro Laminado 18k</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="colecciones.html#oro-18k"
-                        class="flex items-center gap-4 text-white/80 px-6 py-3.5 hover:bg-[#E5C76B]/10 hover:text-[#E5C76B] transition-colors">
-                        <span class="material-symbols-outlined text-[#E5C76B]" data-icon="diamond">diamond</span>
-                        <span class="font-body-md">Oro 18k</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="personalizacion.html"
-                        class="flex items-center gap-4 text-white/80 px-6 py-3.5 hover:bg-[#E5C76B]/10 hover:text-[#E5C76B] transition-colors">
-                        <span class="material-symbols-outlined text-[#E5C76B]" data-icon="edit_note">edit_note</span>
-                        <span class="font-body-md">Personalización</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="mayorista.html"
-                        class="flex items-center gap-4 text-white/80 px-6 py-3.5 hover:bg-[#E5C76B]/10 hover:text-[#E5C76B] transition-colors">
-                        <span class="material-symbols-outlined text-[#E5C76B]"
-                            data-icon="storefront">storefront</span>
-                        <span class="font-body-md">Ventas al Mayor</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="historia.html"
-                        class="flex items-center gap-4 text-white/80 px-6 py-3.5 hover:bg-[#E5C76B]/10 hover:text-[#E5C76B] transition-colors">
-                        <span class="material-symbols-outlined text-[#E5C76B]"
-                            data-icon="history_edu">history_edu</span>
-                        <span class="font-body-md">Nuestra Historia</span>
-                    </a>
-                </li>
-                <!-- Social Links in Drawer -->
-                <li class="pt-4 border-t border-[#E5C76B]/10 mt-4">
-                    <a href="https://wa.me/573009635047" target="_blank" rel="noopener noreferrer"
-                        class="flex items-center gap-4 text-white/80 px-6 py-3.5 hover:bg-[#E5C76B]/10 hover:text-[#E5C76B] transition-colors">
-                        <svg class="w-5 h-5 fill-current text-[#E5C76B]" viewBox="0 0 24 24">
-                            <path
-                                d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
-                        </svg>
-                        <span class="font-body-md">WhatsApp</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="https://www.instagram.com/laestelar_joyeria18k" target="_blank" rel="noopener noreferrer"
-                        class="flex items-center gap-4 text-white/80 px-6 py-3.5 hover:bg-[#E5C76B]/10 hover:text-[#E5C76B] transition-colors">
-                        <svg class="w-5 h-5 fill-current text-[#E5C76B]" viewBox="0 0 24 24">
-                            <path
-                                d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
-                        </svg>
-                        <span class="font-body-md">Instagram</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="https://www.tiktok.com/@laestelar_joyeria" target="_blank" rel="noopener noreferrer"
-                        class="flex items-center gap-4 text-white/80 px-6 py-3.5 hover:bg-[#E5C76B]/10 hover:text-[#E5C76B] transition-colors">
-                        <svg class="w-5 h-5 fill-current text-[#E5C76B]" viewBox="0 0 24 24">
-                            <path
-                                d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.07-1.3 1.8-.24.84-.02 1.77.49 2.45.57.78 1.52 1.25 2.48 1.25 1.13.01 2.21-.55 2.79-1.52.41-.66.58-1.46.56-2.24.01-4.87.01-9.74 0-14.61z" />
-                        </svg>
-                        <span class="font-body-md">TikTok</span>
-                    </a>
-                </li>
+                <li><a href="colecciones.html" class="flex items-center gap-4 text-white/80 px-6 py-3.5 hover:bg-[#E5C76B]/10 hover:text-[#E5C76B] transition-colors"><span class="material-symbols-outlined text-[#E5C76B]">auto_awesome</span><span class="font-body-md">Oro Laminado 18k</span></a></li>
+                <li><a href="colecciones.html#oro-18k" class="flex items-center gap-4 text-white/80 px-6 py-3.5 hover:bg-[#E5C76B]/10 hover:text-[#E5C76B] transition-colors"><span class="material-symbols-outlined text-[#E5C76B]">diamond</span><span class="font-body-md">Oro 18k</span></a></li>
+                <li><a href="personalizacion.html" class="flex items-center gap-4 text-white/80 px-6 py-3.5 hover:bg-[#E5C76B]/10 hover:text-[#E5C76B] transition-colors"><span class="material-symbols-outlined text-[#E5C76B]">edit_note</span><span class="font-body-md">Personalización</span></a></li>
+                <li><a href="mayorista.html" class="flex items-center gap-4 text-white/80 px-6 py-3.5 hover:bg-[#E5C76B]/10 hover:text-[#E5C76B] transition-colors"><span class="material-symbols-outlined text-[#E5C76B]">storefront</span><span class="font-body-md">Ventas al Mayor</span></a></li>
+                <li><a href="historia.html" class="flex items-center gap-4 text-white/80 px-6 py-3.5 hover:bg-[#E5C76B]/10 hover:text-[#E5C76B] transition-colors"><span class="material-symbols-outlined text-[#E5C76B]">history_edu</span><span class="font-body-md">Nuestra Historia</span></a></li>
             </ul>
         </nav>
     </aside>
+
+    <!-- Cart Drawer -->
+    <div id="cart-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[95] hidden opacity-0 transition-opacity duration-300"></div>
+    <aside id="cart-drawer" class="fixed top-0 right-0 h-full w-full sm:w-[400px] bg-surface-container-lowest border-l border-[#E5C76B]/20 shadow-2xl z-[100] transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col">
+        <div class="px-6 py-5 bg-black flex justify-between items-center border-b border-[#E5C76B]/20">
+            <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-[#E5C76B]">shopping_bag</span>
+                <h2 class="text-[#E5C76B] font-display-lg italic text-xl">Tu Selección</h2>
+            </div>
+            <button id="close-cart" class="text-white/70 hover:text-[#E5C76B] transition-colors" aria-label="Cerrar carrito">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+
+        <div id="cart-items-container" class="flex-1 overflow-y-auto p-4 space-y-4">
+            <div class="text-center mt-10">
+                <p class="text-black/50 text-sm">Tu carrito está vacío.</p>
+            </div>
+        </div>
+
+        <div class="p-6 bg-white border-t border-black/10 shadow-[0_-4px_20px_rgba(0,0,0,0.05)] z-10">
+            <div class="flex justify-between items-center mb-4">
+                <span class="font-body-md text-black/70 text-sm">Total Estimado</span>
+                <span id="cart-total-price" class="font-display-lg text-xl text-[#735c00] font-bold">$0 COP</span>
+            </div>
+            <button id="checkout-btn" onclick="checkoutToWhatsApp()" class="w-full bg-black text-[#E5C76B] border border-[#E5C76B]/40 py-3.5 rounded-full hover:bg-[#E5C76B] hover:text-black transition-all shadow-md uppercase tracking-widest font-semibold text-xs flex items-center justify-center gap-2 opacity-50 cursor-not-allowed">
+                <span class="material-symbols-outlined text-lg">arrow_forward</span> Proceder al Pago
+            </button>
+        </div>
+    </aside>
+
+    <!-- PRODUCT POPUP MODAL -->
+    <div id="product-modal-overlay" class="fixed inset-0 bg-black/80 backdrop-blur-md z-[100] hidden opacity-0 transition-opacity duration-300 flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
+        <button id="close-product-modal" class="absolute top-4 right-4 z-[110] bg-white/20 backdrop-blur-sm border border-white/20 hover:bg-white/30 text-white w-10 h-10 flex items-center justify-center rounded-full transition-colors shadow-sm">
+            <span class="material-symbols-outlined text-xl">close</span>
+        </button>
+
+        <div id="product-modal-content" class="bg-surface-container-lowest w-full max-w-4xl rounded-2xl md:rounded-3xl shadow-2xl relative transform scale-95 transition-transform duration-300 flex flex-col md:flex-row my-auto">
+            <div class="w-full md:w-1/2 bg-surface-container-low border-b md:border-b-0 md:border-r border-[#E5C76B]/20 flex flex-col p-5 md:p-6">
+                <div class="w-full aspect-square bg-stone-100 rounded-xl overflow-hidden relative border border-black/10 shadow-sm">
+                    <div onclick="openImageZoom(document.getElementById('modal-main-img-tag').src)" title="Haz clic para hacer zoom" class="block w-full h-full cursor-zoom-in">
+                        <img id="modal-main-img-tag" src="" class="w-full h-full object-cover transition-opacity duration-200">
+                    </div>
+                </div>
+                <div id="modal-thumbnails-container" class="w-full flex gap-3 mt-4 overflow-x-auto no-scrollbar py-1"></div>
+            </div>
+
+            <div class="w-full md:w-1/2 p-5 md:p-6 flex flex-col">
+                <div class="flex flex-col gap-1 mb-4 pr-2">
+                    <span id="modal-category" class="text-[10px] uppercase tracking-widest text-[#735c00] font-bold animate-pulse bg-stone-200 h-3 w-24 rounded"></span>
+                    <h2 id="modal-title" class="font-display-lg text-xl md:text-2xl text-black mt-1 leading-tight">Cargando...</h2>
+                    <p id="modal-price" class="font-body-lg text-lg font-bold text-[#735c00] mt-0.5"></p>
+                </div>
+                <div class="mb-6 border-l-2 border-[#E5C76B] pl-3">
+                    <p id="modal-description" class="text-sm text-on-surface-variant leading-relaxed"></p>
+                </div>
+                <div class="h-px w-full bg-[#E5C76B]/20 mb-6"></div>
+                <div id="modal-variants-container" class="flex flex-col gap-4 mb-8"></div>
+                <div class="flex flex-col gap-3 mt-auto border-t border-black/5 pt-6">
+                    <button onclick="addToCart()" class="w-full bg-black text-[#E5C76B] border border-[#E5C76B]/40 hover:border-[#E5C76B] text-sm py-3.5 rounded-full hover:bg-[#E5C76B] hover:text-black transition-all duration-300 shadow-[0_4px_20px_rgba(229,199,107,0.2)] uppercase tracking-widest font-semibold flex items-center justify-center gap-2 active:scale-[0.98]">
+                        <span class="material-symbols-outlined text-xl">shopping_cart</span> Añadir al Carrito
+                    </button>
+                    <button onclick="sendWhatsAppInquiry()" class="w-full bg-transparent border border-black text-black hover:bg-[#25D366] hover:border-[#25D366] hover:text-white text-sm py-3.5 rounded-full transition-all duration-300 uppercase tracking-widest font-semibold flex items-center justify-center gap-2 group">
+                        <span class="material-symbols-outlined text-lg">chat</span> Preguntar por WhatsApp
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FULLSCREEN IMAGE ZOOM OVERLAY -->
+    <div id="image-zoom-overlay" class="fixed inset-0 bg-black/95 z-[200] hidden opacity-0 transition-opacity duration-300 flex items-center justify-center p-4 cursor-zoom-out" onclick="closeImageZoom()">
+        <button class="absolute top-4 right-4 text-white hover:text-[#E5C76B] z-[210]">
+            <span class="material-symbols-outlined text-4xl">close</span>
+        </button>
+        <img id="zoomed-image" src="" class="max-w-full max-h-full object-contain transform scale-95 transition-transform duration-300" alt="Zoomed image">
+    </div>
+
     <main>
         <!-- Hero Section -->
-        <section
-            class="relative w-full h-[80vh] md:h-[90vh] flex flex-col justify-center items-center text-center px-margin-mobile md:px-margin-desktop overflow-hidden bg-black">
+        <section class="relative w-full h-[80vh] md:h-[90vh] flex flex-col justify-center items-center text-center px-margin-mobile md:px-margin-desktop overflow-hidden bg-black">
             <div class="absolute inset-0 z-0">
-                <img src="img/landing.jpeg" alt="Woven gold rings on a hand"
-                    class="w-full h-full object-cover object-center opacity-85">
+                <img src="img/landing.jpeg" alt="Woven gold rings on a hand" class="w-full h-full object-cover object-center opacity-85">
                 <div class="absolute inset-0 bg-gradient-to-b from-black/90 via-black/40 to-transparent"></div>
             </div>
-            <div
-                class="relative z-10 max-w-3xl mx-auto flex flex-col items-center gap-stack-md text-center animate-fade-in-up pt-16">
+            <div class="relative z-10 max-w-3xl mx-auto flex flex-col items-center gap-stack-md text-center animate-fade-in-up pt-16">
                 <div class="space-y-stack-sm text-center">
                     <h1 class="font-display-lg text-headline-lg-mobile md:text-display-lg text-white text-center">JOYAS DE ALTA CALIDAD</h1>
-                    <p class="font-body-lg text-[#E5C76B]/90 max-w-xl mx-auto text-center font-medium">Piezas únicas en
-                        oro de 18k y oro 18k laminado.</p>
+                    <p class="font-body-lg text-[#E5C76B]/90 max-w-xl mx-auto text-center font-medium">Piezas únicas en oro de 18k y oro 18k laminado.</p>
                 </div>
                 <a href="colecciones.html">
-                    <button
-                        class="bg-black/80 backdrop-blur-sm text-[#E5C76B] border border-[#E5C76B]/50 hover:border-[#E5C76B] font-label-sm px-10 py-4 rounded-full hover:bg-[#E5C76B] hover:text-black transition-all duration-300 shadow-[0_4px_25px_rgba(229,199,107,0.25)] uppercase tracking-widest font-semibold active:scale-95">
+                    <button class="bg-black/80 backdrop-blur-sm text-[#E5C76B] border border-[#E5C76B]/50 hover:border-[#E5C76B] font-label-sm px-10 py-4 rounded-full hover:bg-[#E5C76B] hover:text-black transition-all duration-300 shadow-[0_4px_25px_rgba(229,199,107,0.25)] uppercase tracking-widest font-semibold active:scale-95">
                         Ver Colección
                     </button>
                 </a>
             </div>
         </section>
+
         <!-- Personaliza tu Pieza -->
         <section class="py-section-gap px-margin-mobile md:px-margin-desktop bg-surface-container-lowest">
             <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-margin-desktop items-center">
                 <div class="order-2 lg:order-1 space-y-stack-md">
-                    <h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-black">Personaliza tu
-                        Pieza</h2>
-                    <p class="font-body-lg text-on-surface-variant">Cada historia es única, y tu joya debería serlo
-                        también. Colabora con nuestros artesanos para crear un diseño a medida, eligiendo desde el
-                        grosor del hilo de oro hasta el color del tejido.</p>
+                    <h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-black">Personaliza tu Pieza</h2>
+                    <p class="font-body-lg text-on-surface-variant">Cada historia es única, y tu joya debería serlo también. Colabora con nuestros artesanos para crear un diseño a medida, eligiendo desde el grosor del hilo de oro hasta el color del tejido.</p>
                     <ul class="space-y-stack-sm font-body-md text-on-surface-variant">
                         <li class="flex items-center gap-3">
                             <span class="material-symbols-outlined text-[#735c00] text-sm">circle</span>
@@ -270,130 +264,50 @@
                         </li>
                     </ul>
                     <a href="personalizacion.html">
-                    <button
-                        class="mt-stack-md bg-black text-[#E5C76B] border border-black font-label-sm px-8 py-3 rounded-full hover:bg-[#735c00] hover:text-white hover:border-[#735c00] transition-colors duration-300 uppercase tracking-wider font-semibold">
+                    <button class="mt-stack-md bg-black text-[#E5C76B] border border-black font-label-sm px-8 py-3 rounded-full hover:bg-[#735c00] hover:text-white hover:border-[#735c00] transition-colors duration-300 uppercase tracking-wider font-semibold">
                         Iniciar Diseño Custom
                     </button>
                     </a>
                 </div>
                 <div class="order-1 lg:order-2">
-                    <div
-                        class="relative w-full aspect-square rounded-2xl overflow-hidden bg-surface-container shadow-[0_20px_60px_rgba(0,0,0,0.15)] border border-[#E5C76B]/30">
-                        <img class="w-full h-full object-cover" data-alt="Jeweler workbench"
-                            src="img/personalizar.jpeg">
+                    <div class="relative w-full aspect-square rounded-2xl overflow-hidden bg-surface-container shadow-[0_20px_60px_rgba(0,0,0,0.15)] border border-[#E5C76B]/30">
+                        <img class="w-full h-full object-cover" data-alt="Jeweler workbench" src="img/personalizar.jpeg">
                     </div>
                 </div>
             </div>
         </section>
-        <!-- Más Vendidos -->
+
+        <!-- Más Vendidos (Dinámico) -->
         <section class="py-section-gap px-margin-mobile md:px-margin-desktop bg-surface-container-lowest">
             <div class="max-w-7xl mx-auto">
                 <div class="flex justify-between items-end mb-stack-md">
-                    <h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-black">Más Vendidos
-                    </h2>
-                    <a href="colecciones.html"
-                        class="font-label-sm text-[#735c00] hover:text-black transition-colors hidden md:block uppercase tracking-wider font-semibold">Ver
-                        todos</a>
+                    <h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-black">Más Vendidos</h2>
+                    <a href="colecciones.html" class="font-label-sm text-[#735c00] hover:text-black transition-colors hidden md:block uppercase tracking-wider font-semibold">Ver todos</a>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
-                    <!-- Product Card 1 -->
-                    <a href="producto.html" class="block">
-                        <div class="group cursor-pointer">
-                            <div
-                                class="bg-surface-container rounded-xl overflow-hidden aspect-[4/5] relative mb-stack-sm transition-transform duration-500 group-hover:-translate-y-2 group-hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)] border border-[#E5C76B]/10">
-                                <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                                    data-alt="Dijes de Oro" src="img/dijes.jpeg">
-                            </div>
-                            <div class="text-center">
-                                <h3 class="font-headline-lg text-body-lg md:text-headline-lg-mobile text-on-background">
-                                    Anillo Nudo Infinito</h3>
-                                <p class="font-body-md text-[#735c00] font-semibold mt-1">$450</p>
-                            </div>
-                        </div>
-                    </a>
-
-                    <!-- Product Card 2 -->
-                    <a href="producto.html" class="block">
-                        <div class="group cursor-pointer">
-                            <div
-                                class="bg-surface-container rounded-xl overflow-hidden aspect-[4/5] relative mb-stack-sm transition-transform duration-500 group-hover:-translate-y-2 group-hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)] border border-[#E5C76B]/10">
-                                <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                                    data-alt="Cadena de Oro 18k" src="img/cadena 2.jpeg">
-                            </div>
-                            <div class="text-center">
-                                <h3 class="font-headline-lg text-body-lg md:text-headline-lg-mobile text-on-background">
-                                    Topos Aurora</h3>
-                                <p class="font-body-md text-[#735c00] font-semibold mt-1">$280</p>
-                            </div>
-                        </div>
-                    </a>
-
-                    <!-- Product Card 3 -->
-                    <a href="producto.html" class="block">
-                        <div class="group cursor-pointer">
-                            <div
-                                class="bg-surface-container rounded-xl overflow-hidden aspect-[4/5] relative mb-stack-sm transition-transform duration-500 group-hover:-translate-y-2 group-hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)] border border-[#E5C76B]/10">
-                                <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                                    data-alt="Topos de Oro" src="img/topos 1.jpeg">
-                            </div>
-                            <div class="text-center">
-                                <h3 class="font-headline-lg text-body-lg md:text-headline-lg-mobile text-on-background">
-                                    Pulsera Lazo Carmesí</h3>
-                                <p class="font-body-md text-[#735c00] font-semibold mt-1">$320</p>
-                            </div>
-                        </div>
-                    </a>
+                <div id="featured-products-container" class="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-gutter">
+                    <div class="col-span-full text-center py-10 text-stone-400">Cargando productos destacados...</div>
                 </div>
                 <div class="mt-stack-md text-center md:hidden">
-                    <a class="font-label-sm text-[#735c00] underline hover:text-black transition-colors"
-                        href="colecciones.html">Ver todos</a>
+                    <a class="font-label-sm text-[#735c00] underline hover:text-black transition-colors" href="colecciones.html">Ver todos</a>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- Official Website Footer -->
+    <!-- Footer -->
     <footer class="bg-black text-white border-t border-[#E5C76B]/20 py-12 px-margin-mobile md:px-margin-desktop">
-        <div
-            class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8 text-center md:text-left">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8 text-center md:text-left">
             <div>
-                <h3 class="font-display-lg italic font-bold text-[#E5C76B] text-xl md:text-2xl mb-2">La Estelar Joyería
-                    18k</h3>
-                <p class="text-xs text-white/70 max-w-sm">Elegancia, artesanía y la pureza del oro de 18k en cada
-                    detalle.</p>
+                <h3 class="font-display-lg italic font-bold text-[#E5C76B] text-xl md:text-2xl mb-2">La Estelar Joyería 18k</h3>
+                <p class="text-xs text-white/70 max-w-sm">Elegancia, artesanía y la pureza del oro de 18k en cada detalle.</p>
             </div>
-
-            <!-- Navigation Links -->
-            <div class="flex flex-wrap justify-center gap-6 text-sm text-white/80">
-                <a href="colecciones.html#oro-18k" class="hover:text-[#E5C76B] transition-colors">Oro 18k</a>
-                <a href="colecciones.html#oro-laminado" class="hover:text-[#E5C76B] transition-colors">Oro Laminado</a>
-                <a href="#" class="hover:text-[#E5C76B] transition-colors">Personalización</a>
-            </div>
-
             <!-- Social Links -->
-            <div class="flex items-center gap-4">
-                <a href="https://wa.me/573009635047" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"
-                    class="p-3 bg-white/5 rounded-full text-[#E5C76B] hover:bg-[#E5C76B] hover:text-black transition-all">
-                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                        <path
-                            d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
-                    </svg>
+            <div class="flex items-center justify-center gap-4">
+                <a href="https://wa.me/573009635047" target="_blank" rel="noopener noreferrer" class="p-3 bg-white/5 rounded-full text-[#E5C76B] hover:bg-[#E5C76B] hover:text-black transition-all">
+                    <span class="material-symbols-outlined text-xl">chat</span>
                 </a>
-                <a href="https://www.instagram.com/laestelar_joyeria18k" target="_blank" rel="noopener noreferrer"
-                    aria-label="Instagram"
-                    class="p-3 bg-white/5 rounded-full text-[#E5C76B] hover:bg-[#E5C76B] hover:text-black transition-all">
-                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                        <path
-                            d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
-                    </svg>
-                </a>
-                <a href="https://www.tiktok.com/@laestelar_joyeria" target="_blank" rel="noopener noreferrer"
-                    aria-label="TikTok"
-                    class="p-3 bg-white/5 rounded-full text-[#E5C76B] hover:bg-[#E5C76B] hover:text-black transition-all">
-                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                        <path
-                            d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.07-1.3 1.8-.24.84-.02 1.77.49 2.45.57.78 1.52 1.25 2.48 1.25 1.13.01 2.21-.55 2.79-1.52.41-.66.58-1.46.56-2.24.01-4.87.01-9.74 0-14.61z" />
-                    </svg>
+                <a href="https://www.instagram.com/laestelar_joyeria18k" target="_blank" rel="noopener noreferrer" class="p-3 bg-white/5 rounded-full text-[#E5C76B] hover:bg-[#E5C76B] hover:text-black transition-all">
+                    <span class="material-symbols-outlined text-xl">photo_camera</span>
                 </a>
             </div>
         </div>
@@ -402,16 +316,24 @@
         </div>
     </footer>
 
-    <!-- Floating WhatsApp Button -->
-    <a href="https://wa.me/573009635047" target="_blank" rel="noopener noreferrer" 
-       class="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-[90] bg-[#25D366] text-white p-3.5 rounded-full shadow-[0_4px_14px_rgba(37,211,102,0.4)] hover:scale-110 hover:shadow-[0_6px_20px_rgba(37,211,102,0.6)] transition-all duration-300 flex items-center justify-center group"
-       aria-label="Chatear por WhatsApp">
-        <svg class="w-8 h-8 fill-current" viewBox="0 0 24 24">
-            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
-        </svg>
-    </a>
+    <!-- Botones Flotantes -->
+    <div class="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-[90] flex flex-col gap-4">
+        <!-- WhatsApp -->
+        <a href="https://wa.me/573009635047" target="_blank" rel="noopener noreferrer" class="bg-[#25D366] text-white w-14 h-14 rounded-full shadow-[0_4px_14px_rgba(37,211,102,0.4)] hover:scale-110 hover:shadow-[0_6px_20px_rgba(37,211,102,0.6)] transition-all duration-300 flex items-center justify-center group" aria-label="Chatear por WhatsApp">
+            <span class="material-symbols-outlined text-3xl">chat</span>
+        </a>
+        <!-- Carrito -->
+        <button onclick="toggleCart()" class="bg-black text-[#E5C76B] w-14 h-14 rounded-full shadow-[0_4px_14px_rgba(0,0,0,0.4)] hover:scale-110 hover:shadow-[0_6px_20px_rgba(0,0,0,0.6)] transition-all duration-300 flex items-center justify-center relative group" aria-label="Abrir Carrito">
+            <span class="material-symbols-outlined text-3xl">shopping_bag</span>
+            <span id="floating-cart-badge" class="absolute -top-1 -right-1 bg-red-600 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center hidden border-2 border-white z-10">0</span>
+        </button>
+    </div>
 
+    <!-- JAVASCRIPT GLOBAL (Menu, Modal, Carrito, Productos Dinámicos) -->
     <script>
+        // ==========================================
+        // DRAWER Y MENU LOGIC
+        // ==========================================
         const menuBtn = document.getElementById('menu-btn');
         const drawer = document.getElementById('nav-drawer');
         const overlay = document.getElementById('drawer-overlay');
@@ -429,12 +351,414 @@
                 setTimeout(() => overlay.classList.add('opacity-100'), 10);
             }
         }
-
         menuBtn.addEventListener('click', toggleDrawer);
         closeBtn.addEventListener('click', toggleDrawer);
         overlay.addEventListener('click', toggleDrawer);
+
+        // ==========================================
+        // CARGA DINÁMICA "MÁS VENDIDOS"
+        // ==========================================
+        let globalCatalog = [];
+        
+        window.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const response = await fetch('/api/catalog'); 
+                if (!response.ok) throw new Error('Failed to fetch catalog');
+                globalCatalog = await response.json();
+                
+                // Mostrar solo los primeros 6 productos en el Index
+                const featuredProducts = globalCatalog.slice(0, 6);
+                renderFeaturedProducts(featuredProducts);
+            } catch (error) {
+                console.error("Error loading catalog:", error);
+                document.getElementById('featured-products-container').innerHTML = `<p class="col-span-full text-center py-10 text-stone-400">Próximamente nuevas colecciones.</p>`;
+            }
+        });
+
+        function createProductCardHTML(product) {
+            const is18k = product.category === '18k';
+            const badgeClass = is18k ? 'bg-black/80 text-[#E5C76B] border-[#E5C76B]/30' : 'bg-stone-800/90 text-white border-white/20';
+            const badgeText = is18k ? '18K' : 'Laminado'; 
+            const borderClass = is18k ? 'border-[#E5C76B]/20' : 'border-black/10';
+            const imageUrl = product.image || (product.images && product.images.length > 0 ? product.images[0] : 'img/placeholder.jpg');
+            
+            const formattedPrice = new Intl.NumberFormat('es-CO', {
+                style: 'currency', currency: 'COP', minimumFractionDigits: 0
+            }).format(product.price);
+
+            return `
+                <button onclick="openProductModal('${product.id}')" class="block w-full text-left">
+                    <article class="group cursor-pointer rounded-2xl bg-surface-container-lowest transition-all duration-300 hover:shadow-[0_8px_40px_rgba(0,0,0,0.12)] hover:-translate-y-1 relative overflow-hidden border ${borderClass} flex flex-col h-full">
+                        <div class="aspect-square w-full overflow-hidden rounded-t-2xl relative bg-stone-100">
+                            <span class="absolute top-2 right-2 z-20 backdrop-blur-sm text-[10px] font-bold px-2 py-0.5 rounded-full border pointer-events-none shadow-sm ${badgeClass} uppercase">
+                                ${badgeText}
+                            </span>
+                            <img src="${imageUrl}" alt="${product.name}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" onerror="this.src='img/placeholder.jpg'">
+                        </div>
+                        <div class="p-3 md:p-6 text-center mt-auto flex flex-col gap-1.5 md:gap-2">
+                            <h5 class="font-headline-lg-mobile text-sm md:text-lg text-black leading-snug truncate">${product.name}</h5>
+                            <p class="font-body-md text-[#735c00] font-semibold text-sm md:text-base">${formattedPrice} COP</p>
+                        </div>
+                    </article>
+                </button>
+            `;
+        }
+
+        function renderFeaturedProducts(products) {
+            const container = document.getElementById('featured-products-container');
+            if (products.length === 0) {
+                container.innerHTML = `<p class="col-span-full py-8 text-center text-black/50">Próximamente nuevos diseños.</p>`;
+                return;
+            }
+            container.innerHTML = products.map(createProductCardHTML).join('');
+        }
+
+        // ==========================================
+        // MODAL Y VARIANTES
+        // ==========================================
+        let modalActiveProduct = null;
+        let modalActiveColor = null;
+        let modalActiveSize = null;
+
+        const productModalOverlay = document.getElementById('product-modal-overlay');
+        const productModalContent = document.getElementById('product-modal-content');
+        const closeProductModalBtn = document.getElementById('close-product-modal');
+
+        function setModalMainImage(src, btnEl) {
+            const mainImgTag = document.getElementById('modal-main-img-tag');
+            mainImgTag.style.opacity = '0.5';
+            setTimeout(() => {
+                mainImgTag.src = src;
+                mainImgTag.style.opacity = '1';
+            }, 150);
+
+            document.querySelectorAll('.modal-thumb-btn').forEach(btn => {
+                btn.className = "modal-thumb-btn w-16 h-16 shrink-0 rounded-lg overflow-hidden border-2 transition-all border-transparent opacity-60 hover:opacity-100";
+            });
+            btnEl.className = "modal-thumb-btn w-16 h-16 shrink-0 rounded-lg overflow-hidden border-2 transition-all border-[#E5C76B] shadow-md scale-105 opacity-100";
+        }
+
+        function openProductModal(productId) {
+            const product = globalCatalog.find(p => p.id === productId);
+            if (!product) return;
+
+            modalActiveProduct = product;
+            modalActiveColor = null;
+            modalActiveSize = null;
+
+            const is18k = product.category === '18k';
+            
+            document.getElementById('modal-category').innerText = is18k ? 'Oro 18k Macizo' : 'Oro Laminado 18k';
+            document.getElementById('modal-category').classList.remove('animate-pulse', 'bg-stone-200');
+            document.getElementById('modal-title').innerText = product.name;
+            document.getElementById('modal-description').innerText = product.description || 'Una pieza única elaborada con la mejor calidad.';
+            document.getElementById('modal-price').innerText = new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(product.price) + ' COP';
+
+            const images = product.images && product.images.length > 0 ? product.images : [product.image];
+            const mainImgTag = document.getElementById('modal-main-img-tag');
+            mainImgTag.src = images[0] || 'img/placeholder.jpg';
+
+            const thumbContainer = document.getElementById('modal-thumbnails-container');
+            if (images.length > 1) {
+                thumbContainer.innerHTML = images.map((img, index) => `
+                    <button onclick="setModalMainImage('${img}', this)" class="modal-thumb-btn w-16 h-16 shrink-0 rounded-lg overflow-hidden border-2 transition-all ${index === 0 ? 'border-[#E5C76B] shadow-md scale-105 opacity-100' : 'border-transparent opacity-60 hover:opacity-100'}">
+                        <img src="${img}" class="w-full h-full object-cover pointer-events-none">
+                    </button>
+                `).join('');
+                thumbContainer.classList.remove('hidden');
+            } else {
+                thumbContainer.innerHTML = '';
+                thumbContainer.classList.add('hidden');
+            }
+
+            const variantContainer = document.getElementById('modal-variants-container');
+            const type = product.type || '';
+            const group1 = ['Herraje', 'Dije', 'Topos'];
+            const group2 = ['Cadena', 'Anillo'];
+            const group3 = ['Pulsos'];
+            const group4 = ['Manilla', 'Anillo tejido'];
+
+            let variantHtml = '';
+
+            if (group1.includes(type)) {
+                variantHtml = `<p class="text-xs text-black/50 italic py-1">Talla Estándar</p>`;
+            } 
+            else if (group2.includes(type)) {
+                if (product.sizes && product.sizes.length > 0) {
+                    modalActiveSize = product.sizes[0];
+                    variantHtml = `
+                        <div class="flex flex-col gap-2">
+                            <label class="text-[11px] text-black uppercase tracking-wider font-semibold">Tallas Disponibles</label>
+                            <div class="flex flex-wrap gap-2">
+                                ${product.sizes.map(sz => `
+                                    <button onclick="selectModalSize('${sz}')" id="size-btn-${sz.replace(/\s+/g, '-')}" class="px-3.5 py-1.5 border rounded-lg text-xs font-bold transition-all ${modalActiveSize === sz ? 'border-black bg-black text-[#E5C76B]' : 'border-black/20 text-black/70 hover:border-black/50'}">
+                                        ${sz}${type==='Cadena' ? 'cm' : ''}
+                                    </button>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `;
+                } else { variantHtml = `<p class="text-xs text-black/50 italic py-1">Talla única.</p>`; }
+            } 
+            else if (group3.includes(type)) {
+                 if (product.sizes && product.sizes.length > 0) {
+                    modalActiveSize = product.sizes[0];
+                    variantHtml = `
+                        <div class="flex flex-col gap-2">
+                            <label class="text-[11px] text-black uppercase tracking-wider font-semibold">Género y Talla</label>
+                            <div class="flex flex-wrap gap-2">
+                                ${product.sizes.map(sz => `
+                                    <button onclick="selectModalSize('${sz}')" id="size-btn-${sz.replace(/\s+/g, '-')}" class="px-3.5 py-1.5 border rounded-lg text-xs font-bold transition-all ${modalActiveSize === sz ? 'border-black bg-black text-[#E5C76B]' : 'border-black/20 text-black/70 hover:border-black/50'}">
+                                        ${sz}
+                                    </button>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `;
+                }
+            } 
+            else if (group4.includes(type) || product.colors?.length > 0) {
+                 if (product.colors && product.colors.length > 0) {
+                    modalActiveColor = product.colors[0];
+                    variantHtml = `
+                        <div class="flex flex-col gap-2">
+                            <label class="text-[11px] text-black uppercase tracking-wider font-semibold">Tonalidad / Color</label>
+                            <div class="flex flex-wrap gap-3">
+                                ${product.colors.map(color => `
+                                    <button onclick="selectModalColor('${color}')" id="swatch-${color.replace('#', '')}" class="w-8 h-8 md:w-10 md:h-10 rounded-full border-2 transition-all p-0.5 relative group shadow-sm ${modalActiveColor === color ? 'border-[#E5C76B]' : 'border-black/20 hover:border-[#E5C76B]/60'}">
+                                        <span class="block w-full h-full rounded-full shadow-inner border border-black/5" style="background-color: ${color}"></span>
+                                    </button>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `;
+                }
+            } else {
+                variantHtml = `<p class="text-xs text-black/50 italic py-1">Pieza estándar.</p>`;
+            }
+
+            variantContainer.innerHTML = variantHtml;
+
+            productModalOverlay.classList.remove('hidden');
+            setTimeout(() => {
+                productModalOverlay.classList.remove('opacity-0');
+                productModalContent.classList.remove('scale-95');
+            }, 10);
+            document.body.style.overflow = 'hidden';
+        }
+
+        function selectModalSize(size) {
+            modalActiveSize = size;
+            if(modalActiveProduct && modalActiveProduct.sizes) {
+                modalActiveProduct.sizes.forEach(sz => {
+                    const btn = document.getElementById(`size-btn-${sz.replace(/\s+/g, '-')}`);
+                    if(btn) btn.className = `px-3.5 py-1.5 border rounded-lg text-xs font-bold transition-all ${sz === size ? 'border-black bg-black text-[#E5C76B]' : 'border-black/20 text-black/70 hover:border-black/50'}`;
+                });
+            }
+        }
+
+        function selectModalColor(color) {
+            modalActiveColor = color;
+            if(modalActiveProduct && modalActiveProduct.colors) {
+                modalActiveProduct.colors.forEach(c => {
+                    const btn = document.getElementById(`swatch-${c.replace('#', '')}`);
+                    if(btn) btn.className = `w-8 h-8 md:w-10 md:h-10 rounded-full border-2 transition-all p-0.5 relative group shadow-sm ${c === color ? 'border-[#E5C76B]' : 'border-black/20 hover:border-[#E5C76B]/60'}`;
+                });
+            }
+        }
+
+        function closeProductModal() {
+            productModalOverlay.classList.add('opacity-0');
+            productModalContent.classList.add('scale-95');
+            setTimeout(() => {
+                productModalOverlay.classList.add('hidden');
+                document.body.style.overflow = 'auto'; 
+            }, 300);
+        }
+
+        closeProductModalBtn.addEventListener('click', closeProductModal);
+        productModalOverlay.addEventListener('click', (e) => { if (e.target === productModalOverlay) closeProductModal(); });
+
+        // ==========================================
+        // IMAGE ZOOM
+        // ==========================================
+        const imageZoomOverlay = document.getElementById('image-zoom-overlay');
+        const zoomedImage = document.getElementById('zoomed-image');
+
+        function openImageZoom(src) {
+            zoomedImage.src = src;
+            imageZoomOverlay.classList.remove('hidden');
+            setTimeout(() => {
+                imageZoomOverlay.classList.remove('opacity-0');
+                zoomedImage.classList.remove('scale-95');
+            }, 10);
+        }
+
+        function closeImageZoom() {
+            imageZoomOverlay.classList.add('opacity-0');
+            zoomedImage.classList.add('scale-95');
+            setTimeout(() => {
+                imageZoomOverlay.classList.add('hidden');
+                zoomedImage.src = '';
+            }, 300);
+        }
+
+        // ==========================================
+        // SHOPPING CART
+        // ==========================================
+        let shoppingCart = [];
+        const cartDrawer = document.getElementById('cart-drawer');
+        const cartOverlay = document.getElementById('cart-overlay');
+        const closeCartBtn = document.getElementById('close-cart');
+
+        function toggleCart() {
+            const isOpen = !cartDrawer.classList.contains('translate-x-full');
+            if (isOpen) {
+                cartDrawer.classList.add('translate-x-full');
+                cartOverlay.classList.add('hidden');
+                setTimeout(() => cartOverlay.classList.remove('opacity-100'), 10);
+            } else {
+                cartDrawer.classList.remove('translate-x-full');
+                cartOverlay.classList.remove('hidden');
+                setTimeout(() => cartOverlay.classList.add('opacity-100'), 10);
+            }
+        }
+        closeCartBtn.addEventListener('click', toggleCart);
+        cartOverlay.addEventListener('click', toggleCart);
+
+        function addToCart() {
+            if(!modalActiveProduct) return;
+            
+            const existingItemIndex = shoppingCart.findIndex(item => 
+                item.id === modalActiveProduct.id && 
+                item.color === modalActiveColor && 
+                item.size === modalActiveSize
+            );
+            
+            if(existingItemIndex > -1) {
+                shoppingCart[existingItemIndex].quantity += 1;
+            } else {
+                shoppingCart.push({
+                    id: modalActiveProduct.id,
+                    name: modalActiveProduct.name,
+                    price: modalActiveProduct.price,
+                    image: modalActiveProduct.image || (modalActiveProduct.images ? modalActiveProduct.images[0] : ''),
+                    category: modalActiveProduct.category,
+                    color: modalActiveColor,
+                    size: modalActiveSize,
+                    quantity: 1
+                });
+            }
+            
+            closeProductModal();
+            renderCart();
+            setTimeout(toggleCart, 350); 
+        }
+
+        function renderCart() {
+            const container = document.getElementById('cart-items-container');
+            const totalElement = document.getElementById('cart-total-price');
+            const checkoutBtn = document.getElementById('checkout-btn');
+            const headerBadge = document.getElementById('header-cart-badge');
+            const floatingBadge = document.getElementById('floating-cart-badge');
+            
+            const totalItems = shoppingCart.reduce((sum, item) => sum + item.quantity, 0);
+            if(totalItems > 0) {
+                if(headerBadge) { headerBadge.innerText = totalItems; headerBadge.classList.remove('hidden'); }
+                if(floatingBadge) { floatingBadge.innerText = totalItems; floatingBadge.classList.remove('hidden'); }
+            } else {
+                if(headerBadge) headerBadge.classList.add('hidden');
+                if(floatingBadge) floatingBadge.classList.add('hidden');
+            }
+
+            if(shoppingCart.length === 0) {
+                container.innerHTML = `<div class="text-center mt-10"><p class="text-black/50 text-sm">Tu carrito está vacío.</p></div>`;
+                totalElement.innerText = "$0 COP";
+                checkoutBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                return;
+            }
+            
+            let totalCost = 0;
+            container.innerHTML = shoppingCart.map((item, index) => {
+                totalCost += item.price * item.quantity;
+                const formattedPrice = new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(item.price * item.quantity);
+                const subtitle = item.category === '18k' ? 'Oro 18k Macizo' : 'Oro Laminado 18k';
+                
+                let variantPieces = [];
+                if (item.color && item.color !== 'Estándar') {
+                    variantPieces.push(item.color.startsWith('#') 
+                        ? `<span class="inline-block w-2.5 h-2.5 rounded-full border border-black/20 ml-1 align-middle shadow-inner" style="background-color:${item.color}"></span>`
+                        : item.color);
+                }
+                if (item.size) variantPieces.push(`Talla: ${item.size}`);
+                const variantHtml = variantPieces.length > 0 ? `• <span class="ml-1">${variantPieces.join(' | ')}</span>` : '';
+
+                return `
+                <article class="bg-white rounded-2xl p-3 border border-black/10 flex gap-4 shadow-sm relative">
+                    <button onclick="removeFromCart(${index})" class="absolute top-2 right-2 text-black/30 hover:text-red-600 transition-colors">
+                        <span class="material-symbols-outlined text-lg">close</span>
+                    </button>
+                    <div class="w-20 h-20 shrink-0 bg-stone-100 rounded-xl overflow-hidden border border-black/5">
+                        <img class="w-full h-full object-cover" src="${item.image}" alt="${item.name}">
+                    </div>
+                    <div class="flex-1 flex flex-col justify-between py-1 pr-4">
+                        <div>
+                            <h3 class="font-headline-lg-mobile text-base text-black leading-tight">${item.name}</h3>
+                            <p class="text-[10px] text-black/50 font-medium uppercase tracking-wider mt-1 flex items-center flex-wrap">${subtitle} ${variantHtml}</p>
+                        </div>
+                        <div class="flex justify-between items-end mt-2">
+                            <div class="flex items-center gap-2 bg-stone-100 border border-black/10 rounded-full px-2 py-0.5">
+                                <button onclick="updateCartQuantity(${index}, -1)" class="text-black/60 hover:text-black"><span class="material-symbols-outlined text-sm">remove</span></button>
+                                <span class="font-label-sm text-black text-xs font-semibold w-4 text-center">${item.quantity}</span>
+                                <button onclick="updateCartQuantity(${index}, 1)" class="text-black/60 hover:text-black"><span class="material-symbols-outlined text-sm">add</span></button>
+                            </div>
+                            <span class="font-body-md text-[#735c00] font-bold text-sm">${formattedPrice} COP</span>
+                        </div>
+                    </div>
+                </article>
+                `;
+            }).join('');
+            
+            totalElement.innerText = new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(totalCost) + " COP";
+            checkoutBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+        }
+
+        function removeFromCart(index) { shoppingCart.splice(index, 1); renderCart(); }
+        function updateCartQuantity(index, delta) {
+            shoppingCart[index].quantity += delta;
+            if(shoppingCart[index].quantity <= 0) removeFromCart(index);
+            else renderCart();
+        }
+
+        function sendWhatsAppInquiry() {
+            if(!modalActiveProduct) return;
+            const message = `¡Hola! Estoy interesado/a en la pieza *${modalActiveProduct.name}*. ¿Me podrían dar más información?`;
+            window.open(`https://wa.me/573009635047?text=${encodeURIComponent(message)}`, '_blank');
+        }
+
+        function checkoutToWhatsApp() {
+            if (shoppingCart.length === 0) return;
+            let totalCost = 0;
+            let message = "¡Hola! Quisiera concretar la compra de mi carrito de La Estelar:\n\n";
+
+            shoppingCart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                totalCost += itemTotal;
+                const formattedPrice = new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(itemTotal);
+                const subtitle = item.category === '18k' ? '18k Macizo' : 'Laminado';
+                
+                let variantPieces = [];
+                if (item.color && item.color !== 'Estándar') variantPieces.push(`Color: ${item.color}`);
+                if (item.size) variantPieces.push(`Talla: ${item.size}`);
+                const variantText = variantPieces.length > 0 ? ` [${variantPieces.join(', ')}]` : '';
+
+                message += `▪ ${item.quantity}x ${item.name} (${subtitle})${variantText} - ${formattedPrice} COP\n`;
+            });
+
+            const formattedTotal = new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(totalCost);
+            message += `\n*Total Estimado:* ${formattedTotal} COP\n\n¿Me indican los pasos para el pago y envío?`;
+            window.open(`https://wa.me/573009635047?text=${encodeURIComponent(message)}`, '_blank');
+        }
     </script>
-
 </body>
-
 </html>
