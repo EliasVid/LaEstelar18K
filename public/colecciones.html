@@ -194,7 +194,7 @@
         </nav>
     </aside>
 
-    <!-- Cart Drawer (Z-Index increased to 100 to sit above floaters) -->
+    <!-- Cart Drawer -->
     <div id="cart-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[95] hidden opacity-0 transition-opacity duration-300"></div>
     <aside id="cart-drawer" class="fixed top-0 right-0 h-full w-full sm:w-[400px] bg-surface-container-lowest border-l border-[#E5C76B]/20 shadow-2xl z-[100] transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col">
         <div class="px-6 py-5 bg-black flex justify-between items-center border-b border-[#E5C76B]/20">
@@ -230,53 +230,48 @@
 
     <!-- PRODUCT POPUP MODAL -->
     <div id="product-modal-overlay" class="fixed inset-0 bg-black/80 backdrop-blur-md z-[100] hidden opacity-0 transition-opacity duration-300 flex items-center justify-center p-3 sm:p-6 overflow-hidden">
-        <div id="product-modal-content" class="bg-surface-container-lowest w-full max-w-4xl rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl relative transform scale-95 transition-transform duration-300 flex flex-col md:flex-row max-h-full">
+        <!-- max-h-[90vh] ensures the modal never pushes past the screen edge, preventing the bottom buttons from disappearing -->
+        <div id="product-modal-content" class="bg-surface-container-lowest w-full max-w-4xl rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl relative transform scale-95 transition-transform duration-300 flex flex-col md:flex-row max-h-[90vh]">
             
-            <!-- Perfect Circle Close Button -->
             <button id="close-product-modal" class="absolute top-3 right-3 z-[110] bg-white/90 backdrop-blur-sm border border-black/10 hover:bg-stone-100 text-black w-8 h-8 flex items-center justify-center rounded-full transition-colors shadow-sm">
                 <span class="material-symbols-outlined text-lg">close</span>
             </button>
 
             <!-- Left: Image Swipe Gallery -->
             <div class="w-full md:w-1/2 bg-surface-container-low border-b md:border-b-0 md:border-r border-[#E5C76B]/20 relative flex items-center shrink-0">
-                <!-- Images will be injected here as a horizontal scroll -->
                 <div id="modal-image-container" class="w-full flex flex-nowrap overflow-x-auto snap-x snap-mandatory no-scrollbar p-4 gap-4">
                     <div class="w-full shrink-0 aspect-square bg-stone-200 animate-pulse rounded-xl"></div>
                 </div>
             </div>
 
-            <!-- Right: Product Details -->
-            <div class="w-full md:w-1/2 p-5 md:p-6 flex flex-col overflow-y-auto">
-                <div class="flex flex-col gap-1 mb-3 pr-8">
+            <!-- Right: Product Details (Fixed Flexbox & internal scrolling) -->
+            <div class="w-full md:w-1/2 p-5 md:p-6 flex flex-col overflow-hidden">
+                <div class="flex flex-col gap-1 mb-2 pr-8 shrink-0">
                     <span id="modal-category" class="text-[10px] uppercase tracking-widest text-[#735c00] font-bold animate-pulse bg-stone-200 h-3 w-24 rounded"></span>
                     <h2 id="modal-title" class="font-display-lg text-xl md:text-2xl text-black mt-1 leading-tight">Cargando...</h2>
                     <p id="modal-price" class="font-body-lg text-lg font-bold text-[#735c00] mt-0.5"></p>
                 </div>
                 
-                <p id="modal-description" class="text-sm text-on-surface-variant mb-4 leading-relaxed border-l-2 border-[#E5C76B] pl-3 min-h-[40px]">
-                </p>
+                <!-- Scrollable Description block (Prevents pushing the UI down on small phones) -->
+                <div class="overflow-y-auto mb-4 border-l-2 border-[#E5C76B] pl-3 min-h-[40px] max-h-[120px] shrink-0">
+                    <p id="modal-description" class="text-sm text-on-surface-variant leading-relaxed"></p>
+                </div>
                 
-                <div class="h-px w-full bg-[#E5C76B]/20 mb-4"></div>
+                <div class="h-px w-full bg-[#E5C76B]/20 mb-4 shrink-0"></div>
 
-                <!-- Options -->
-                <div class="flex flex-col gap-4 mb-4 flex-1">
-                    <div class="flex flex-col gap-2">
-                        <label class="text-[11px] text-black uppercase tracking-wider font-semibold">Tonalidad / Color</label>
-                        <div id="modal-variants" class="flex flex-wrap gap-2">
-                            <!-- Colored Swatches injected here -->
-                        </div>
-                    </div>
+                <!-- Dynamic Options Injector (Sizes, Colors, etc) -->
+                <div id="modal-variants-container" class="flex flex-col gap-4 mb-4 flex-1 overflow-y-auto shrink-0">
+                    <!-- Injected via JS -->
                 </div>
 
-                <!-- Actions -->
-                <div class="flex flex-col gap-2.5 mt-auto pt-2">
+                <!-- Actions (Always visible at the bottom) -->
+                <div class="flex flex-col gap-2.5 mt-auto pt-2 shrink-0 border-t border-black/5">
                     <button onclick="addToCart()" class="w-full bg-black text-[#E5C76B] border border-[#E5C76B]/40 hover:border-[#E5C76B] text-xs py-3 rounded-full hover:bg-[#E5C76B] hover:text-black transition-all duration-300 shadow-[0_4px_20px_rgba(229,199,107,0.2)] uppercase tracking-widest font-semibold flex items-center justify-center gap-2 active:scale-[0.98]">
                         <span class="material-symbols-outlined text-lg">shopping_cart</span>
                         Añadir al Carrito
                     </button>
                     
                     <button onclick="sendWhatsAppInquiry()" class="w-full bg-transparent border border-black text-black hover:bg-[#25D366] hover:border-[#25D366] hover:text-white text-xs h-[44px] rounded-full transition-all duration-300 uppercase tracking-widest font-semibold flex items-center justify-center gap-2 group">
-                        <!-- SVG WhatsApp Icon -->
                         <svg class="w-[16px] h-[16px] fill-current -mt-0.5" viewBox="0 0 24 24">
                             <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
                         </svg>
@@ -285,6 +280,14 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <!-- FULLSCREEN IMAGE ZOOM OVERLAY -->
+    <div id="image-zoom-overlay" class="fixed inset-0 bg-black/95 z-[200] hidden opacity-0 transition-opacity duration-300 flex items-center justify-center p-4 cursor-zoom-out" onclick="closeImageZoom()">
+        <button class="absolute top-4 right-4 text-white hover:text-[#E5C76B] z-[210]">
+            <span class="material-symbols-outlined text-4xl">close</span>
+        </button>
+        <img id="zoomed-image" src="" class="max-w-full max-h-full object-contain transform scale-95 transition-transform duration-300" alt="Zoomed image">
     </div>
 
     <main class="pt-16">
@@ -331,8 +334,9 @@
                     </div>
                 </div>
 
-                <div id="laminado-grid" class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-gutter">
-                    <!-- Products injected here -->
+                <!-- CATEGORIZED GRID INJECTOR -->
+                <div id="laminado-container">
+                    <!-- Products injected here grouped by type -->
                 </div>
             </section>
 
@@ -349,8 +353,9 @@
                     </div>
                 </div>
 
-                <div id="oro-18k-grid" class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-gutter">
-                    <!-- Products injected here -->
+                <!-- CATEGORIZED GRID INJECTOR -->
+                <div id="oro-18k-container">
+                    <!-- Products injected here grouped by type -->
                 </div>
             </section>
         </div>
@@ -396,6 +401,7 @@
         let shoppingCart = [];
         let modalActiveProduct = null;
         let modalActiveColor = null;
+        let modalActiveSize = null;
 
         // ==========================================
         // DRAWER LOGIC
@@ -453,7 +459,7 @@
             const gold18kContent = document.getElementById('oro-18k-section');
 
             const activeBtnClasses = "flex-1 py-2.5 md:py-3 rounded-full text-xs md:text-sm font-semibold uppercase tracking-wider transition-all duration-300 bg-black text-[#E5C76B] shadow-md";
-            const inactiveBtnClasses = "flex-1 py-2.5 md:py-3 rounded-full text-xs md:text-sm font-semibold uppercase tracking-wider transition-all duration-300 text-black/70 hover:text-black";
+            const inactiveBtnClasses = "flex-1 py-2.5 md:py-3 rounded-full text-xs md:text-sm font-semibold uppercase tracking-wider transition-all duration-300 text-black/70 hover:text-black bg-stone-100";
 
             if (cat === 'laminado') {
                 laminadoBtn.className = activeBtnClasses;
@@ -480,21 +486,20 @@
 
         async function loadCatalog() {
             try {
-                const response = await fetch('/api/get-catalog');
+                const response = await fetch('/api/catalog'); // Usando endpoint actualizado
                 if (!response.ok) throw new Error('Failed to fetch catalog');
                 globalCatalog = await response.json();
-                renderProducts(globalCatalog);
+                renderCategorizedProducts(globalCatalog);
             } catch (error) {
                 console.error("Error loading catalog:", error);
-                document.getElementById('laminado-grid').innerHTML = `<p class="col-span-2 text-center py-12 text-black/50">Error al cargar el catálogo.</p>`;
+                document.getElementById('laminado-container').innerHTML = `<p class="text-center py-12 text-black/50">Error al cargar el catálogo.</p>`;
             }
         }
 
         function createProductCardHTML(product) {
             const is18k = product.category === '18k';
             const badgeClass = is18k ? 'bg-black/80 text-[#E5C76B] border-[#E5C76B]/30' : 'bg-stone-800/90 text-white border-white/20';
-            const badgeText = is18k ? '18K' : 'Laminado';
-            const subtitleText = is18k ? 'Oro 18k Macizo' : 'Oro Laminado 18k';
+            const badgeText = product.type || (is18k ? '18K' : 'Laminado'); 
             const borderClass = is18k ? 'border-[#E5C76B]/20' : 'border-black/10';
             const imageUrl = product.image || (product.images && product.images.length > 0 ? product.images[0] : 'img/placeholder.jpg');
             
@@ -503,37 +508,56 @@
             }).format(product.price);
 
             return `
-                <button onclick="openProductModal('${product.id}')" class="col-span-1 block w-full text-left">
+                <button onclick="openProductModal('${product.id}')" class="block w-full text-left">
                     <article class="group cursor-pointer rounded-2xl bg-surface-container-lowest transition-all duration-300 hover:shadow-[0_8px_40px_rgba(0,0,0,0.12)] hover:-translate-y-1 relative overflow-hidden border ${borderClass} flex flex-col h-full">
                         <div class="aspect-square w-full overflow-hidden rounded-t-2xl relative">
-                            <span class="absolute top-2 right-2 z-20 backdrop-blur-sm text-[10px] font-bold px-2 py-0.5 rounded-full border pointer-events-none shadow-sm ${badgeClass}">
+                            <span class="absolute top-2 right-2 z-20 backdrop-blur-sm text-[10px] font-bold px-2 py-0.5 rounded-full border pointer-events-none shadow-sm ${badgeClass} uppercase">
                                 ${badgeText}
                             </span>
                             <img src="${imageUrl}" alt="${product.name}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy">
                         </div>
                         <div class="p-3 md:p-6 text-center mt-auto flex flex-col gap-1.5 md:gap-2">
-                            <p class="text-[9px] md:text-[10px] text-black/50 font-bold uppercase tracking-widest">${subtitleText}</p>
-                            <h5 class="font-headline-lg-mobile text-sm md:text-lg text-black leading-snug">${product.name}</h5>
-                            <p class="font-body-md text-[#735c00] font-semibold text-sm md:text-base mt-1">${formattedPrice} COP</p>
+                            <h5 class="font-headline-lg-mobile text-sm md:text-lg text-black leading-snug truncate">${product.name}</h5>
+                            <p class="font-body-md text-[#735c00] font-semibold text-sm md:text-base">${formattedPrice} COP</p>
                         </div>
                     </article>
                 </button>
             `;
         }
 
-        function renderProducts(products) {
-            const laminadoContainer = document.getElementById('laminado-grid');
-            const oro18kContainer = document.getElementById('oro-18k-grid');
+        function renderCategorizedProducts(products) {
+            const laminadoContainer = document.getElementById('laminado-container');
+            const oro18kContainer = document.getElementById('oro-18k-container');
 
             const laminadoProducts = products.filter(p => p.category === 'laminado');
-            if (laminadoContainer) {
-                laminadoContainer.innerHTML = laminadoProducts.length ? laminadoProducts.map(createProductCardHTML).join('') : `<p class="col-span-2 py-8 text-center text-black/50">Próximamente nuevos diseños.</p>`;
-            }
-
             const oro18kProducts = products.filter(p => p.category === '18k');
-            if (oro18kContainer) {
-                oro18kContainer.innerHTML = oro18kProducts.length ? oro18kProducts.map(createProductCardHTML).join('') : `<p class="col-span-2 py-8 text-center text-black/50">Próximamente nuevos diseños.</p>`;
+
+            laminadoContainer.innerHTML = buildGroupedHTML(laminadoProducts);
+            if(oro18kContainer) oro18kContainer.innerHTML = buildGroupedHTML(oro18kProducts);
+        }
+
+        function buildGroupedHTML(productsArray) {
+            if (productsArray.length === 0) return `<p class="py-8 text-center text-black/50">Próximamente nuevos diseños.</p>`;
+            
+            const grouped = {};
+            productsArray.forEach(p => {
+                const t = p.type || 'Otros Diseños';
+                if (!grouped[t]) grouped[t] = [];
+                grouped[t].push(p);
+            });
+
+            let html = '';
+            for (const [type, prods] of Object.entries(grouped)) {
+                html += `
+                    <div class="mb-12">
+                        <h4 class="text-xl font-display-lg italic font-bold text-black border-b border-[#E5C76B]/40 pb-2 mb-6">${type}s</h4>
+                        <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-gutter">
+                            ${prods.map(createProductCardHTML).join('')}
+                        </div>
+                    </div>
+                `;
             }
+            return html;
         }
 
         // ==========================================
@@ -548,7 +572,8 @@
             if (!product) return;
 
             modalActiveProduct = product;
-            modalActiveColor = product.colors && product.colors.length > 0 ? product.colors[0] : 'Estándar';
+            modalActiveColor = null;
+            modalActiveSize = null;
 
             const is18k = product.category === '18k';
             
@@ -561,35 +586,86 @@
                 style: 'currency', currency: 'COP', minimumFractionDigits: 0
             }).format(product.price) + ' COP';
 
-            // Populate Images (Swipe horizontally)
+            // Populate Images (In-page zoom functionality)
             const imageContainer = document.getElementById('modal-image-container');
             const images = product.images && product.images.length > 0 ? product.images : [product.image];
             imageContainer.innerHTML = images.map(img => `
                 <div class="w-full shrink-0 snap-center aspect-square bg-surface-container-low rounded-xl overflow-hidden relative border border-black/10">
-                    <img src="${img}" class="w-full h-full object-cover">
+                    <div onclick="openImageZoom('${img}')" title="Haz clic para hacer zoom" class="block w-full h-full cursor-zoom-in">
+                        <img src="${img}" class="w-full h-full object-cover">
+                    </div>
                 </div>
             `).join('');
-
-            // Reset scroll position to the first image
             imageContainer.scrollLeft = 0;
 
-            // Populate Variant Swatches (Colors)
-            const variantContainer = document.getElementById('modal-variants');
-            if (product.colors && product.colors.length > 0) {
-                variantContainer.innerHTML = product.colors.map(color => {
-                    const cleanColorId = color.replace('#', '');
-                    const isSelected = modalActiveColor === color;
-                    const activeBorder = isSelected ? 'border-[#E5C76B]' : 'border-black/20 hover:border-[#E5C76B]/60';
-                    
-                    return `
-                        <button onclick="selectModalColor('${color}')" id="swatch-${cleanColorId}" class="w-8 h-8 md:w-10 md:h-10 rounded-full border-2 ${activeBorder} transition-all p-0.5 relative group shadow-sm">
-                            <span class="block w-full h-full rounded-full shadow-inner border border-black/5" style="background-color: ${color}"></span>
-                        </button>
+            // LÓGICA DE VARIANTES BASADA EN EL TIPO DE JOYA
+            const variantContainer = document.getElementById('modal-variants-container');
+            const type = product.type || '';
+            const group1 = ['Herraje', 'Dije', 'Topos'];
+            const group2 = ['Cadena', 'Anillo'];
+            const group3 = ['Pulsos'];
+            const group4 = ['Manilla', 'Anillo tejido'];
+
+            let variantHtml = '';
+
+            if (group1.includes(type)) {
+                variantHtml = `<p class="text-xs text-black/50 italic py-1">Talla Estándar</p>`;
+            } 
+            else if (group2.includes(type)) {
+                if (product.sizes && product.sizes.length > 0) {
+                    modalActiveSize = product.sizes[0];
+                    variantHtml = `
+                        <div class="flex flex-col gap-2">
+                            <label class="text-[11px] text-black uppercase tracking-wider font-semibold">Tallas Disponibles</label>
+                            <div class="flex flex-wrap gap-2">
+                                ${product.sizes.map(sz => `
+                                    <button onclick="selectModalSize('${sz}')" id="size-btn-${sz.replace(/\s+/g, '-')}" class="px-3.5 py-1.5 border rounded-lg text-xs font-bold transition-all ${modalActiveSize === sz ? 'border-black bg-black text-[#E5C76B]' : 'border-black/20 text-black/70 hover:border-black/50'}">
+                                        ${sz}
+                                    </button>
+                                `).join('')}
+                            </div>
+                        </div>
                     `;
-                }).join('');
+                } else { variantHtml = `<p class="text-xs text-black/50 italic py-1">Talla única.</p>`; }
+            } 
+            else if (group3.includes(type)) {
+                 if (product.sizes && product.sizes.length > 0) {
+                    modalActiveSize = product.sizes[0];
+                    variantHtml = `
+                        <div class="flex flex-col gap-2">
+                            <label class="text-[11px] text-black uppercase tracking-wider font-semibold">Género y Talla</label>
+                            <div class="flex flex-wrap gap-2">
+                                ${product.sizes.map(sz => `
+                                    <button onclick="selectModalSize('${sz}')" id="size-btn-${sz.replace(/\s+/g, '-')}" class="px-3.5 py-1.5 border rounded-lg text-xs font-bold transition-all ${modalActiveSize === sz ? 'border-black bg-black text-[#E5C76B]' : 'border-black/20 text-black/70 hover:border-black/50'}">
+                                        ${sz}
+                                    </button>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `;
+                }
+            } 
+            else if (group4.includes(type) || product.colors?.length > 0) {
+                 if (product.colors && product.colors.length > 0) {
+                    modalActiveColor = product.colors[0];
+                    variantHtml = `
+                        <div class="flex flex-col gap-2">
+                            <label class="text-[11px] text-black uppercase tracking-wider font-semibold">Tonalidad / Color</label>
+                            <div class="flex flex-wrap gap-3">
+                                ${product.colors.map(color => `
+                                    <button onclick="selectModalColor('${color}')" id="swatch-${color.replace('#', '')}" class="w-8 h-8 md:w-10 md:h-10 rounded-full border-2 transition-all p-0.5 relative group shadow-sm ${modalActiveColor === color ? 'border-[#E5C76B]' : 'border-black/20 hover:border-[#E5C76B]/60'}">
+                                        <span class="block w-full h-full rounded-full shadow-inner border border-black/5" style="background-color: ${color}"></span>
+                                    </button>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `;
+                }
             } else {
-                variantContainer.innerHTML = `<span class="text-xs text-black/50">Pieza única (Color Estándar)</span>`;
+                variantHtml = `<p class="text-xs text-black/50 italic py-1">Pieza estándar.</p>`;
             }
+
+            variantContainer.innerHTML = variantHtml;
 
             // Show Modal
             productModalOverlay.classList.remove('hidden');
@@ -602,14 +678,51 @@
             document.body.style.overflow = 'hidden';
         }
 
+        // ==========================================
+        // IMAGE ZOOM LOGIC
+        // ==========================================
+        const imageZoomOverlay = document.getElementById('image-zoom-overlay');
+        const zoomedImage = document.getElementById('zoomed-image');
+
+        function openImageZoom(src) {
+            zoomedImage.src = src;
+            imageZoomOverlay.classList.remove('hidden');
+            setTimeout(() => {
+                imageZoomOverlay.classList.remove('opacity-0');
+                zoomedImage.classList.remove('scale-95');
+            }, 10);
+        }
+
+        function closeImageZoom() {
+            imageZoomOverlay.classList.add('opacity-0');
+            zoomedImage.classList.add('scale-95');
+            setTimeout(() => {
+                imageZoomOverlay.classList.add('hidden');
+                zoomedImage.src = '';
+            }, 300);
+        }
+
+
+        // Eventos para botones dinámicos generados
+        function selectModalSize(size) {
+            modalActiveSize = size;
+            if(modalActiveProduct && modalActiveProduct.sizes) {
+                modalActiveProduct.sizes.forEach(sz => {
+                    const btn = document.getElementById(`size-btn-${sz.replace(/\s+/g, '-')}`);
+                    if(btn) {
+                        btn.className = `px-3.5 py-1.5 border rounded-lg text-xs font-bold transition-all ${sz === size ? 'border-black bg-black text-[#E5C76B]' : 'border-black/20 text-black/70 hover:border-black/50'}`;
+                    }
+                });
+            }
+        }
+
         function selectModalColor(color) {
             modalActiveColor = color;
-            // Update UI Borders visually
             if(modalActiveProduct && modalActiveProduct.colors) {
                 modalActiveProduct.colors.forEach(c => {
                     const btn = document.getElementById(`swatch-${c.replace('#', '')}`);
                     if(btn) {
-                        btn.className = `w-8 h-8 md:w-10 md:h-10 rounded-full border-2 ${c === color ? 'border-[#E5C76B]' : 'border-black/20 hover:border-[#E5C76B]/60'} transition-all p-0.5 relative group shadow-sm`;
+                        btn.className = `w-8 h-8 md:w-10 md:h-10 rounded-full border-2 transition-all p-0.5 relative group shadow-sm ${c === color ? 'border-[#E5C76B]' : 'border-black/20 hover:border-[#E5C76B]/60'}`;
                     }
                 });
             }
@@ -637,7 +750,11 @@
         function addToCart() {
             if(!modalActiveProduct) return;
             
-            const existingItemIndex = shoppingCart.findIndex(item => item.id === modalActiveProduct.id && item.color === modalActiveColor);
+            const existingItemIndex = shoppingCart.findIndex(item => 
+                item.id === modalActiveProduct.id && 
+                item.color === modalActiveColor && 
+                item.size === modalActiveSize
+            );
             
             if(existingItemIndex > -1) {
                 shoppingCart[existingItemIndex].quantity += 1;
@@ -649,6 +766,7 @@
                     image: modalActiveProduct.image || (modalActiveProduct.images ? modalActiveProduct.images[0] : ''),
                     category: modalActiveProduct.category,
                     color: modalActiveColor,
+                    size: modalActiveSize,
                     quantity: 1
                 });
             }
@@ -663,25 +781,20 @@
                 cartDrawer.classList.remove('translate-x-full');
                 cartOverlay.classList.remove('hidden');
                 setTimeout(() => cartOverlay.classList.add('opacity-100'), 10);
-            }, 350); // wait for modal to close smoothly
+            }, 350); 
         }
 
         function sendWhatsAppInquiry() {
             if(!modalActiveProduct) return;
             
-            // Format the message natively
             const productName = modalActiveProduct.name;
             const message = `¡Hola! Estoy interesado/a en la pieza *${productName}*. ¿Me podrían dar más información?`;
-            
-            // Encode the string so spaces and characters don't break the URL
             const encodedMessage = encodeURIComponent(message);
-            
-            // Open WhatsApp in a new tab
-            window.open(`https://wa.me/573009635047?text=${encodedMessage}`, '_blank');
+            window.open(`https://wa.me/573009635047?text=${encodedMessage}`, '_self');
         }
 
         function checkoutToWhatsApp() {
-            if (shoppingCart.length === 0) return; // Do nothing if cart is empty
+            if (shoppingCart.length === 0) return;
 
             let message = "¡Hola! Quisiera concretar la compra de mi carrito de La Estelar:\n\n";
             let totalCost = 0;
@@ -696,10 +809,13 @@
                 
                 const subtitle = item.category === '18k' ? '18k Macizo' : 'Laminado';
                 
-                // Add color text if it's not the default
-                const colorText = (item.color && item.color !== 'Estándar') ? ` (Color: ${item.color})` : '';
+                // Construye el texto de variables (Color y Talla)
+                let variantPieces = [];
+                if (item.color && item.color !== 'Estándar') variantPieces.push(`Color: ${item.color}`);
+                if (item.size) variantPieces.push(`Talla: ${item.size}`);
+                const variantText = variantPieces.length > 0 ? ` [${variantPieces.join(', ')}]` : '';
 
-                message += `▪ ${item.quantity}x ${item.name} [${subtitle}]${colorText} - ${formattedPrice} COP\n`;
+                message += `▪ ${item.quantity}x ${item.name} (${subtitle})${variantText} - ${formattedPrice} COP\n`;
             });
 
             const formattedTotal = new Intl.NumberFormat('es-CO', { 
@@ -709,7 +825,7 @@
             message += `\n*Total Estimado:* ${formattedTotal} COP\n\n¿Me indican los pasos para el pago y envío?`;
 
             const encodedMessage = encodeURIComponent(message);
-            window.open(`https://wa.me/573009635047?text=${encodedMessage}`, '_blank');
+            window.open(`https://wa.me/573009635047?text=${encodedMessage}`, '_self');
         }
 
         function renderCart() {
@@ -717,11 +833,9 @@
             const totalElement = document.getElementById('cart-total-price');
             const checkoutBtn = document.getElementById('checkout-btn');
             
-            // Grab both badges
             const headerBadge = document.getElementById('cart-badge');
             const floatingBadge = document.getElementById('floating-cart-badge');
             
-            // Calculate total quantities for badges
             const totalItems = shoppingCart.reduce((sum, item) => sum + item.quantity, 0);
             if(totalItems > 0) {
                 if(headerBadge) { headerBadge.innerText = totalItems; headerBadge.classList.remove('hidden'); }
@@ -744,10 +858,15 @@
                 const formattedPrice = new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(item.price * item.quantity);
                 const subtitle = item.category === '18k' ? 'Oro 18k Macizo' : 'Oro Laminado 18k';
                 
-                // Show color swatch if it's a valid hex
-                const colorHtml = item.color.startsWith('#') 
-                    ? `<span class="inline-block w-2.5 h-2.5 rounded-full border border-black/20 ml-1 align-middle shadow-inner" style="background-color:${item.color}"></span>`
-                    : '';
+                // Muestra color visual y texto de talla en el carrito
+                let variantPieces = [];
+                if (item.color && item.color !== 'Estándar') {
+                    variantPieces.push(item.color.startsWith('#') 
+                        ? `<span class="inline-block w-2.5 h-2.5 rounded-full border border-black/20 ml-1 align-middle shadow-inner" style="background-color:${item.color}"></span>`
+                        : item.color);
+                }
+                if (item.size) variantPieces.push(`Talla: ${item.size}`);
+                const variantHtml = variantPieces.length > 0 ? `• <span class="ml-1">${variantPieces.join(' | ')}</span>` : '';
 
                 return `
                 <article class="bg-white rounded-2xl p-3 border border-black/10 flex gap-4 shadow-sm relative">
@@ -760,7 +879,7 @@
                     <div class="flex-1 flex flex-col justify-between py-1 pr-4">
                         <div>
                             <h3 class="font-headline-lg-mobile text-base text-black leading-tight">${item.name}</h3>
-                            <p class="text-[10px] text-black/50 font-medium uppercase tracking-wider mt-1 flex items-center">${subtitle} ${colorHtml}</p>
+                            <p class="text-[10px] text-black/50 font-medium uppercase tracking-wider mt-1 flex items-center flex-wrap">${subtitle} ${variantHtml}</p>
                         </div>
                         <div class="flex justify-between items-end mt-2">
                             <div class="flex items-center gap-2 bg-stone-100 border border-black/10 rounded-full px-2 py-0.5">

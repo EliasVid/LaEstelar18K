@@ -1,17 +1,31 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Módulo 3: Punto de Venta | La Estelar</title>
-    <link
-        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap"
-        rel="stylesheet">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=block"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=block" rel="stylesheet">
+    
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- NUEVO: Detector Automático de Bloqueo de Edge -->
+    <script>
+        window.addEventListener('load', () => {
+            if (typeof tailwind === 'undefined') {
+                document.body.innerHTML = `
+                    <div style="height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; font-family: 'DM Sans', sans-serif; padding: 20px; background: #f9f9f9;">
+                        <span class="material-symbols-outlined" style="font-size: 60px; color: #cc0000; margin-bottom: 20px;">gpp_bad</span>
+                        <h2 style="font-size: 24px; font-weight: bold; color: #121212;">⚠️ Escudo del Navegador Detectado</h2>
+                        <p style="margin-top: 15px; color: #555; max-width: 500px; line-height: 1.6;">Microsoft Edge o tu bloqueador de anuncios está bloqueando los estilos visuales (CSS) de este panel por error.</p>
+                        <p style="margin-top: 15px; color: #121212; font-weight: bold; max-width: 500px;">Solución:</p>
+                        <p style="margin-top: 5px; color: #555; max-width: 500px; line-height: 1.6;">Haz clic en el candado junto a la URL y <b>desactiva la "Prevención de Seguimiento"</b>, o te recomendamos abrir este sistema utilizando <b>Google Chrome</b>.</p>
+                    </div>
+                `;
+            }
+        });
+    </script>
+
     <style>
         /* === IMPORTED SIDEBAR CSS === */
         :root {
