@@ -4,14 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link
-        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&amp;family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&amp;display=swap"
-        rel="stylesheet">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block"
-        rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <script id="tailwind-config">try {
+    <title>La Estelar | Joyería 18k</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=block" rel="stylesheet">
+    
+    <!-- Carga limpia de Tailwind CDN (Sin plugins problemáticos para Edge) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script id="tailwind-config">
+        try {
             tailwind.config = {
                 darkMode: "class",
                 theme: {
@@ -63,7 +63,8 @@
                             "surface-dim": "#e8d7c9",
                             "primary-container": "#c98b6d",
                             "surface": "#fff8f4",
-                            "inverse-surface": "#392f25"
+                            "inverse-surface": "#392f25",
+                            "brand-gold": "#E5C76B"
                         },
                         "borderRadius": {
                             "DEFAULT": "0.25rem",
@@ -112,7 +113,7 @@
     </style>
 </head>
 
-<body class="bg-surface-container-lowest text-on-background font-body-md antialiased min-h-screen">
+<body class="bg-surface-container-lowest text-on-background font-body-md antialiased min-h-screen pb-24 md:pb-0">
     <!-- TopAppBar -->
     <header
         class="flex justify-between items-center px-2 sm:px-margin-mobile md:px-margin-desktop h-16 w-full fixed top-0 z-50 transition-all duration-300 bg-black/50 backdrop-blur-md border-b border-[#E5C76B]/20">
@@ -237,7 +238,7 @@
                 <span class="material-symbols-outlined text-lg">close</span>
             </button>
 
-            <!-- Left: Image Swipe Gallery -->
+            <!-- Left: Image Swipe Gallery (Now clickable) -->
             <div class="w-full md:w-1/2 bg-surface-container-low border-b md:border-b-0 md:border-r border-[#E5C76B]/20 relative flex items-center shrink-0">
                 <div id="modal-image-container" class="w-full flex flex-nowrap overflow-x-auto snap-x snap-mandatory no-scrollbar p-4 gap-4">
                     <div class="w-full shrink-0 aspect-square bg-stone-200 animate-pulse rounded-xl"></div>
