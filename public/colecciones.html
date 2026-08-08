@@ -506,7 +506,7 @@
         function createProductCardHTML(product) {
             const is18k = product.category === '18k';
             const badgeClass = is18k ? 'bg-black/80 text-[#E5C76B] border-[#E5C76B]/30' : 'bg-stone-800/90 text-white border-white/20';
-            const badgeText = product.type || (is18k ? '18K' : 'Laminado'); 
+            const badgeText = (is18k ? '18K' : 'Laminado'); 
             const borderClass = is18k ? 'border-[#E5C76B]/20' : 'border-black/10';
             const imageUrl = product.image || (product.images && product.images.length > 0 ? product.images[0] : 'img/placeholder.jpg');
             
