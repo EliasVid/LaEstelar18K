@@ -377,6 +377,20 @@
             loadCatalog();
         });
 
+        // Escuchar cuando el "#hash" cambia sin recargar la página
+        window.addEventListener('hashchange', () => {
+            if (window.location.hash === '#oro-18k') {
+                switchCategory('18k');
+            } else {
+                switchCategory('laminado'); // Vuelve al default si se quita el hash
+            }
+            
+            // Cerrar el menú lateral automáticamente para que el usuario vea el cambio
+            if (!drawer.classList.contains('-translate-x-full')) {
+                toggleDrawer();
+            }
+        });
+
         async function loadCatalog() {
             try {
                 const response = await fetch('/api/catalog');

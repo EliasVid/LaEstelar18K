@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" style="">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -8,99 +8,9 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=block" rel="stylesheet">
     
-    <!-- Carga limpia de Tailwind CDN (Sin plugins problemáticos para Edge) -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script id="tailwind-config">
-        try {
-            tailwind.config = {
-                darkMode: "class",
-                theme: {
-                    extend: {
-                        "colors": {
-                            "outline-variant": "#d7c2ba",
-                            "inverse-primary": "#fbb797",
-                            "on-tertiary-fixed-variant": "#574500",
-                            "surface-container": "#fdebdc",
-                            "outline": "#84746c",
-                            "surface-variant": "#f1dfd1",
-                            "surface-bright": "#fff8f4",
-                            "on-surface-variant": "#52443e",
-                            "on-tertiary-fixed": "#241a00",
-                            "on-tertiary": "#ffffff",
-                            "on-secondary-container": "#6d6354",
-                            "inverse-on-surface": "#ffeee0",
-                            "surface-container-low": "#fff1e7",
-                            "on-surface": "#231a11",
-                            "on-primary-container": "#50260f",
-                            "tertiary-fixed": "#ffe088",
-                            "surface-container-lowest": "#ffffff",
-                            "secondary-fixed": "#efe0cd",
-                            "primary-fixed": "#ffdbcb",
-                            "on-tertiary-container": "#4f3e00",
-                            "on-primary-fixed": "#341100",
-                            "tertiary-container": "#cca830",
-                            "surface-container-high": "#f7e5d7",
-                            "on-secondary-fixed-variant": "#4f4538",
-                            "on-error-container": "#93000a",
-                            "on-primary-fixed-variant": "#6a3b22",
-                            "on-primary": "#ffffff",
-                            "primary-fixed-dim": "#fbb797",
-                            "secondary-container": "#efe0cd",
-                            "surface-container-highest": "#f1dfd1",
-                            "on-background": "#231a11",
-                            "error": "#ba1a1a",
-                            "on-secondary-fixed": "#221a0f",
-                            "on-secondary": "#ffffff",
-                            "error-container": "#ffdad6",
-                            "tertiary-fixed-dim": "#e9c349",
-                            "background": "#fff8f4",
-                            "on-error": "#ffffff",
-                            "tertiary": "#735c00",
-                            "secondary": "#675d4e",
-                            "secondary-fixed-dim": "#d2c4b2",
-                            "primary": "#855137",
-                            "surface-tint": "#855137",
-                            "surface-dim": "#e8d7c9",
-                            "primary-container": "#c98b6d",
-                            "surface": "#fff8f4",
-                            "inverse-surface": "#392f25",
-                            "brand-gold": "#E5C76B"
-                        },
-                        "borderRadius": {
-                            "DEFAULT": "0.25rem",
-                            "lg": "0.5rem",
-                            "xl": "0.75rem",
-                            "full": "9999px"
-                        },
-                        "spacing": {
-                            "gutter": "24px",
-                            "margin-desktop": "64px",
-                            "stack-md": "32px",
-                            "margin-mobile": "16px",
-                            "base": "8px",
-                            "section-gap": "80px",
-                            "stack-sm": "12px"
-                        },
-                        "fontFamily": {
-                            "display-lg": ["Libre Caslon Text", "serif"],
-                            "body-md": ["DM Sans", "sans-serif"],
-                            "headline-lg": ["Libre Caslon Text", "serif"],
-                            "body-lg": ["DM Sans", "sans-serif"],
-                            "headline-lg-mobile": ["Libre Caslon Text", "serif"],
-                            "label-sm": ["DM Sans", "sans-serif"]
-                        },
-                        "fontSize": {
-                            "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "400" }],
-                            "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
-                            "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "400" }],
-                            "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
-                            "headline-lg-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "400" }],
-                            "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }]
-                        }
-                    }
-                }
-            }
-        } catch (_e) { }</script>
+    <!-- Archivo CSS compilado (Soluciona el problema de carga en Edge) -->
+    <link rel="stylesheet" href="css/index.css">
+
     <style>
         /* Hides the scrollbar on the image gallery for a native app feel */
         .no-scrollbar::-webkit-scrollbar {
@@ -109,6 +19,75 @@
         .no-scrollbar {
             -ms-overflow-style: none;
             scrollbar-width: none;
+        }
+
+        /* Estilos del Tab Switcher idénticos a colecciones */
+        .tab-container {
+            display: inline-flex;
+            background-color: #f5f5f4;
+            padding: 0.35rem;
+            border-radius: 9999px;
+            box-shadow: inset 0 2px 4px 0 rgba(0,0,0,0.05);
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+        .tab-btn-base {
+            padding: 0.5rem 1.5rem;
+            border-radius: 9999px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        @media (min-width: 768px) {
+            .tab-btn-base { padding: 0.6rem 2.5rem; font-size: 0.75rem; }
+        }
+        .tab-btn-active {
+            background-color: #000000;
+            color: #E5C76B;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.15);
+        }
+        .tab-btn-inactive {
+            background-color: transparent;
+            color: rgba(0, 0, 0, 0.5);
+        }
+        .tab-btn-inactive:hover {
+            color: #000000;
+            background-color: rgba(0,0,0,0.04);
+        }
+
+        /* FORZAR GRID LAYOUTS MANUALES PARA EVITAR QUE SE ROMPA SIN EL CDN */
+        .customizer-layout { display: grid; grid-template-columns: 1fr; gap: 2.5rem; }
+        @media (min-width: 1024px) {
+            .customizer-layout { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+            .customizer-left { grid-column: span 7 / span 7; }
+            .customizer-right { grid-column: span 5 / span 5; }
+        }
+
+        .grid-2-col { display: grid; grid-template-columns: 1fr; gap: 0.75rem; }
+        @media (min-width: 640px) { .grid-2-col { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+        .grid-3-col { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; }
+        @media (min-width: 640px) { .grid-3-col { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+        
+        .grid-4-col { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.5rem; }
+        @media (min-width: 640px) { .grid-4-col { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+
+        .grid-3-col-fixed { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.75rem; }
+        .grid-5-col-fixed { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0.5rem; }
+
+        .sticky-summary { position: sticky; top: 6rem; }
+
+        /* FORZAR COLOR AMARILLO EN BOTÓN DE WHATSAPP */
+        .btn-wa-yellow {
+            background-color: #E5C76B !important;
+            color: #000000 !important;
+        }
+        .btn-wa-yellow:hover {
+            background-color: #dcb55c !important;
         }
     </style>
 </head>
@@ -140,9 +119,9 @@
 
     <!-- NavigationDrawer -->
     <div id="drawer-overlay"
-        class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden opacity-0 transition-opacity duration-300"></div>
+        class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[90] hidden opacity-0 transition-opacity duration-300"></div>
     <aside id="nav-drawer"
-        class="fixed top-0 left-0 h-full w-80 bg-[#121212] border-r border-[#E5C76B]/20 shadow-2xl rounded-r-3xl z-50 transform -translate-x-full transition-transform duration-300 ease-in-out flex flex-col py-8 text-white">
+        class="fixed top-0 left-0 h-full w-80 bg-[#121212] border-r border-[#E5C76B]/20 shadow-2xl rounded-r-3xl z-[100] transform -translate-x-full transition-transform duration-300 ease-in-out flex flex-col py-8 text-white">
         <div class="px-6 mb-6 flex justify-between items-center">
             <h2 class="text-[#E5C76B] font-display-lg italic text-headline-lg">Menú</h2>
             <button id="close-drawer" class="text-white/70 hover:text-[#E5C76B] transition-colors"
@@ -190,43 +169,12 @@
                         <span class="font-body-md">Nuestra Historia</span>
                     </a>
                 </li>
-                <li class="pt-4 border-t border-[#E5C76B]/10 mt-4">
-                    <a href="https://wa.me/573009635047?text=Hola,%20quisiera%20recibir%20informaci%C3%B3n%20sobre%20compras%20al%20por%20mayor."
-                        target="_blank" rel="noopener noreferrer"
-                        class="flex items-center gap-4 text-white/80 px-6 py-3.5 hover:bg-[#E5C76B]/10 hover:text-[#E5C76B] transition-colors">
-                        <svg class="w-5 h-5 fill-current text-[#E5C76B]" viewBox="0 0 24 24">
-                            <path
-                                d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
-                        </svg>
-                        <span class="font-body-md">WhatsApp</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="https://www.instagram.com/laestelar_joyeria18k" target="_blank" rel="noopener noreferrer"
-                        class="flex items-center gap-4 text-white/80 px-6 py-3.5 hover:bg-[#E5C76B]/10 hover:text-[#E5C76B] transition-colors">
-                        <svg class="w-5 h-5 fill-current text-[#E5C76B]" viewBox="0 0 24 24">
-                            <path
-                                d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
-                        </svg>
-                        <span class="font-body-md">Instagram</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="https://www.tiktok.com/@laestelar_joyeria" target="_blank" rel="noopener noreferrer"
-                        class="flex items-center gap-4 text-white/80 px-6 py-3.5 hover:bg-[#E5C76B]/10 hover:text-[#E5C76B] transition-colors">
-                        <svg class="w-5 h-5 fill-current text-[#E5C76B]" viewBox="0 0 24 24">
-                            <path
-                                d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.07-1.3 1.8-.24.84-.02 1.77.49 2.45.57.78 1.52 1.25 2.48 1.25 1.13.01 2.21-.55 2.79-1.52.41-.66.58-1.46.56-2.24.01-4.87.01-9.74 0-14.61z" />
-                        </svg>
-                        <span class="font-body-md">TikTok</span>
-                    </a>
-                </li>
             </ul>
         </nav>
     </aside>
 
     <main class="pt-16">
-        <!-- Hero Header with Rectangular Background Image Support -->
+        <!-- Hero Header -->
         <section class="bg-black text-[#E5C76B] py-12 px-margin-mobile md:px-margin-desktop text-center border-b border-[#E5C76B]/20 relative overflow-hidden">
             <div class="absolute inset-0 z-0">
                 <img src="img/landing.jpeg" alt="La Estelar Joyería Header" class="w-full h-full object-cover object-center opacity-40">
@@ -239,35 +187,33 @@
             </div>
         </section>
 
-        <!-- Category Tab Switcher (Pulseras / Anillos) -->
-        <section class="bg-surface-container-lowest py-6 px-margin-mobile md:px-margin-desktop border-b border-[#E5C76B]/20">
-            <div class="max-w-md mx-auto flex justify-center p-1.5 bg-stone-100 rounded-full border border-black/10 shadow-inner">
-                <button id="tab-pulseras-btn" onclick="switchTab('pulseras')"
-                    class="flex-1 py-3 rounded-full text-xs md:text-sm font-semibold uppercase tracking-wider transition-all duration-300 bg-black text-[#E5C76B] shadow-md">
+        <!-- Category Tab Switcher -->
+        <section class="bg-surface-container-lowest text-center border-b border-[#E5C76B]/20" style="padding-top: 4rem; padding-bottom: 2rem; padding-left: 1rem; padding-right: 1rem;">
+            <div class="tab-container">
+                <button id="tab-pulseras-btn" onclick="switchTab('pulseras')" class="tab-btn-base tab-btn-active">
                     Pulseras
                 </button>
-                <button id="tab-anillos-btn" onclick="switchTab('anillos')"
-                    class="flex-1 py-3 rounded-full text-xs md:text-sm font-semibold uppercase tracking-wider transition-all duration-300 text-black/70 hover:text-black">
+                <button id="tab-anillos-btn" onclick="switchTab('anillos')" class="tab-btn-base tab-btn-inactive">
                     Anillos
                 </button>
             </div>
         </section>
 
         <!-- Interactive Customizer Section -->
-        <section class="py-12 px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10">
+        <section class="py-12 px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto customizer-layout">
             
-            <!-- Builder Steps Column (Left 7 Cols) -->
-            <div class="lg:col-span-7 space-y-8">
+            <!-- Builder Steps Column -->
+            <div class="customizer-left space-y-8">
                 
                 <!-- ================= TAB 1: PULSERAS ================= -->
                 <div id="builder-pulseras" class="space-y-8">
                     <!-- Step 1: Material -->
                     <div class="bg-white p-6 rounded-2xl border border-[#E5C76B]/30 shadow-sm space-y-4">
-                        <div class="flex items-center gap-2 border-b border-black/10 pb-3">
-                            <span class="bg-black text-[#E5C76B] text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center">1</span>
+                        <div class="flex items-center gap-3 border-b border-black/10 pb-3">
+                            <span class="bg-black text-[#E5C76B] text-sm font-bold w-8 h-8 rounded-full flex items-center justify-center shrink-0 shadow-sm">1</span>
                             <h2 class="font-headline-lg text-lg text-black">Tipo de Oro</h2>
                         </div>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div class="grid-2-col">
                             <button type="button" data-key="material" data-value="Oro 18k Macizo" class="option-btn border-2 border-black bg-black text-[#E5C76B] p-4 rounded-xl text-left font-semibold text-sm transition-all flex justify-between items-center shadow-sm">
                                 <div>
                                     <p class="text-base font-headline-lg">Oro 18k Macizo</p>
@@ -287,11 +233,11 @@
 
                     <!-- Step 2: Estilo de Tejido -->
                     <div class="bg-white p-6 rounded-2xl border border-[#E5C76B]/30 shadow-sm space-y-4">
-                        <div class="flex items-center gap-2 border-b border-black/10 pb-3">
-                            <span class="bg-black text-[#E5C76B] text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center">2</span>
+                        <div class="flex items-center gap-3 border-b border-black/10 pb-3">
+                            <span class="bg-black text-[#E5C76B] text-sm font-bold w-8 h-8 rounded-full flex items-center justify-center shrink-0 shadow-sm">2</span>
                             <h2 class="font-headline-lg text-lg text-black">Tipo de Tejido</h2>
                         </div>
-                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                        <div class="grid-3-col">
                             <button type="button" data-key="tejido" data-value="Macramé Clásico" class="option-btn border-2 border-black bg-black text-[#E5C76B] p-3 rounded-xl text-center transition-all">
                                 <p class="text-sm font-semibold">Macramé Clásico</p>
                             </button>
@@ -306,37 +252,37 @@
 
                     <!-- Step 3: Color del Hilo -->
                     <div class="bg-white p-6 rounded-2xl border border-[#E5C76B]/30 shadow-sm space-y-4">
-                        <div class="flex items-center gap-2 border-b border-black/10 pb-3">
-                            <span class="bg-black text-[#E5C76B] text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center">3</span>
+                        <div class="flex items-center gap-3 border-b border-black/10 pb-3">
+                            <span class="bg-black text-[#E5C76B] text-sm font-bold w-8 h-8 rounded-full flex items-center justify-center shrink-0 shadow-sm">3</span>
                             <h2 class="font-headline-lg text-lg text-black">Color del Hilo</h2>
                         </div>
-                        <div class="flex flex-wrap gap-3">
-                            <button type="button" data-key="hilo" data-value="Rojo Escarlata" class="option-btn flex items-center gap-2 border-2 border-black bg-black text-[#E5C76B] px-4 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all">
-                                <span class="w-3.5 h-3.5 rounded-full bg-red-600 inline-block border border-white"></span>
-                                Rojo Escarlata
+                        <div class="grid-4-col">
+                            <button type="button" data-key="hilo" data-value="Rojo Escarlata" class="option-btn border-2 border-black bg-black text-[#E5C76B] p-2 rounded-xl text-center transition-all flex flex-col items-center justify-center gap-1.5 shadow-sm">
+                                <span class="w-4 h-4 rounded-full inline-block shadow-inner border border-white/20" style="background-color: #dc2626;"></span>
+                                <p class="text-xs font-semibold leading-tight">Rojo Escarlata</p>
                             </button>
-                            <button type="button" data-key="hilo" data-value="Negro Ébano" class="option-btn flex items-center gap-2 border border-black/15 text-black hover:border-[#E5C76B] px-4 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all">
-                                <span class="w-3.5 h-3.5 rounded-full bg-black inline-block"></span>
-                                Negro Ébano
+                            <button type="button" data-key="hilo" data-value="Negro Ébano" class="option-btn border border-black/15 hover:border-[#E5C76B] text-black p-2 rounded-xl text-center transition-all flex flex-col items-center justify-center gap-1.5">
+                                <span class="w-4 h-4 rounded-full inline-block shadow-inner border border-black/20" style="background-color: #000000;"></span>
+                                <p class="text-xs font-semibold leading-tight">Negro Ébano</p>
                             </button>
-                            <button type="button" data-key="hilo" data-value="Vino Tinto" class="option-btn flex items-center gap-2 border border-black/15 text-black hover:border-[#E5C76B] px-4 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all">
-                                <span class="w-3.5 h-3.5 rounded-full bg-red-950 inline-block"></span>
-                                Vino Tinto
+                            <button type="button" data-key="hilo" data-value="Vino Tinto" class="option-btn border border-black/15 hover:border-[#E5C76B] text-black p-2 rounded-xl text-center transition-all flex flex-col items-center justify-center gap-1.5">
+                                <span class="w-4 h-4 rounded-full inline-block shadow-inner border border-white/20" style="background-color: #722F37;"></span>
+                                <p class="text-xs font-semibold leading-tight">Vino Tinto</p>
                             </button>
-                            <button type="button" data-key="hilo" data-value="Azul Marino" class="option-btn flex items-center gap-2 border border-black/15 text-black hover:border-[#E5C76B] px-4 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all">
-                                <span class="w-3.5 h-3.5 rounded-full bg-blue-900 inline-block"></span>
-                                Azul Marino
+                            <button type="button" data-key="hilo" data-value="Azul Marino" class="option-btn border border-black/15 hover:border-[#E5C76B] text-black p-2 rounded-xl text-center transition-all flex flex-col items-center justify-center gap-1.5">
+                                <span class="w-4 h-4 rounded-full inline-block shadow-inner border border-white/20" style="background-color: #1e3a8a;"></span>
+                                <p class="text-xs font-semibold leading-tight">Azul Marino</p>
                             </button>
                         </div>
                     </div>
 
                     <!-- Step 4: Tamaños de Balines -->
                     <div class="bg-white p-6 rounded-2xl border border-[#E5C76B]/30 shadow-sm space-y-4">
-                        <div class="flex items-center gap-2 border-b border-black/10 pb-3">
-                            <span class="bg-black text-[#E5C76B] text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center">4</span>
+                        <div class="flex items-center gap-3 border-b border-black/10 pb-3">
+                            <span class="bg-black text-[#E5C76B] text-sm font-bold w-8 h-8 rounded-full flex items-center justify-center shrink-0 shadow-sm">4</span>
                             <h2 class="font-headline-lg text-lg text-black">Tamaño de Balines / Esferas</h2>
                         </div>
-                        <div class="grid grid-cols-3 gap-3">
+                        <div class="grid-3-col-fixed">
                             <button type="button" data-key="balines" data-value="3 mm (Finos)" class="option-btn border-2 border-black bg-black text-[#E5C76B] p-3 rounded-xl text-center transition-all">
                                 <p class="text-sm font-semibold">3 mm</p>
                                 <p class="text-[10px] opacity-70 font-normal">Finos / Delicados</p>
@@ -354,11 +300,11 @@
 
                     <!-- Step 5: Dijes -->
                     <div class="bg-white p-6 rounded-2xl border border-[#E5C76B]/30 shadow-sm space-y-4">
-                        <div class="flex items-center gap-2 border-b border-black/10 pb-3">
-                            <span class="bg-black text-[#E5C76B] text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center">5</span>
+                        <div class="flex items-center gap-3 border-b border-black/10 pb-3">
+                            <span class="bg-black text-[#E5C76B] text-sm font-bold w-8 h-8 rounded-full flex items-center justify-center shrink-0 shadow-sm">5</span>
                             <h2 class="font-headline-lg text-lg text-black">Dije Central</h2>
                         </div>
-                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                        <div class="grid-3-col">
                             <button type="button" data-key="dije" data-value="Inicial Grabada" class="option-btn border-2 border-black bg-black text-[#E5C76B] p-3 rounded-xl text-center transition-all">
                                 <p class="text-sm font-semibold">Inicial Grabada</p>
                             </button>
@@ -378,15 +324,15 @@
                     </div>
                 </div>
 
-                <!-- ================= TAB 2: ANILLOS (Hidden by default) ================= -->
+                <!-- ================= TAB 2: ANILLOS ================= -->
                 <div id="builder-anillos" class="space-y-8 hidden">
                     <!-- Step 1: Material Anillo -->
                     <div class="bg-white p-6 rounded-2xl border border-[#E5C76B]/30 shadow-sm space-y-4">
-                        <div class="flex items-center gap-2 border-b border-black/10 pb-3">
-                            <span class="bg-black text-[#E5C76B] text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center">1</span>
+                        <div class="flex items-center gap-3 border-b border-black/10 pb-3">
+                            <span class="bg-black text-[#E5C76B] text-sm font-bold w-8 h-8 rounded-full flex items-center justify-center shrink-0 shadow-sm">1</span>
                             <h2 class="font-headline-lg text-lg text-black">Tipo de Oro para Anillo</h2>
                         </div>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div class="grid-2-col">
                             <button type="button" data-key="anilloMaterial" data-value="Oro 18k Macizo" class="option-btn-anillo border-2 border-black bg-black text-[#E5C76B] p-4 rounded-xl text-left font-semibold text-sm transition-all flex justify-between items-center shadow-sm">
                                 <div>
                                     <p class="text-base font-headline-lg">Oro 18k Macizo</p>
@@ -406,11 +352,11 @@
 
                     <!-- Step 2: Estilo / Textura del Anillo -->
                     <div class="bg-white p-6 rounded-2xl border border-[#E5C76B]/30 shadow-sm space-y-4">
-                        <div class="flex items-center gap-2 border-b border-black/10 pb-3">
-                            <span class="bg-black text-[#E5C76B] text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center">2</span>
+                        <div class="flex items-center gap-3 border-b border-black/10 pb-3">
+                            <span class="bg-black text-[#E5C76B] text-sm font-bold w-8 h-8 rounded-full flex items-center justify-center shrink-0 shadow-sm">2</span>
                             <h2 class="font-headline-lg text-lg text-black">Estilo o Tejido del Anillo</h2>
                         </div>
-                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                        <div class="grid-3-col">
                             <button type="button" data-key="anilloEstilo" data-value="Anillo Tejido a Mano" class="option-btn-anillo border-2 border-black bg-black text-[#E5C76B] p-3 rounded-xl text-center transition-all">
                                 <p class="text-sm font-semibold">Tejido a Mano</p>
                             </button>
@@ -425,51 +371,51 @@
 
                     <!-- Step 3: Color del Hilo -->
                     <div class="bg-white p-6 rounded-2xl border border-[#E5C76B]/30 shadow-sm space-y-4">
-                        <div class="flex items-center gap-2 border-b border-black/10 pb-3">
-                            <span class="bg-black text-[#E5C76B] text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center">3</span>
+                        <div class="flex items-center gap-3 border-b border-black/10 pb-3">
+                            <span class="bg-black text-[#E5C76B] text-sm font-bold w-8 h-8 rounded-full flex items-center justify-center shrink-0 shadow-sm">3</span>
                             <h2 class="font-headline-lg text-lg text-black">Color del Hilo</h2>
                         </div>
-                        <div class="flex flex-wrap gap-3">
-                            <button type="button" data-key="hilo" data-value="Rojo Escarlata" class="option-btn flex items-center gap-2 border-2 border-black bg-black text-[#E5C76B] px-4 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all">
-                                <span class="w-3.5 h-3.5 rounded-full bg-red-600 inline-block border border-white"></span>
-                                Rojo Escarlata
+                        <div class="grid-4-col">
+                            <button type="button" data-key="anilloHilo" data-value="Rojo Escarlata" class="option-btn-anillo border-2 border-black bg-black text-[#E5C76B] p-2 rounded-xl text-center transition-all flex flex-col items-center justify-center gap-1.5 shadow-sm">
+                                <span class="w-4 h-4 rounded-full inline-block shadow-inner border border-white/20" style="background-color: #dc2626;"></span>
+                                <p class="text-xs font-semibold leading-tight">Rojo Escarlata</p>
                             </button>
-                            <button type="button" data-key="hilo" data-value="Negro Ébano" class="option-btn flex items-center gap-2 border border-black/15 text-black hover:border-[#E5C76B] px-4 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all">
-                                <span class="w-3.5 h-3.5 rounded-full bg-black inline-block"></span>
-                                Negro Ébano
+                            <button type="button" data-key="anilloHilo" data-value="Negro Ébano" class="option-btn-anillo border border-black/15 hover:border-[#E5C76B] text-black p-2 rounded-xl text-center transition-all flex flex-col items-center justify-center gap-1.5">
+                                <span class="w-4 h-4 rounded-full inline-block shadow-inner border border-black/20" style="background-color: #000000;"></span>
+                                <p class="text-xs font-semibold leading-tight">Negro Ébano</p>
                             </button>
-                            <button type="button" data-key="hilo" data-value="Vino Tinto" class="option-btn flex items-center gap-2 border border-black/15 text-black hover:border-[#E5C76B] px-4 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all">
-                                <span class="w-3.5 h-3.5 rounded-full bg-red-950 inline-block"></span>
-                                Vino Tinto
+                            <button type="button" data-key="anilloHilo" data-value="Vino Tinto" class="option-btn-anillo border border-black/15 hover:border-[#E5C76B] text-black p-2 rounded-xl text-center transition-all flex flex-col items-center justify-center gap-1.5">
+                                <span class="w-4 h-4 rounded-full inline-block shadow-inner border border-white/20" style="background-color: #722F37;"></span>
+                                <p class="text-xs font-semibold leading-tight">Vino Tinto</p>
                             </button>
-                            <button type="button" data-key="hilo" data-value="Azul Marino" class="option-btn flex items-center gap-2 border border-black/15 text-black hover:border-[#E5C76B] px-4 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all">
-                                <span class="w-3.5 h-3.5 rounded-full bg-blue-900 inline-block"></span>
-                                Azul Marino
+                            <button type="button" data-key="anilloHilo" data-value="Azul Marino" class="option-btn-anillo border border-black/15 hover:border-[#E5C76B] text-black p-2 rounded-xl text-center transition-all flex flex-col items-center justify-center gap-1.5">
+                                <span class="w-4 h-4 rounded-full inline-block shadow-inner border border-white/20" style="background-color: #1e3a8a;"></span>
+                                <p class="text-xs font-semibold leading-tight">Azul Marino</p>
                             </button>
                         </div>
                     </div>
 
                     <!-- Step 4: Talla Aproximada -->
                     <div class="bg-white p-6 rounded-2xl border border-[#E5C76B]/30 shadow-sm space-y-4">
-                        <div class="flex items-center gap-2 border-b border-black/10 pb-3">
-                            <span class="bg-black text-[#E5C76B] text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center">3</span>
+                        <div class="flex items-center gap-3 border-b border-black/10 pb-3">
+                            <span class="bg-black text-[#E5C76B] text-sm font-bold w-8 h-8 rounded-full flex items-center justify-center shrink-0 shadow-sm">4</span>
                             <h2 class="font-headline-lg text-lg text-black">Talla Estimada</h2>
                         </div>
-                        <div class="grid grid-cols-5 gap-2">
-                            <button type="button" data-key="anilloTalla" data-value="Talla 5" class="option-btn-anillo border border-black/15 text-black hover:border-[#E5C76B] h-12 rounded-xl text-center font-semibold text-sm transition-all">5</button>
-                            <button type="button" data-key="anilloTalla" data-value="Talla 6" class="option-btn-anillo border-2 border-black bg-black text-[#E5C76B] h-12 rounded-xl text-center font-semibold text-sm transition-all">6</button>
-                            <button type="button" data-key="anilloTalla" data-value="Talla 7" class="option-btn-anillo border border-black/15 text-black hover:border-[#E5C76B] h-12 rounded-xl text-center font-semibold text-sm transition-all">7</button>
-                            <button type="button" data-key="anilloTalla" data-value="Talla 8" class="option-btn-anillo border border-black/15 text-black hover:border-[#E5C76B] h-12 rounded-xl text-center font-semibold text-sm transition-all">8</button>
-                            <button type="button" data-key="anilloTalla" data-value="Talla 9" class="option-btn-anillo border border-black/15 text-black hover:border-[#E5C76B] h-12 rounded-xl text-center font-semibold text-sm transition-all">9</button>
+                        <div class="grid-5-col-fixed">
+                            <button type="button" data-key="anilloTalla" data-value="Talla 5" class="option-btn-anillo border border-black/15 text-black hover:border-[#E5C76B] py-3 rounded-xl text-center font-semibold text-sm transition-all">5</button>
+                            <button type="button" data-key="anilloTalla" data-value="Talla 6" class="option-btn-anillo border-2 border-black bg-black text-[#E5C76B] py-3 rounded-xl text-center font-semibold text-sm transition-all">6</button>
+                            <button type="button" data-key="anilloTalla" data-value="Talla 7" class="option-btn-anillo border border-black/15 text-black hover:border-[#E5C76B] py-3 rounded-xl text-center font-semibold text-sm transition-all">7</button>
+                            <button type="button" data-key="anilloTalla" data-value="Talla 8" class="option-btn-anillo border border-black/15 text-black hover:border-[#E5C76B] py-3 rounded-xl text-center font-semibold text-sm transition-all">8</button>
+                            <button type="button" data-key="anilloTalla" data-value="Talla 9" class="option-btn-anillo border border-black/15 text-black hover:border-[#E5C76B] py-3 rounded-xl text-center font-semibold text-sm transition-all">9</button>
                         </div>
                     </div>
                 </div>
 
             </div>
 
-            <!-- Sticky Live Summary Sidebar (Right 5 Cols) -->
-            <div class="lg:col-span-5">
-                <div class="bg-black text-white p-6 md:p-8 rounded-2xl border border-[#E5C76B]/30 shadow-xl sticky top-24 space-y-6">
+            <!-- Sticky Live Summary Sidebar -->
+            <div class="customizer-right">
+                <div class="bg-black text-white p-6 md:p-8 rounded-2xl border border-[#E5C76B]/30 shadow-xl sticky-summary space-y-6">
                     <div>
                         <span class="text-xs uppercase tracking-widest text-[#E5C76B] font-bold" id="summary-badge">Idea para Pulsera</span>
                         <h3 class="font-headline-lg text-2xl text-white mt-1">Resumen de Idea</h3>
@@ -499,7 +445,7 @@
                         </div>
                     </div>
 
-                    <!-- Anillos Summary Lines (Hidden by default) -->
+                    <!-- Anillos Summary Lines -->
                     <div id="summary-anillos-list" class="space-y-3 border-y border-[#E5C76B]/20 py-4 text-sm text-white/80 hidden">
                         <div class="flex justify-between items-center">
                             <span class="text-white/50">Tipo de Oro:</span>
@@ -526,7 +472,7 @@
                         </div>
 
                         <a id="whatsapp-btn" href="#" target="_blank" rel="noopener noreferrer"
-                            class="w-full bg-[#E5C76B] text-black font-semibold uppercase tracking-wider py-4 rounded-full hover:bg-white transition-all shadow-[0_4px_20px_rgba(229,199,107,0.3)] active:scale-95 flex items-center justify-center gap-2 text-center text-sm">
+                            class="w-full btn-wa-yellow uppercase tracking-wider py-4 rounded-xl transition-all shadow-[0_4px_20px_rgba(229,199,107,0.3)] active:scale-95 flex items-center justify-center gap-2 text-center text-sm font-bold">
                             <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
                                 <path
                                     d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
@@ -541,8 +487,7 @@
 
     <!-- Official Website Footer -->
     <footer class="bg-black text-white border-t border-[#E5C76B]/20 py-12 px-margin-mobile md:px-margin-desktop">
-        <div
-            class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8 text-center md:text-left">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8 text-center md:text-left">
             <div>
                 <h3 class="font-display-lg italic font-bold text-[#E5C76B] text-xl md:text-2xl mb-2">La Estelar Joyería 18k</h3>
                 <p class="text-xs text-white/70 max-w-sm">Elegancia, artesanía y la pureza del oro de 18k en cada detalle.</p>
@@ -590,10 +535,10 @@
 
     <!-- Floating WhatsApp Button -->
     <a href="https://wa.me/573009635047" target="_blank" rel="noopener noreferrer" 
-       class="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-[90] bg-[#25D366] text-white p-3.5 rounded-full shadow-[0_4px_14px_rgba(37,211,102,0.4)] hover:scale-110 hover:shadow-[0_6px_20px_rgba(37,211,102,0.6)] transition-all duration-300 flex items-center justify-center group"
+       class="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-[90] bg-[#25D366] text-white w-14 h-14 rounded-full shadow-[0_4px_14px_rgba(37,211,102,0.4)] hover:scale-110 hover:shadow-[0_6px_20px_rgba(37,211,102,0.6)] transition-all duration-300 flex items-center justify-center group animate-[bounce_2s_infinite]"
        aria-label="Chatear por WhatsApp">
-        <svg class="w-8 h-8 fill-current" viewBox="0 0 24 24">
-            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
+        <svg class="w-8 h-8 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
         </svg>
     </a>
 
@@ -679,7 +624,7 @@
             document.getElementById('whatsapp-btn').href = `https://wa.me/${phone}?text=${encodedMsg}`;
         }
 
-        // Tab Switching Function
+        // Tab Switching Function usando las clases CSS nativas tab-btn-base
         function switchTab(tab) {
             activeTab = tab;
             const pulserasBtn = document.getElementById('tab-pulseras-btn');
@@ -690,20 +635,17 @@
             const summaryPulseras = document.getElementById('summary-pulseras-list');
             const summaryAnillos = document.getElementById('summary-anillos-list');
 
-            const activeBtnClasses = "flex-1 py-3 rounded-full text-xs md:text-sm font-semibold uppercase tracking-wider transition-all duration-300 bg-black text-[#E5C76B] shadow-md";
-            const inactiveBtnClasses = "flex-1 py-3 rounded-full text-xs md:text-sm font-semibold uppercase tracking-wider transition-all duration-300 text-black/70 hover:text-black";
-
             if (tab === 'pulseras') {
-                pulserasBtn.className = activeBtnClasses;
-                anillosBtn.className = inactiveBtnClasses;
+                pulserasBtn.className = "tab-btn-base tab-btn-active";
+                anillosBtn.className = "tab-btn-base tab-btn-inactive";
                 builderPulseras.classList.remove('hidden');
                 builderAnillos.classList.add('hidden');
                 summaryBadge.innerText = "Idea para Pulsera";
                 summaryPulseras.classList.remove('hidden');
                 summaryAnillos.classList.add('hidden');
             } else {
-                anillosBtn.className = activeBtnClasses;
-                pulserasBtn.className = inactiveBtnClasses;
+                anillosBtn.className = "tab-btn-base tab-btn-active";
+                pulserasBtn.className = "tab-btn-base tab-btn-inactive";
                 builderAnillos.classList.remove('hidden');
                 builderPulseras.classList.add('hidden');
                 summaryBadge.innerText = "Idea para Anillo";
