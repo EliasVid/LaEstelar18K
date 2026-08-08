@@ -57,6 +57,15 @@
         textarea { resize: vertical; font-family: inherit; }
         input[type="file"] { display: block; margin-top: 5px; }
 
+        /* ===================== IMAGE SORTING PREVIEW GRID (OPTIMIZADO MÓVIL) ===================== */
+        .image-preview-grid { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 14px; }
+        .preview-thumb-card { position: relative; width: 95px; height: 95px; border: 1px solid #ccc; border-radius: 8px; overflow: hidden; background: #fff; box-shadow: 0 2px 6px rgba(0,0,0,0.08); display: flex; flex-direction: column; align-items: center; }
+        .preview-thumb-img { width: 100%; height: 62px; object-fit: cover; }
+        .preview-badge-order { position: absolute; top: 3px; left: 3px; background: rgba(0,0,0,0.75); color: #E5C76B; font-size: 10px; font-weight: bold; padding: 2px 5px; border-radius: 4px; }
+        .preview-actions-bar { display: flex; width: 100%; height: 33px; background: #f0f0f0; justify-content: space-around; align-items: center; border-top: 1px solid #ddd; }
+        .preview-action-btn { background: none; border: none; cursor: pointer; font-size: 14px; color: #222; font-weight: bold; padding: 4px 8px; display: flex; align-items: center; justify-content: center; }
+        .preview-action-btn:hover { color: var(--danger-color); background: rgba(0,0,0,0.05); }
+
         /* ===================== VARIANTS ===================== */
         .variant-container { background: #fdfdfd; padding: 18px; border-radius: 6px; margin-top: 10px; border-left: 4px solid var(--brand-gold); border-top: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee; }
         .dynamic-section-title { font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; color: #555; margin-bottom: 12px; }
@@ -268,8 +277,9 @@
                         <div class="dynamicAttributesContainer"></div>
 
                         <div class="form-group" style="margin-top: 20px;">
-                            <label>Imágenes de la Joya</label>
-                            <input type="file" class="prodImageField" accept="image/png, image/jpeg, image/webp" multiple required>
+                            <label>Imágenes de la Joya (La primera será la principal)</label>
+                            <input type="file" class="prodImageField" accept="image/png, image/jpeg, image/webp" multiple>
+                            <div class="image-preview-grid" id="addImagePreviewGrid"></div>
                         </div>
                         <button type="submit" class="btn-primary" style="width:100%; margin-top:15px;">Publicar Joya</button>
                     </form>
@@ -327,8 +337,9 @@
                 <div class="dynamicAttributesContainer" id="editDynamicAttributesContainer"></div>
 
                 <div class="form-group" style="margin-top: 20px;">
-                    <label>Reemplazar Imágenes (Dejar vacío para conservar actuales)</label>
+                    <label>Administrar Imágenes (Agrega nuevas o reordena las existentes)</label>
                     <input type="file" class="prodImageField" id="editProdImage" accept="image/png, image/jpeg, image/webp" multiple>
+                    <div class="image-preview-grid" id="editImagePreviewGrid"></div>
                 </div>
 
                 <div class="modal-actions-row">
@@ -355,6 +366,10 @@
         let loadedCatalogData = [];
         let activeColors = [];
         let activeSizes = [];
+
+        // Unified Image state arrays (can hold either existing URL strings or new File objects)
+        let addSelectedImages = [];
+        let editSelectedImages = [];
 
         // ===================== MOBILE SIDEBAR TOGGLE =====================
         const hamburgerBtn = document.getElementById('hamburgerBtn');
@@ -392,6 +407,78 @@
                 if (blockTarget === 'productsTab') fetchInventoryCatalog();
             });
         });
+
+        // ===================== UNIFIED IMAGE SORTING HANDLERS =====================
+        function setupImageSorting(inputSelector, gridSelector, imagesArrayRef) {
+            const inputEl = document.querySelector(inputSelector);
+            const gridEl = document.querySelector(gridSelector);
+
+            inputEl.addEventListener('change', (e) => {
+                const newFiles = Array.from(e.target.files);
+                newFiles.forEach(f => imagesArrayRef.push(f)); // Push new File objects
+                inputEl.value = ''; 
+                renderUnifiedPreviews(gridEl, imagesArrayRef);
+            });
+        }
+
+        function renderUnifiedPreviews(gridEl, imagesArray) {
+            if (imagesArray.length === 0) {
+                gridEl.innerHTML = '';
+                return;
+            }
+
+            gridEl.innerHTML = imagesArray.map((item, idx) => {
+                // Determine source whether it's an existing URL string or a local File object
+                const imgSrc = typeof item === 'string' ? item : URL.createObjectURL(item);
+                return `
+                    <div class="preview-thumb-card">
+                        <span class="preview-badge-order">#${idx + 1}</span>
+                        <img src="${imgSrc}" class="preview-thumb-img" alt="thumb">
+                        <div class="preview-actions-bar">
+                            <button type="button" class="preview-action-btn move-left" data-idx="${idx}" title="Mover izquierda" ${idx === 0 ? 'style="visibility:hidden;"' : ''}>◀</button>
+                            <button type="button" class="preview-action-btn delete-img" data-idx="${idx}" title="Eliminar">✕</button>
+                            <button type="button" class="preview-action-btn move-right" data-idx="${idx}" title="Mover derecha" ${idx === imagesArray.length - 1 ? 'style="visibility:hidden;"' : ''}>▶</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            // Bind actions
+            gridEl.querySelectorAll('.move-left').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const i = parseInt(btn.dataset.idx, 10);
+                    if (i > 0) {
+                        const temp = imagesArray[i];
+                        imagesArray[i] = imagesArray[i - 1];
+                        imagesArray[i - 1] = temp;
+                        renderUnifiedPreviews(gridEl, imagesArray);
+                    }
+                });
+            });
+
+            gridEl.querySelectorAll('.move-right').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const i = parseInt(btn.dataset.idx, 10);
+                    if (i < imagesArray.length - 1) {
+                        const temp = imagesArray[i];
+                        imagesArray[i] = imagesArray[i + 1];
+                        imagesArray[i + 1] = temp;
+                        renderUnifiedPreviews(gridEl, imagesArray);
+                    }
+                });
+            });
+
+            gridEl.querySelectorAll('.delete-img').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const i = parseInt(btn.dataset.idx, 10);
+                    imagesArray.splice(i, 1);
+                    renderUnifiedPreviews(gridEl, imagesArray);
+                });
+            });
+        }
+
+        setupImageSorting('#addProductTab .prodImageField', '#addImagePreviewGrid', addSelectedImages);
+        setupImageSorting('#editProdImage', '#editImagePreviewGrid', editSelectedImages);
 
         // ===================== FETCH CATALOG (GET) =====================
         async function fetchInventoryCatalog() {
@@ -448,9 +535,9 @@
                 activeSizes = [];
                 container.innerHTML = '';
 
-                const group1 = ['Herraje', 'Dije', 'Topos']; // Nothing needed
-                const group2 = ['Cadena', 'Pulsos', 'Anillo']; // Need sizes
-                const group3 = ['Manilla', 'Anillo tejido']; // Need colors
+                const group1 = ['Herraje', 'Dije', 'Topos']; 
+                const group2 = ['Cadena', 'Pulsos', 'Anillo']; 
+                const group3 = ['Manilla', 'Anillo tejido']; 
 
                 if (group1.includes(type)) {
                     container.innerHTML = `<div class="variant-container" style="text-align:center; color:#666; font-size:13px; padding:20px;">Este tipo de joya no requiere configurar tallas ni colores adicionales.</div>`;
@@ -626,6 +713,11 @@
             activeColors = product.colors ? [...product.colors] : [];
             activeSizes = product.sizes ? [...product.sizes] : [];
 
+            // Populate existing images into editSelectedImages array
+            const existingImages = product.images && product.images.length > 0 ? product.images : (product.image ? [product.image] : []);
+            editSelectedImages = [...existingImages];
+            renderUnifiedPreviews(document.getElementById('editImagePreviewGrid'), editSelectedImages);
+
             // Trigger the engine render manually for edit
             const container = document.getElementById('editDynamicAttributesContainer');
             container.innerHTML = '';
@@ -681,13 +773,14 @@
             const category = form.querySelector('.prodCategoryField').value;
             const price = parseFloat(form.querySelector('.prodPriceField').value);
             const description = form.querySelector('.prodDescriptionField').value.trim();
-            const files = Array.from(form.querySelector('.prodImageField').files);
 
             if (!name) return alert('El nombre de la joya es obligatorio.');
             if (!type) return alert('Selecciona un tipo de joya.');
             if (!category) return alert('Selecciona el material.');
             if (isNaN(price) || price <= 0) return alert('Ingresa un precio válido.');
-            if (files.length === 0) return alert('Selecciona al menos una imagen.');
+            
+            // CORRECCIÓN: Validar usando el arreglo unificado de adición (addSelectedImages)
+            if (addSelectedImages.length === 0) return alert('Selecciona al menos una imagen.');
 
             const group2 = ['Cadena', 'Pulsos', 'Anillo'];
             const group3 = ['Manilla', 'Anillo tejido'];
@@ -695,12 +788,13 @@
             if (group2.includes(type) && activeSizes.length === 0) return alert('Debes seleccionar al menos una talla.');
             if (group3.includes(type) && activeColors.length === 0) return alert('Debes agregar al menos un color.');
 
-            submitBtn.disabled = true; submitBtn.style.opacity = '0.6'; submitBtn.innerHTML = 'Creando...';
+            submitBtn.disabled = true; submitBtn.style.opacity = '0.6'; submitBtn.innerHTML = 'Publicando...';
 
             try {
+                // Upload files in the exact sequence defined by addSelectedImages
                 const uploadResponses = await Promise.all(
-                    files.map(async (file) => {
-                        const formData = new FormData(); formData.append("file", file);
+                    addSelectedImages.map(async (item) => {
+                        const formData = new FormData(); formData.append("file", item);
                         const res = await fetch("/api/upload", { method: "POST", body: formData });
                         if (!res.ok) throw new Error("Upload failed");
                         return res.json();
@@ -725,6 +819,8 @@
                 if (res.ok) {
                     alert('¡Joya creada con éxito!');
                     form.reset();
+                    addSelectedImages = [];
+                    document.getElementById('addImagePreviewGrid').innerHTML = '';
                     document.querySelector('#addProductTab .dynamicAttributesContainer').innerHTML = '';
                     activeColors = []; activeSizes = [];
                 } else { alert('Error al guardar el producto.'); }
@@ -745,9 +841,10 @@
             const name = document.getElementById('editProdName').value.trim();
             const type = document.getElementById('editProdType').value;
             const category = document.getElementById('editProdCategory').value;
-            const price = parseFloat(document.getElementById('editProdPrice').value);
+            const price = parseFloat(form.querySelector('.prodPriceField').value);
             const description = document.getElementById('editProdDescription').value.trim();
-            const files = Array.from(document.getElementById('editProdImage').files);
+
+            if (editSelectedImages.length === 0) return alert('La joya debe tener al menos una imagen.');
 
             const group2 = ['Cadena', 'Pulsos', 'Anillo'];
             const group3 = ['Manilla', 'Anillo tejido'];
@@ -758,24 +855,24 @@
             submitBtn.disabled = true; submitBtn.style.opacity = '0.6'; submitBtn.innerHTML = 'Guardando...';
 
             try {
-                let urls = [];
-                if (files.length > 0) {
-                    const uploadResponses = await Promise.all(
-                        files.map(async (file) => {
-                            const formData = new FormData(); formData.append("file", file);
-                            const res = await fetch("/api/upload", { method: "POST", body: formData });
-                            if (!res.ok) throw new Error("Upload failed");
-                            return res.json();
-                        })
-                    );
-                    urls = uploadResponses.map(r => r.url);
-                }
+                // Process editSelectedImages: upload new File objects, keep existing string URLs as-is in exact order
+                const finalUrls = await Promise.all(
+                    editSelectedImages.map(async (item) => {
+                        if (typeof item === 'string') return item; // Already an R2 public URL
+                        // Otherwise, it's a new local File object that needs uploading
+                        const formData = new FormData(); formData.append("file", item);
+                        const res = await fetch("/api/upload", { method: "POST", body: formData });
+                        if (!res.ok) throw new Error("Upload failed");
+                        const data = await res.json();
+                        return data.url;
+                    })
+                );
 
                 const payload = {
                     id, name, type, category, price, description,
                     colors: group3.includes(type) ? activeColors : [],
                     sizes: group2.includes(type) ? activeSizes : [],
-                    images: urls.length > 0 ? urls : null
+                    images: finalUrls 
                 };
 
                 const res = await fetch('/api/catalog', {
