@@ -275,7 +275,7 @@
                 globalCatalog = await response.json();
                 
                 // Mostrar solo los primeros 6 productos en el Index
-                const featuredProducts = globalCatalog.slice(0, 6);
+                const featuredProducts = globalCatalog.slice(0, 3);
                 renderFeaturedProducts(featuredProducts);
             } catch (error) {
                 console.error("Error loading catalog:", error);

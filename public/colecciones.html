@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" style="">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=block" rel="stylesheet">
     
-    <!-- Carga limpia de Tailwind CDN (Sin plugins problemáticos para Edge) -->
+    <!-- Carga de Tailwind CDN segura -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script id="tailwind-config">
         try {
@@ -100,97 +100,86 @@
                     }
                 }
             }
-        } catch (_e) { }</script>
+        } catch (_e) { console.error("Error cargando Tailwind"); }
+    </script>
     <style>
-        /* Hides the scrollbar on the image gallery for a native app feel */
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
+        /* Ocultar barra de scroll en galerías */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* Estilos del Tab Switcher (Interruptor) */
+        .tab-container {
+            display: inline-flex;
+            background-color: #f5f5f4;
+            padding: 0.35rem;
+            border-radius: 9999px;
+            box-shadow: inset 0 2px 4px 0 rgba(0,0,0,0.05);
+            border: 1px solid rgba(0,0,0,0.1);
         }
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
+        .tab-btn-base {
+            padding: 0.5rem 1.5rem;
+            border-radius: 9999px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        @media (min-width: 768px) {
+            .tab-btn-base { padding: 0.6rem 2.5rem; font-size: 0.75rem; }
+        }
+        .tab-btn-active {
+            background-color: #000000;
+            color: #E5C76B;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.15);
+        }
+        .tab-btn-inactive {
+            background-color: transparent;
+            color: rgba(0, 0, 0, 0.5);
+        }
+        .tab-btn-inactive:hover {
+            color: #000000;
+            background-color: rgba(0,0,0,0.04);
         }
     </style>
 </head>
 
 <body class="bg-surface-container-lowest text-on-background font-body-md antialiased min-h-screen pb-24 md:pb-0">
     <!-- TopAppBar -->
-    <header
-        class="flex justify-between items-center px-2 sm:px-margin-mobile md:px-margin-desktop h-16 w-full fixed top-0 z-50 transition-all duration-300 bg-black/50 backdrop-blur-md border-b border-[#E5C76B]/20">
-        <button
-            class="hover:opacity-80 transition-opacity scale-95 active:scale-90 transition-transform p-2 text-[#E5C76B]"
-            id="menu-btn" aria-label="Abrir menú">
+    <header class="flex justify-between items-center px-2 sm:px-margin-mobile md:px-margin-desktop h-16 w-full fixed top-0 z-50 transition-all duration-300 bg-black/50 backdrop-blur-md border-b border-[#E5C76B]/20">
+        <button class="hover:opacity-80 transition-opacity scale-95 active:scale-90 transition-transform p-2 text-[#E5C76B]" id="menu-btn" aria-label="Abrir menú">
             <span class="material-symbols-outlined text-2xl" data-icon="menu">menu</span>
         </button>
         <div class="flex-1 flex justify-center px-1 overflow-hidden">
             <a href="index.html" class="hover:opacity-90 transition-opacity max-w-full">
-                <h1
-                    class="font-display-lg text-[22px] sm:text-2xl whitespace-nowrap italic font-bold text-[#E5C76B] text-center tracking-tighter sm:tracking-wide">
-                    La Estelar Joyería 18k</h1>
+                <h1 class="font-display-lg text-[22px] sm:text-2xl whitespace-nowrap italic font-bold text-[#E5C76B] text-center tracking-tighter sm:tracking-wide">La Estelar Joyería 18k</h1>
             </a>
         </div>
-        <button
-            id="cart-btn"
-            class="hover:opacity-80 transition-opacity scale-95 active:scale-90 transition-transform p-2 text-[#E5C76B] relative"
-            aria-label="Bolsa de compras">
+        <button id="cart-btn" class="hover:opacity-80 transition-opacity scale-95 active:scale-90 transition-transform p-2 text-[#E5C76B] relative" aria-label="Bolsa de compras">
             <span class="material-symbols-outlined text-2xl" data-icon="shopping_bag">shopping_bag</span>
-            <!-- Cart Badge -->
             <span id="cart-badge" class="absolute top-1.5 right-1.5 bg-red-600 text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center hidden">0</span>
         </button>
     </header>
 
     <!-- NavigationDrawer -->
-    <div id="drawer-overlay"
-        class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[90] hidden opacity-0 transition-opacity duration-300"></div>
-    <aside id="nav-drawer"
-        class="fixed top-0 left-0 h-full w-80 bg-[#121212] border-r border-[#E5C76B]/20 shadow-2xl rounded-r-3xl z-[100] transform -translate-x-full transition-transform duration-300 ease-in-out flex flex-col py-8 text-white">
+    <div id="drawer-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[90] hidden opacity-0 transition-opacity duration-300"></div>
+    <aside id="nav-drawer" class="fixed top-0 left-0 h-full w-80 bg-[#121212] border-r border-[#E5C76B]/20 shadow-2xl rounded-r-3xl z-[100] transform -translate-x-full transition-transform duration-300 ease-in-out flex flex-col py-8 text-white">
         <div class="px-6 mb-6 flex justify-between items-center">
             <h2 class="text-[#E5C76B] font-display-lg italic text-2xl">Menú</h2>
-            <button id="close-drawer" class="text-white/70 hover:text-[#E5C76B] transition-colors"
-                aria-label="Cerrar menú">
+            <button id="close-drawer" class="text-white/70 hover:text-[#E5C76B] transition-colors" aria-label="Cerrar menú">
                 <span class="material-symbols-outlined">close</span>
             </button>
         </div>
         <nav class="flex-1 overflow-y-auto">
             <ul class="space-y-1">
-                <li>
-                    <a href="colecciones.html" onclick="switchCategory('laminado')"
-                        class="flex items-center gap-4 text-white/80 px-6 py-3.5 hover:bg-[#E5C76B]/10 hover:text-[#E5C76B] transition-colors">
-                        <span class="material-symbols-outlined text-[#E5C76B]"
-                            data-icon="auto_awesome">auto_awesome</span>
-                        <span class="font-body-md">Oro Laminado 18k</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="colecciones.html#oro-18k" onclick="switchCategory('18k')"
-                        class="flex items-center gap-4 text-white/80 px-6 py-3.5 hover:bg-[#E5C76B]/10 hover:text-[#E5C76B] transition-colors">
-                        <span class="material-symbols-outlined text-[#E5C76B]" data-icon="diamond">diamond</span>
-                        <span class="font-body-md">Oro 18k</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="personalizacion.html"
-                        class="flex items-center gap-4 text-white/80 px-6 py-3.5 hover:bg-[#E5C76B]/10 hover:text-[#E5C76B] transition-colors">
-                        <span class="material-symbols-outlined text-[#E5C76B]" data-icon="edit_note">edit_note</span>
-                        <span class="font-body-md">Personalización</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="mayorista.html"
-                        class="flex items-center gap-4 text-white/80 px-6 py-3.5 hover:bg-[#E5C76B]/10 hover:text-[#E5C76B] transition-colors">
-                        <span class="material-symbols-outlined text-[#E5C76B]"
-                            data-icon="storefront">storefront</span>
-                        <span class="font-body-md">Ventas al Mayor</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="historia.html"
-                        class="flex items-center gap-4 text-white/80 px-6 py-3.5 hover:bg-[#E5C76B]/10 hover:text-[#E5C76B] transition-colors">
-                        <span class="material-symbols-outlined text-[#E5C76B]"
-                            data-icon="history_edu">history_edu</span>
-                        <span class="font-body-md">Nuestra Historia</span>
-                    </a>
-                </li>
+                <li><a href="colecciones.html" class="flex items-center gap-4 text-white/80 px-6 py-3.5 hover:bg-[#E5C76B]/10 hover:text-[#E5C76B] transition-colors"><span class="material-symbols-outlined text-[#E5C76B]">auto_awesome</span><span class="font-body-md">Oro Laminado 18k</span></a></li>
+                <li><a href="colecciones.html#oro-18k" class="flex items-center gap-4 text-white/80 px-6 py-3.5 hover:bg-[#E5C76B]/10 hover:text-[#E5C76B] transition-colors"><span class="material-symbols-outlined text-[#E5C76B]">diamond</span><span class="font-body-md">Oro 18k</span></a></li>
+                <li><a href="personalizacion.html" class="flex items-center gap-4 text-white/80 px-6 py-3.5 hover:bg-[#E5C76B]/10 hover:text-[#E5C76B] transition-colors"><span class="material-symbols-outlined text-[#E5C76B]">edit_note</span><span class="font-body-md">Personalización</span></a></li>
+                <li><a href="mayorista.html" class="flex items-center gap-4 text-white/80 px-6 py-3.5 hover:bg-[#E5C76B]/10 hover:text-[#E5C76B] transition-colors"><span class="material-symbols-outlined text-[#E5C76B]">storefront</span><span class="font-body-md">Ventas al Mayor</span></a></li>
+                <li><a href="historia.html" class="flex items-center gap-4 text-white/80 px-6 py-3.5 hover:bg-[#E5C76B]/10 hover:text-[#E5C76B] transition-colors"><span class="material-symbols-outlined text-[#E5C76B]">history_edu</span><span class="font-body-md">Nuestra Historia</span></a></li>
             </ul>
         </nav>
     </aside>
@@ -229,7 +218,7 @@
         </div>
     </aside>
 
-    <!-- PRODUCT POPUP MODAL (CON THUMBNAILS E IMAGEN PRINCIPAL Y SCROLL ARREGLADO) -->
+    <!-- PRODUCT POPUP MODAL -->
     <div id="product-modal-overlay" class="fixed inset-0 bg-black/80 backdrop-blur-md z-[100] hidden opacity-0 transition-opacity duration-300 flex items-center justify-center p-3 sm:p-6 overflow-hidden">
         <div id="product-modal-content" class="bg-surface-container-lowest w-full max-w-4xl rounded-2xl md:rounded-3xl shadow-2xl relative transform scale-95 transition-transform duration-300 flex flex-col md:flex-row max-h-[90vh] overflow-hidden">
             
@@ -239,19 +228,15 @@
 
             <!-- Left: Main Image + Thumbnails -->
             <div class="w-full md:w-1/2 bg-surface-container-low border-b md:border-b-0 md:border-r border-[#E5C76B]/20 relative flex flex-col shrink-0 p-5 md:p-6">
-                <!-- Imagen Principal Grande -->
                 <div class="w-full aspect-square bg-stone-100 rounded-xl overflow-hidden relative border border-black/10 shadow-sm shrink-0">
                     <div onclick="openImageZoom(document.getElementById('modal-main-img-tag').src)" title="Haz clic para hacer zoom" class="block w-full h-full cursor-zoom-in">
                         <img id="modal-main-img-tag" src="" class="w-full h-full object-cover transition-opacity duration-200">
                     </div>
                 </div>
-                <!-- Contenedor de Miniaturas -->
-                <div id="modal-thumbnails-container" class="w-full flex gap-3 mt-4 overflow-x-auto no-scrollbar py-1 shrink-0">
-                    <!-- Se inyectan cuadritos aquí -->
-                </div>
+                <div id="modal-thumbnails-container" class="w-full flex gap-3 mt-4 overflow-x-auto no-scrollbar py-1 shrink-0"></div>
             </div>
 
-            <!-- Right: Product Details (TOTALMENTE DESLIZABLE) -->
+            <!-- Right: Product Details -->
             <div class="w-full md:w-1/2 p-5 md:p-6 flex flex-col overflow-y-auto">
                 <div class="flex flex-col gap-1 mb-2 pr-8 shrink-0">
                     <span id="modal-category" class="text-[10px] uppercase tracking-widest text-[#735c00] font-bold animate-pulse bg-stone-200 h-3 w-24 rounded"></span>
@@ -259,26 +244,21 @@
                     <p id="modal-price" class="font-body-lg text-lg font-bold text-[#735c00] mt-0.5"></p>
                 </div>
                 
-                <!-- Description -->
                 <div class="mb-4 border-l-2 border-[#E5C76B] pl-3 shrink-0">
                     <p id="modal-description" class="text-sm text-on-surface-variant leading-relaxed"></p>
                 </div>
                 
                 <div class="h-px w-full bg-[#E5C76B]/20 mb-4 shrink-0"></div>
 
-                <!-- Dynamic Options Injector -->
-                <div id="modal-variants-container" class="flex flex-col gap-4 mb-6 shrink-0">
-                    <!-- Injected via JS -->
-                </div>
+                <div id="modal-variants-container" class="flex flex-col gap-4 mb-6 shrink-0"></div>
 
-                <!-- Actions -->
                 <div class="flex flex-col gap-2.5 mt-auto shrink-0 border-t border-black/5 pt-4">
                     <button onclick="addToCart()" class="w-full bg-black text-[#E5C76B] border border-[#E5C76B]/40 hover:border-[#E5C76B] text-xs py-3 rounded-full hover:bg-[#E5C76B] hover:text-black transition-all duration-300 shadow-[0_4px_20px_rgba(229,199,107,0.2)] uppercase tracking-widest font-semibold flex items-center justify-center gap-2 active:scale-[0.98]">
                         <span class="material-symbols-outlined text-lg">shopping_cart</span>
                         Añadir al Carrito
                     </button>
                     
-                    <button onclick="sendWhatsAppInquiry()" class="w-full bg-transparent border border-black text-black hover:bg-[#25D366] hover:border-[#25D366] hover:text-white text-xs h-[44px] rounded-full transition-all duration-300 uppercase tracking-widest font-semibold flex items-center justify-center gap-2 group">
+                    <button onclick="sendWhatsAppInquiry()" class="w-full bg-[#25D366] text-white hover:bg-[#20b858] text-xs h-[44px] rounded-full transition-all duration-300 uppercase tracking-widest font-semibold flex items-center justify-center gap-2 shadow-md active:scale-[0.98]">
                         <svg class="w-[16px] h-[16px] fill-current -mt-0.5" viewBox="0 0 24 24">
                             <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
                         </svg>
@@ -298,7 +278,7 @@
     </div>
 
     <main class="pt-16">
-        <!-- Compact Hero Header Section -->
+        <!-- Hero Header Section -->
         <section class="bg-black text-[#E5C76B] py-12 px-margin-mobile md:px-margin-desktop text-center border-b border-[#E5C76B]/20 relative overflow-hidden">
             <div class="absolute inset-0 z-0">
                 <img src="img/landing.jpeg" alt="Colecciones La Estelar Joyería" class="w-full h-full object-cover object-center opacity-40">
@@ -311,15 +291,13 @@
             </div>
         </section>
 
-        <!-- Category Tabs Switcher Section -->
-        <section class="bg-surface-container-lowest py-6 px-margin-mobile md:px-margin-desktop border-b border-[#E5C76B]/20">
-            <div class="max-w-md mx-auto flex justify-center p-1.5 bg-stone-100 rounded-full border border-black/10 shadow-inner">
-                <button id="tab-laminado-btn" onclick="switchCategory('laminado')"
-                    class="flex-1 py-2.5 md:py-3 rounded-full text-xs md:text-sm font-semibold uppercase tracking-wider transition-all duration-300 bg-black text-[#E5C76B] shadow-md">
+        <!-- Category Tabs Switcher -->
+        <section class="bg-surface-container-lowest py-6 px-margin-mobile md:px-margin-desktop border-b border-[#E5C76B]/20 text-center">
+            <div class="tab-container">
+                <button id="tab-laminado-btn" onclick="switchCategory('laminado')" class="tab-btn-base tab-btn-active">
                     Oro Laminado 18k
                 </button>
-                <button id="tab-18k-btn" onclick="switchCategory('18k')"
-                    class="flex-1 py-2.5 md:py-3 rounded-full text-xs md:text-sm font-semibold uppercase tracking-wider transition-all duration-300 text-black/70 hover:text-black">
+                <button id="tab-18k-btn" onclick="switchCategory('18k')" class="tab-btn-base tab-btn-inactive">
                     Oro 18k
                 </button>
             </div>
@@ -340,11 +318,7 @@
                         <p class="text-xs md:text-sm text-white/70 mt-1 max-w-xl">Múltiples capas de oro de 18k sobre una base de alta resistencia. Misma apariencia, brillo y sofisticación a un precio excepcional.</p>
                     </div>
                 </div>
-
-                <!-- CATEGORIZED GRID INJECTOR -->
-                <div id="laminado-container">
-                    <!-- Products injected here grouped by type -->
-                </div>
+                <div id="laminado-container"></div>
             </section>
 
             <!-- SECTION 2: ORO 18K -->
@@ -359,11 +333,7 @@
                         <p class="text-xs md:text-sm text-white/70 mt-1 max-w-xl">Piezas elaboradas en oro puro de 18 quilates. Durabilidad eterna, elegancia sin tiempo e inversión para toda la vida.</p>
                     </div>
                 </div>
-
-                <!-- CATEGORIZED GRID INJECTOR -->
-                <div id="oro-18k-container">
-                    <!-- Products injected here grouped by type -->
-                </div>
+                <div id="oro-18k-container"></div>
             </section>
         </div>
     </main>
@@ -375,16 +345,25 @@
                 <h3 class="font-display-lg italic font-bold text-[#E5C76B] text-xl md:text-2xl mb-2">La Estelar Joyería 18k</h3>
                 <p class="text-xs text-white/70 max-w-sm">Elegancia, artesanía y la pureza del oro de 18k en cada detalle.</p>
             </div>
-            <div class="mt-8 pt-6 border-t border-white/10 text-center text-xs text-white/50 w-full">
-                © 2026 La Estelar Joyería 18k. - Smarti.
+            <!-- Social Links con WhatsApp en círculo verde -->
+            <div class="flex items-center justify-center gap-4">
+                <a href="https://wa.me/573009635047" target="_blank" rel="noopener noreferrer" class="bg-[#25D366] text-white w-10 h-10 rounded-full flex items-center justify-center hover:scale-110 transition-all shadow-md">
+                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                        <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
+                    </svg>
+                </a>
+                <a href="https://www.instagram.com/laestelar_joyeria18k" target="_blank" rel="noopener noreferrer" class="p-3 bg-white/5 rounded-full text-[#E5C76B] hover:bg-[#E5C76B] hover:text-black transition-all">
+                    <span class="material-symbols-outlined text-xl">photo_camera</span>
+                </a>
             </div>
+        </div>
+        <div class="mt-8 pt-6 border-t border-white/10 text-center text-xs text-white/50 w-full">
+            © 2026 La Estelar Joyería 18k. - Smarti.
         </div>
     </footer>
 
     <!-- Floating Actions Cluster -->
     <div class="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-[90] flex flex-col gap-4">
-        
-        <!-- Floating WhatsApp Button -->
         <a href="https://wa.me/573009635047" target="_blank" rel="noopener noreferrer" 
            class="bg-[#25D366] text-white w-14 h-14 rounded-full shadow-[0_4px_14px_rgba(37,211,102,0.4)] hover:scale-110 hover:shadow-[0_6px_20px_rgba(37,211,102,0.6)] transition-all duration-300 flex items-center justify-center group"
            aria-label="Chatear por WhatsApp">
@@ -392,26 +371,15 @@
                 <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
             </svg>
         </a>
-
-        <!-- Floating Cart Button -->
         <button onclick="toggleCart()" class="bg-black text-[#E5C76B] w-14 h-14 rounded-full shadow-[0_4px_14px_rgba(0,0,0,0.4)] hover:scale-110 hover:shadow-[0_6px_20px_rgba(0,0,0,0.6)] transition-all duration-300 flex items-center justify-center relative group" aria-label="Abrir Carrito">
             <span class="material-symbols-outlined text-3xl">shopping_bag</span>
-            <!-- Floating Cart Badge -->
             <span id="floating-cart-badge" class="absolute -top-1 -right-1 bg-red-600 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center hidden border-2 border-white z-10">0</span>
         </button>
-        
     </div>
 
     <script>
-        // Global States
-        let globalCatalog = [];
-        let shoppingCart = [];
-        let modalActiveProduct = null;
-        let modalActiveColor = null;
-        let modalActiveSize = null;
-
         // ==========================================
-        // DRAWER LOGIC
+        // DRAWER Y MENU LOGIC
         // ==========================================
         const menuBtn = document.getElementById('menu-btn');
         const drawer = document.getElementById('nav-drawer');
@@ -435,9 +403,14 @@
         overlay.addEventListener('click', toggleDrawer);
 
         // ==========================================
-        // CART LOGIC
+        // CARGA DINÁMICA
         // ==========================================
-        const cartBtn = document.getElementById('cart-btn');
+        let globalCatalog = [];
+        let shoppingCart = [];
+        let modalActiveProduct = null;
+        let modalActiveColor = null;
+        let modalActiveSize = null;
+
         const cartDrawer = document.getElementById('cart-drawer');
         const cartOverlay = document.getElementById('cart-overlay');
         const closeCartBtn = document.getElementById('close-cart');
@@ -454,74 +427,61 @@
                 setTimeout(() => cartOverlay.classList.add('opacity-100'), 10);
             }
         }
-        cartBtn.addEventListener('click', toggleCart);
         closeCartBtn.addEventListener('click', toggleCart);
         cartOverlay.addEventListener('click', toggleCart);
 
-        // Catalog Tab logic
         function switchCategory(cat) {
             const laminadoBtn = document.getElementById('tab-laminado-btn');
             const gold18kBtn = document.getElementById('tab-18k-btn');
             const laminadoContent = document.getElementById('oro-laminado-section');
             const gold18kContent = document.getElementById('oro-18k-section');
 
-            const activeBtnClasses = "flex-1 py-2.5 md:py-3 rounded-full text-xs md:text-sm font-semibold uppercase tracking-wider transition-all duration-300 bg-black text-[#E5C76B] shadow-md";
-            const inactiveBtnClasses = "flex-1 py-2.5 md:py-3 rounded-full text-xs md:text-sm font-semibold uppercase tracking-wider transition-all duration-300 text-black/70 hover:text-black bg-stone-100";
-
             if (cat === 'laminado') {
-                laminadoBtn.className = activeBtnClasses;
-                gold18kBtn.className = inactiveBtnClasses;
+                laminadoBtn.className = "tab-btn-base tab-btn-active";
+                gold18kBtn.className = "tab-btn-base tab-btn-inactive";
                 laminadoContent.classList.remove('hidden');
                 gold18kContent.classList.add('hidden');
             } else {
-                gold18kBtn.className = activeBtnClasses;
-                laminadoBtn.className = inactiveBtnClasses;
+                gold18kBtn.className = "tab-btn-base tab-btn-active";
+                laminadoBtn.className = "tab-btn-base tab-btn-inactive";
                 gold18kContent.classList.remove('hidden');
                 laminadoContent.classList.add('hidden');
             }
         }
 
-        // ==========================================
-        // DYNAMIC CATALOG FETCHING
-        // ==========================================
         window.addEventListener('DOMContentLoaded', () => {
-            if (window.location.hash === '#oro-18k') {
-                switchCategory('18k');
-            }
+            if (window.location.hash === '#oro-18k') switchCategory('18k');
             loadCatalog();
         });
 
         async function loadCatalog() {
             try {
-                const response = await fetch('/api/catalog'); // Usando endpoint actualizado
+                const response = await fetch('/api/catalog');
                 if (!response.ok) throw new Error('Failed to fetch catalog');
                 globalCatalog = await response.json();
                 renderCategorizedProducts(globalCatalog);
             } catch (error) {
                 console.error("Error loading catalog:", error);
-                document.getElementById('laminado-container').innerHTML = `<p class="text-center py-12 text-black/50">Error al cargar el catálogo.</p>`;
             }
         }
 
         function createProductCardHTML(product) {
             const is18k = product.category === '18k';
             const badgeClass = is18k ? 'bg-black/80 text-[#E5C76B] border-[#E5C76B]/30' : 'bg-stone-800/90 text-white border-white/20';
-            const badgeText = (is18k ? '18K' : 'Laminado'); 
+            const badgeText = is18k ? '18K' : 'Laminado'; 
             const borderClass = is18k ? 'border-[#E5C76B]/20' : 'border-black/10';
             const imageUrl = product.image || (product.images && product.images.length > 0 ? product.images[0] : 'img/placeholder.jpg');
             
-            const formattedPrice = new Intl.NumberFormat('es-CO', {
-                style: 'currency', currency: 'COP', minimumFractionDigits: 0
-            }).format(product.price);
+            const formattedPrice = new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(product.price);
 
             return `
                 <button onclick="openProductModal('${product.id}')" class="block w-full text-left">
                     <article class="group cursor-pointer rounded-2xl bg-surface-container-lowest transition-all duration-300 hover:shadow-[0_8px_40px_rgba(0,0,0,0.12)] hover:-translate-y-1 relative overflow-hidden border ${borderClass} flex flex-col h-full">
-                        <div class="aspect-square w-full overflow-hidden rounded-t-2xl relative">
+                        <div class="aspect-square w-full overflow-hidden rounded-t-2xl relative bg-stone-100">
                             <span class="absolute top-2 right-2 z-20 backdrop-blur-sm text-[10px] font-bold px-2 py-0.5 rounded-full border pointer-events-none shadow-sm ${badgeClass} uppercase">
                                 ${badgeText}
                             </span>
-                            <img src="${imageUrl}" alt="${product.name}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy">
+                            <img src="${imageUrl}" alt="${product.name}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" onerror="this.src='img/placeholder.jpg'">
                         </div>
                         <div class="p-3 md:p-6 text-center mt-auto flex flex-col gap-1.5 md:gap-2">
                             <h5 class="font-headline-lg-mobile text-sm md:text-lg text-black leading-snug truncate">${product.name}</h5>
@@ -539,7 +499,7 @@
             const laminadoProducts = products.filter(p => p.category === 'laminado');
             const oro18kProducts = products.filter(p => p.category === '18k');
 
-            laminadoContainer.innerHTML = buildGroupedHTML(laminadoProducts);
+            if(laminadoContainer) laminadoContainer.innerHTML = buildGroupedHTML(laminadoProducts);
             if(oro18kContainer) oro18kContainer.innerHTML = buildGroupedHTML(oro18kProducts);
         }
 
@@ -555,21 +515,29 @@
 
             let html = '';
             for (const [type, prods] of Object.entries(grouped)) {
-                html += `
+                if(type=="Topos"){
+                    html += `
                     <div class="mb-12">
-                        <h4 class="text-xl font-display-lg italic font-bold text-black border-b border-[#E5C76B]/40 pb-2 mb-6">${type}s</h4>
-                        <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-gutter">
+                        <h4 class="text-xl font-display-lg italic font-bold text-black border-b border-[#E5C76B]/40 pb-2 mb-6">${type}</h4>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-gutter">
                             ${prods.map(createProductCardHTML).join('')}
                         </div>
                     </div>
-                `;
+                    `;
+                }else{
+                    html += `
+                        <div class="mb-12">
+                            <h4 class="text-xl font-display-lg italic font-bold text-black border-b border-[#E5C76B]/40 pb-2 mb-6">${type}s</h4>
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-gutter">
+                                ${prods.map(createProductCardHTML).join('')}
+                            </div>
+                        </div>
+                    `;
+                }
             }
             return html;
         }
 
-        // ==========================================
-        // MAIN IMAGE SWITCHER (MINIATURAS)
-        // ==========================================
         function setModalMainImage(src, btnEl) {
             const mainImgTag = document.getElementById('modal-main-img-tag');
             mainImgTag.style.opacity = '0.5';
@@ -584,9 +552,6 @@
             btnEl.className = "modal-thumb-btn w-16 h-16 shrink-0 rounded-lg overflow-hidden border-2 transition-all border-[#E5C76B] shadow-md scale-105 opacity-100";
         }
 
-        // ==========================================
-        // PRODUCT POPUP MODAL LOGIC
-        // ==========================================
         const productModalOverlay = document.getElementById('product-modal-overlay');
         const productModalContent = document.getElementById('product-modal-content');
         const closeProductModalBtn = document.getElementById('close-product-modal');
@@ -601,20 +566,15 @@
 
             const is18k = product.category === '18k';
             
-            // Populate Text Data
             document.getElementById('modal-category').innerText = is18k ? 'Oro 18k Macizo' : 'Oro Laminado 18k';
-            document.getElementById('modal-category').classList.remove('animate-pulse', 'bg-stone-200', 'h-3', 'w-24', 'rounded');
+            document.getElementById('modal-category').classList.remove('animate-pulse', 'bg-stone-200');
             document.getElementById('modal-title').innerText = product.name;
             document.getElementById('modal-description').innerText = product.description || 'Una pieza única elaborada con la mejor calidad.';
-            document.getElementById('modal-price').innerText = new Intl.NumberFormat('es-CO', {
-                style: 'currency', currency: 'COP', minimumFractionDigits: 0
-            }).format(product.price) + ' COP';
+            document.getElementById('modal-price').innerText = new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(product.price) + ' COP';
 
-            // Populate Images (In-page zoom + Thumbnails)
             const images = product.images && product.images.length > 0 ? product.images : [product.image];
-            
             const mainImgTag = document.getElementById('modal-main-img-tag');
-            mainImgTag.src = images[0];
+            mainImgTag.src = images[0] || 'img/placeholder.jpg';
 
             const thumbContainer = document.getElementById('modal-thumbnails-container');
             if (images.length > 1) {
@@ -629,7 +589,6 @@
                 thumbContainer.classList.add('hidden');
             }
 
-            // LÓGICA DE VARIANTES BASADA EN EL TIPO DE JOYA
             const variantContainer = document.getElementById('modal-variants-container');
             const type = product.type || '';
             const group1 = ['Herraje', 'Dije', 'Topos'];
@@ -644,21 +603,6 @@
             } 
             else if (group2.includes(type)) {
                 if (product.sizes && product.sizes.length > 0) {
-                    if(type=='Cadena'){
-                        modalActiveSize = product.sizes[0];
-                        variantHtml = `
-                            <div class="flex flex-col gap-2">
-                                <label class="text-[11px] text-black uppercase tracking-wider font-semibold">Tallas Disponibles</label>
-                                <div class="flex flex-wrap gap-2">
-                                    ${product.sizes.map(sz => `
-                                        <button onclick="selectModalSize('${sz}')" id="size-btn-${sz.replace(/\s+/g, '-')}" class="px-3.5 py-1.5 border rounded-lg text-xs font-bold transition-all ${modalActiveSize === sz ? 'border-black bg-black text-[#E5C76B]' : 'border-black/20 text-black/70 hover:border-black/50'}">
-                                            ${sz + "cm"}
-                                        </button>
-                                    `).join('')}
-                                </div>
-                            </div>
-                        `;
-                    }else{
                     modalActiveSize = product.sizes[0];
                     variantHtml = `
                         <div class="flex flex-col gap-2">
@@ -666,13 +610,12 @@
                             <div class="flex flex-wrap gap-2">
                                 ${product.sizes.map(sz => `
                                     <button onclick="selectModalSize('${sz}')" id="size-btn-${sz.replace(/\s+/g, '-')}" class="px-3.5 py-1.5 border rounded-lg text-xs font-bold transition-all ${modalActiveSize === sz ? 'border-black bg-black text-[#E5C76B]' : 'border-black/20 text-black/70 hover:border-black/50'}">
-                                        ${sz}
+                                        ${sz}${type==='Cadena' ? 'cm' : ''}
                                     </button>
                                 `).join('')}
                             </div>
                         </div>
                     `;
-                    }
                 } else { variantHtml = `<p class="text-xs text-black/50 italic py-1">Talla única.</p>`; }
             } 
             else if (group3.includes(type)) {
@@ -714,20 +657,14 @@
 
             variantContainer.innerHTML = variantHtml;
 
-            // Show Modal
             productModalOverlay.classList.remove('hidden');
             setTimeout(() => {
                 productModalOverlay.classList.remove('opacity-0');
                 productModalContent.classList.remove('scale-95');
             }, 10);
-            
-            // Prevent background scrolling
             document.body.style.overflow = 'hidden';
         }
 
-        // ==========================================
-        // IMAGE ZOOM LOGIC
-        // ==========================================
         const imageZoomOverlay = document.getElementById('image-zoom-overlay');
         const zoomedImage = document.getElementById('zoomed-image');
 
@@ -749,16 +686,12 @@
             }, 300);
         }
 
-
-        // Eventos para botones dinámicos generados
         function selectModalSize(size) {
             modalActiveSize = size;
             if(modalActiveProduct && modalActiveProduct.sizes) {
                 modalActiveProduct.sizes.forEach(sz => {
                     const btn = document.getElementById(`size-btn-${sz.replace(/\s+/g, '-')}`);
-                    if(btn) {
-                        btn.className = `px-3.5 py-1.5 border rounded-lg text-xs font-bold transition-all ${sz === size ? 'border-black bg-black text-[#E5C76B]' : 'border-black/20 text-black/70 hover:border-black/50'}`;
-                    }
+                    if(btn) btn.className = `px-3.5 py-1.5 border rounded-lg text-xs font-bold transition-all ${sz === size ? 'border-black bg-black text-[#E5C76B]' : 'border-black/20 text-black/70 hover:border-black/50'}`;
                 });
             }
         }
@@ -768,9 +701,7 @@
             if(modalActiveProduct && modalActiveProduct.colors) {
                 modalActiveProduct.colors.forEach(c => {
                     const btn = document.getElementById(`swatch-${c.replace('#', '')}`);
-                    if(btn) {
-                        btn.className = `w-8 h-8 md:w-10 md:h-10 rounded-full border-2 transition-all p-0.5 relative group shadow-sm ${c === color ? 'border-[#E5C76B]' : 'border-black/20 hover:border-[#E5C76B]/60'}`;
-                    }
+                    if(btn) btn.className = `w-8 h-8 md:w-10 md:h-10 rounded-full border-2 transition-all p-0.5 relative group shadow-sm ${c === color ? 'border-[#E5C76B]' : 'border-black/20 hover:border-[#E5C76B]/60'}`;
                 });
             }
         }
@@ -778,10 +709,9 @@
         function closeProductModal() {
             productModalOverlay.classList.add('opacity-0');
             productModalContent.classList.add('scale-95');
-            
             setTimeout(() => {
                 productModalOverlay.classList.add('hidden');
-                document.body.style.overflow = 'auto'; // Restore scrolling
+                document.body.style.overflow = 'auto'; 
             }, 300);
         }
 
@@ -790,10 +720,6 @@
             if (e.target === productModalOverlay) closeProductModal();
         });
 
-
-        // ==========================================
-        // SHOPPING CART ACTIONS
-        // ==========================================
         function addToCart() {
             if(!modalActiveProduct) return;
             
@@ -820,59 +746,7 @@
             
             closeProductModal();
             renderCart();
-            
-            // Automatically open cart to confirm addition
-            setTimeout(() => {
-                const cartDrawer = document.getElementById('cart-drawer');
-                const cartOverlay = document.getElementById('cart-overlay');
-                cartDrawer.classList.remove('translate-x-full');
-                cartOverlay.classList.remove('hidden');
-                setTimeout(() => cartOverlay.classList.add('opacity-100'), 10);
-            }, 350); 
-        }
-
-        function sendWhatsAppInquiry() {
-            if(!modalActiveProduct) return;
-            
-            const productName = modalActiveProduct.name;
-            const message = `¡Hola! Estoy interesado/a en la pieza *${productName}*. ¿Me podrían dar más información?`;
-            const encodedMessage = encodeURIComponent(message);
-            window.open(`https://wa.me/573009635047?text=${encodedMessage}`, '_self');
-        }
-
-        function checkoutToWhatsApp() {
-            if (shoppingCart.length === 0) return;
-
-            let message = "¡Hola! Quisiera concretar la compra de mi carrito de La Estelar:\n\n";
-            let totalCost = 0;
-
-            shoppingCart.forEach(item => {
-                const itemTotal = item.price * item.quantity;
-                totalCost += itemTotal;
-                
-                const formattedPrice = new Intl.NumberFormat('es-CO', { 
-                    style: 'currency', currency: 'COP', minimumFractionDigits: 0 
-                }).format(itemTotal);
-                
-                const subtitle = item.category === '18k' ? '18k Macizo' : 'Laminado';
-                
-                // Construye el texto de variables (Color y Talla)
-                let variantPieces = [];
-                if (item.color && item.color !== 'Estándar') variantPieces.push(`Color: ${item.color}`);
-                if (item.size) variantPieces.push(`Talla: ${item.size}`);
-                const variantText = variantPieces.length > 0 ? ` [${variantPieces.join(', ')}]` : '';
-
-                message += `▪ ${item.quantity}x ${item.name} (${subtitle})${variantText} - ${formattedPrice} COP\n`;
-            });
-
-            const formattedTotal = new Intl.NumberFormat('es-CO', { 
-                style: 'currency', currency: 'COP', minimumFractionDigits: 0 
-            }).format(totalCost);
-            
-            message += `\n*Total Estimado:* ${formattedTotal} COP\n\n¿Me indican los pasos para el pago y envío?`;
-
-            const encodedMessage = encodeURIComponent(message);
-            window.open(`https://wa.me/573009635047?text=${encodedMessage}`, '_self');
+            setTimeout(toggleCart, 350); 
         }
 
         function renderCart() {
@@ -880,7 +754,7 @@
             const totalElement = document.getElementById('cart-total-price');
             const checkoutBtn = document.getElementById('checkout-btn');
             
-            const headerBadge = document.getElementById('cart-badge');
+            const headerBadge = document.getElementById('header-cart-badge');
             const floatingBadge = document.getElementById('floating-cart-badge');
             
             const totalItems = shoppingCart.reduce((sum, item) => sum + item.quantity, 0);
@@ -905,7 +779,6 @@
                 const formattedPrice = new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(item.price * item.quantity);
                 const subtitle = item.category === '18k' ? 'Oro 18k Macizo' : 'Oro Laminado 18k';
                 
-                // Muestra color visual y texto de talla en el carrito
                 let variantPieces = [];
                 if (item.color && item.color !== 'Estándar') {
                     variantPieces.push(item.color.startsWith('#') 
@@ -945,20 +818,42 @@
             checkoutBtn.classList.remove('opacity-50', 'cursor-not-allowed');
         }
 
-        function removeFromCart(index) {
-            shoppingCart.splice(index, 1);
-            renderCart();
-        }
-
+        function removeFromCart(index) { shoppingCart.splice(index, 1); renderCart(); }
         function updateCartQuantity(index, delta) {
             shoppingCart[index].quantity += delta;
-            if(shoppingCart[index].quantity <= 0) {
-                removeFromCart(index);
-            } else {
-                renderCart();
-            }
+            if(shoppingCart[index].quantity <= 0) removeFromCart(index);
+            else renderCart();
+        }
+
+        function sendWhatsAppInquiry() {
+            if(!modalActiveProduct) return;
+            const message = `¡Hola! Estoy interesado/a en la pieza *${modalActiveProduct.name}*. ¿Me podrían dar más información?`;
+            window.open(`https://wa.me/573009635047?text=${encodeURIComponent(message)}`, '_blank');
+        }
+
+        function checkoutToWhatsApp() {
+            if (shoppingCart.length === 0) return;
+            let totalCost = 0;
+            let message = "¡Hola! Quisiera concretar la compra de mi carrito de La Estelar:\n\n";
+
+            shoppingCart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                totalCost += itemTotal;
+                const formattedPrice = new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(itemTotal);
+                const subtitle = item.category === '18k' ? '18k Macizo' : 'Oro Laminado';
+                
+                let variantPieces = [];
+                if (item.color && item.color !== 'Estándar') variantPieces.push(`Color: ${item.color}`);
+                if (item.size) variantPieces.push(`Talla: ${item.size}`);
+                const variantText = variantPieces.length > 0 ? ` [${variantPieces.join(', ')}]` : '';
+
+                message += `▪ ${item.quantity}x ${item.name} (${subtitle})${variantText} - ${formattedPrice} COP\n`;
+            });
+
+            const formattedTotal = new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(totalCost);
+            message += `\n*Total Estimado:* ${formattedTotal} COP\n\n¿Me indican los pasos para el pago y envío?`;
+            window.open(`https://wa.me/573009635047?text=${encodeURIComponent(message)}`, '_blank');
         }
     </script>
 </body>
-
 </html>
