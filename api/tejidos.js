@@ -38,7 +38,9 @@ export default async function handler(req, res) {
 
   else if (req.method === "POST") {
     try {
-      const { name, laborCost, salePrice, materialsUsed } = req.body;
+      // 1. Extraer la descripción del req.body
+      const { name, description, laborCost, salePrice, materialsUsed } = req.body;
+      
       if (!name || isNaN(laborCost) || isNaN(salePrice) || !materialsUsed || materialsUsed.length === 0) {
         return res.status(400).json({ error: "Faltan datos requeridos o materiales." });
       }
@@ -79,9 +81,17 @@ export default async function handler(req, res) {
 
       const newId = Date.now().toString();
       const newTejido = {
-        id: newId, class: 'tejido', name: name.trim(), laborCost: parseFloat(laborCost),
-        materialCost: totalMaterialCost, costPrice: totalMaterialCost + parseFloat(laborCost),
-        salePrice: parseFloat(salePrice), materials: materialsLog, sold: 0, createdAt: new Date().toISOString()
+        id: newId, 
+        class: 'tejido', 
+        name: name.trim(), 
+        description: (description || "").trim(), // Guardar descripción
+        laborCost: parseFloat(laborCost),
+        materialCost: totalMaterialCost, 
+        costPrice: totalMaterialCost + parseFloat(laborCost),
+        salePrice: parseFloat(salePrice), 
+        materials: materialsLog, 
+        sold: 0, 
+        createdAt: new Date().toISOString()
       };
 
       tejidos.push(newTejido);

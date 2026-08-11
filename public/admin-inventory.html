@@ -438,6 +438,13 @@
                             <option value="Herraje">Herraje (Pico de loro, Argolla)</option>
                         </select>
                     </div>
+                    <div>
+                        <label class="label-premium">Material</label>
+                        <select class="input-premium">
+                            <option value="18k">Oro 18k Macizo</option>
+                            <option value="Laminado">Oro Laminado 18k</option>
+                        </select>
+                    </div>
                     <div style="grid-column: span 2;">
                         <label class="label-premium">Imagen (Opcional)</label>
                         <input type="file" id="itemImage" accept="image/*" class="input-premium" style="padding: 0.6rem 1rem;">
@@ -451,6 +458,7 @@
                         <select id="materialMetal" onchange="generateMaterialName()" class="input-premium">
                             <option value="18k">Oro 18k Macizo</option>
                             <option value="Laminado">Oro Laminado 18k</option>
+                            <option value="N/A">N/A</option>
                         </select>
                     </div>
                     <div>
@@ -459,6 +467,7 @@
                             <option value="Balín Liso">Balín Liso</option>
                             <option value="Balín Diamantado">Balín Diamantado</option>
                             <option value="Canutillo Diamantado">Canutillo Diamantado</option>
+                            <option value="Neopreno">Neopreno</option>
                         </select>
                     </div>
                     <div>
@@ -529,6 +538,7 @@
                                 <tr>
                                     <th>Nombre</th>
                                     <th>Tipo</th>
+                                    <th>Material</th>
                                     <th style="text-align: right;">Costo</th>
                                     <th style="text-align: right;">Venta</th>
                                     <th style="text-align: center;">Stock</th>
@@ -543,7 +553,7 @@
                 <!-- Table 2: Materials -->
                 <div class="admin-table-container">
                     <div class="admin-table-header" style="background: #f5f5f4; color: #57534e;">
-                        <span>Insumos (Balines & Herrajes)</span>
+                        <span>Insumos (Balines)</span>
                         <span id="material-count" style="background: #d6d3d1; color: #44403c; padding: 0.1rem 0.6rem; border-radius: 9999px;">0</span>
                     </div>
                     <div style="overflow-x: auto;">
@@ -691,13 +701,18 @@
                 name: document.getElementById('itemName').value,
                 stock: parseInt(document.getElementById('itemStock').value),
                 costPrice: parseFloat(document.getElementById('priceBought').value),
-                salePrice: parseFloat(document.getElementById('priceSold').value)
+                salePrice: parseFloat(document.getElementById('priceSold').value),
+                material: document.getElementById('materialMetal').value
             };
 
             if (currentMode === 'product') {
                 payload.type = document.getElementById('productType').value;
+                
+                // Override class to 'material' if the product type is Herraje or Dije
+                if (payload.type === 'Herraje' || payload.type === 'Dije') {
+                    payload.class = 'material';
+                }
             } else {
-                payload.material = document.getElementById('materialMetal').value;
                 payload.type = document.getElementById('materialType').value;
                 payload.size = document.getElementById('materialSize').value;
             }
@@ -761,6 +776,7 @@
                     <tr class="hover:bg-stone-50 transition-colors">
                         <td class="px-6 py-3 font-medium text-black">${p.name}</td>
                         <td class="px-6 py-3 text-stone-500">${p.type}</td>
+                        <td class="px-6 py-3 text-stone-500">${p.material}</td>
                         <td class="px-6 py-3 text-right text-stone-500">${formatter.format(p.costPrice)}</td>
                         <td class="px-6 py-3 text-right font-medium text-green-700">${formatter.format(p.salePrice)}</td>
                         <td class="px-6 py-3 text-center font-bold text-black">${p.stock}</td>

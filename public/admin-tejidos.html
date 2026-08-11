@@ -203,6 +203,9 @@
                         <button type="button" id="tab-laminado" onclick="switchTab('Laminado')" class="px-6 py-2.5 rounded-lg text-sm font-bold text-stone-500 hover:text-black transition-all">
                             Insumos Laminados
                         </button>
+                        <button type="button" id="tab-na" onclick="switchTab('N/A')" class="px-6 py-2.5 rounded-lg text-sm font-bold text-stone-500 hover:text-black transition-all">
+                            Otros (N/A)
+                        </button>
                     </div>
 
                     <div class="bg-white p-6 rounded-2xl shadow-sm border border-stone-100">
@@ -227,6 +230,12 @@
                             <div>
                                 <label class="block text-[10px] font-bold text-[#cca830] uppercase tracking-wider mb-1">Nombre del Tejido</label>
                                 <input type="text" id="tejido-name" required class="w-full bg-stone-800 border border-stone-700 rounded-lg px-3 py-2 text-sm text-white focus:ring-1 focus:ring-[#cca830] outline-none" placeholder="Ej: Pulsera Neopreno Balines #4">
+                            </div>
+
+                            <!-- Description -->
+                            <div class="mt-4">
+                                <label class="block text-[10px] font-bold text-[#cca830] uppercase tracking-wider mb-1">Descripción / Notas (Opcional)</label>
+                                <textarea id="tejido-desc" rows="2" class="w-full bg-stone-800 border border-stone-700 rounded-lg px-3 py-2 text-sm text-white focus:ring-1 focus:ring-[#cca830] outline-none resize-none" placeholder="Ej: Hilo negro, tejido macramé, largo ajustable..."></textarea>
                             </div>
 
                             <div class="h-px bg-stone-700 w-full my-4"></div>
@@ -337,19 +346,29 @@
             
             const btn18k = document.getElementById('tab-18k');
             const btnLam = document.getElementById('tab-laminado');
+            const btnNA = document.getElementById('tab-na');
+            
             const activeClass = "px-6 py-2.5 rounded-lg text-sm font-bold bg-white text-black shadow-sm transition-all";
             const inactiveClass = "px-6 py-2.5 rounded-lg text-sm font-bold text-stone-500 hover:text-black transition-all";
 
+            // 1. Reset all buttons to inactive
+            btn18k.className = inactiveClass;
+            btnLam.className = inactiveClass;
+            btnNA.className = inactiveClass;
+
+            // 2. Apply active class and update title based on selection
             if (tab === '18k') {
                 btn18k.className = activeClass;
-                btnLam.className = inactiveClass;
                 document.getElementById('list-title').innerText = "Insumos Disponibles (18k)";
-            } else {
+            } else if (tab === 'Laminado') {
                 btnLam.className = activeClass;
-                btn18k.className = inactiveClass;
                 document.getElementById('list-title').innerText = "Insumos Disponibles (Laminado)";
+            } else if (tab === 'N/A') {
+                btnNA.className = activeClass;
+                document.getElementById('list-title').innerText = "Insumos Disponibles (Otros)";
             }
 
+            // 3. Render the newly filtered materials
             renderMaterials();
         }
 
@@ -370,32 +389,39 @@
                     </div>
                     <div class="flex items-center gap-2">
                         <label class="text-[10px] font-bold text-stone-400 uppercase">Usados:</label>
-                        <input type="number" data-id="${m.id}" data-cost="${m.costPrice}" data-name="${m.name}" data-stock="${m.stock}" 
-                               min="0" max="${m.stock}" value="0" oninput="calculateTotals()"
-                               class="qty-input w-16 bg-white border border-stone-200 rounded-lg px-2 py-1.5 text-center text-sm font-bold outline-none focus:border-[#cca830]">
+                        <input type="number" 
+                               min="0" max="${m.stock}" 
+                               value="${m.qty || 0}" 
+                               oninput="handleQtyChange('${m.id}', this.value)"
+                               class="w-16 bg-white border border-stone-200 rounded-lg px-2 py-1.5 text-center text-sm font-bold outline-none focus:border-[#cca830]">
                     </div>
                 </div>
             `).join('');
         }
 
+        function handleQtyChange(id, value) {
+            const item = allMaterials.find(m => m.id === id);
+            if (item) {
+                item.qty = parseInt(value) || 0;
+            }
+            calculateTotals();
+        }
+
         function calculateTotals() {
-            const inputs = document.querySelectorAll('.qty-input');
             const receiptList = document.getElementById('receipt-list');
             let materialCost = 0;
             let receiptHtml = '';
 
-            inputs.forEach(input => {
-                const qty = parseInt(input.value) || 0;
+            // Revisar todo el inventario en memoria, no solo la pestaña activa
+            allMaterials.forEach(m => {
+                const qty = m.qty || 0;
                 if (qty > 0) {
-                    const cost = parseFloat(input.getAttribute('data-cost'));
-                    const name = input.getAttribute('data-name');
-                    
-                    const itemTotal = qty * cost;
+                    const itemTotal = qty * m.costPrice;
                     materialCost += itemTotal;
                     
                     receiptHtml += `
                         <li class="flex justify-between items-center">
-                            <span>${qty}x ${name}</span>
+                            <span>${qty}x ${m.name}</span>
                             <span class="font-mono text-stone-400">${formatter.format(itemTotal)}</span>
                         </li>
                     `;
@@ -429,20 +455,18 @@
             document.getElementById('sale-price').value = Math.round(salePrice);
         }
 
+
         async function handleTejidoSubmission(e) {
             e.preventDefault();
             
             const name = document.getElementById('tejido-name').value;
+            const description = document.getElementById('tejido-desc').value; // <-- Capturar descripción
             const laborCost = parseFloat(document.getElementById('cost-labor').value) || 0;
             const salePrice = parseFloat(document.getElementById('sale-price').value) || 0;
             
-            const materialsUsed = [];
-            document.querySelectorAll('.qty-input').forEach(input => {
-                const qty = parseInt(input.value) || 0;
-                if (qty > 0) {
-                    materialsUsed.push({ id: input.getAttribute('data-id'), qty: qty });
-                }
-            });
+            const materialsUsed = allMaterials
+                .filter(m => (m.qty || 0) > 0)
+                .map(m => ({ id: m.id, qty: m.qty }));
 
             if (materialsUsed.length === 0) {
                 alert("Debes seleccionar al menos un insumo para registrar el tejido.");
@@ -453,7 +477,7 @@
             btn.innerHTML = `<span class="material-symbols-outlined animate-spin">refresh</span> Registrando...`;
             btn.disabled = true;
 
-            const payload = { name, laborCost, salePrice, materialsUsed };
+            const payload = { name, description, laborCost, salePrice, materialsUsed }; 
 
             try {
                 const res = await fetch('/api/tejidos', {

@@ -102,13 +102,13 @@ export default async function handler(req, res) {
       // CREATE NEW ITEM
       const newId = Date.now().toString();
       const newItem = {
-        id: newId, class: itemClass, name: name.trim(), type: type,
+        id: newId, class: itemClass, material: material.trim(), name: name.trim(), type: type,
         costPrice: parseFloat(costPrice), salePrice: parseFloat(salePrice),
         sold: 0, createdAt: currentDate
       };
 
       if (itemClass === 'material') {
-        newItem.material = material; newItem.size = size;
+        newItem.size = size;
         newItem.history = [{ date: currentDate, added: parsedStock, totalAfter: parsedStock }];
       } else if (itemClass === 'product' && image) {
         newItem.image = image;

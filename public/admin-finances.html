@@ -7,38 +7,27 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=block" rel="stylesheet">
     
-    <!-- Carga limpia de Tailwind (Evita bloqueos de Edge) -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        "brand-gold": "#E5C76B",
-                        "brand-dark": "#121212",
-                    }
-                }
-            }
-        }
-    </script>
-
     <style> 
-        /* === IMPORTED SIDEBAR CSS FROM ADMIN.HTML === */
         :root {
             --sidebar-width: 240px;
             --brand-gold: #E5C76B;
             --brand-dark: #121212;
             --header-height: 56px;
+            --bg-light: #f9f9f9;
         }
+        
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
         body { 
             font-family: 'DM Sans', sans-serif; 
             display: flex;
             height: 100vh;
             overflow: hidden;
-            background: #f9f9f9;
-            margin: 0;
+            background: var(--bg-light);
+            color: #292524;
         }
 
+        /* === SIDEBAR === */
         .sidebar {
             width: var(--sidebar-width);
             background: var(--brand-dark);
@@ -61,7 +50,7 @@
             color: var(--brand-gold);
             font-style: italic;
         }
-        .sidebar-menu { list-style: none; margin-top: 10px; padding: 0;}
+        .sidebar-menu { list-style: none; margin-top: 10px; }
         .sidebar-section-title {
             padding: 15px 25px 5px;
             font-size: 10px;
@@ -90,20 +79,144 @@
             padding-left: 21px;
         }
 
+        /* === MAIN WORKSPACE === */
         .main-workspace {
             flex-grow: 1;
             display: flex;
             flex-direction: column;
             height: 100%;
             overflow-y: auto;
-            background: #f9f9f9;
+            background: var(--bg-light);
+            padding: 2rem;
         }
 
-        /* Mobile Sidebar adjustments */
+        /* === FINANCES CUSTOM WIDGETS === */
+        .finance-wrapper {
+            max-width: 72rem;
+            margin: 0 auto;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .finance-header {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .finance-title {
+            font-size: 1.875rem;
+            font-weight: 700;
+            color: #000;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .finance-subtitle { color: #78716c; margin-top: 0.25rem; font-size: 0.9rem; }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        /* Inputs & Buttons */
+        .input-month {
+            background: white; border: 1px solid #e5e7eb; border-radius: 0.5rem;
+            padding: 0.5rem 0.75rem; font-size: 0.875rem; font-weight: 700; outline: none;
+        }
+        .input-month:focus { border-color: #16a34a; }
+        
+        .control-panel {
+            background: white; padding: 1.5rem; border-radius: 1rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05); border: 1px solid #e5e7eb;
+            display: flex; flex-direction: column; gap: 1rem; justify-content: space-between;
+        }
+        .control-title { font-weight: 700; color: #000; display: flex; align-items: center; gap: 0.5rem; }
+
+        .control-input-group { display: flex; gap: 0.75rem; }
+
+        .input-margin {
+            width: 5.5rem; background: #fafaf9; border: 1px solid #e5e7eb; border-radius: 0.5rem;
+            padding: 0.5rem 1rem; text-align: center; font-weight: 700; font-size: 1.125rem; outline: none;
+        }
+        .input-margin:focus { border-color: #16a34a; }
+
+        .btn-update {
+            background: #292524; color: white; font-size: 0.75rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.1em; padding: 0.625rem 1.5rem;
+            border-radius: 0.5rem; border: none; cursor: pointer; transition: background 0.2s;
+        }
+        .btn-update:hover { background: #000; }
+
+        /* Grids */
+        .widget-grid-3 { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+        .widget-grid-2 { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+
+        /* Cards */
+        .widget-card {
+            background: white; padding: 1.5rem; border-radius: 1rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05); border: 1px solid #f5f5f4;
+        }
+        .widget-card.highlight {
+            border-top: 4px solid #22c55e; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+        }
+        .widget-card.dark {
+            background: #1c1917; padding: 2rem; border-radius: 1rem; border: none;
+            position: relative; overflow: hidden; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+        }
+        .widget-card.gradient {
+            background: linear-gradient(to bottom right, #15803d, #14532d);
+            padding: 2rem; border-radius: 1rem; border: none;
+            position: relative; overflow: hidden; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+        }
+
+        /* Labels & Values */
+        .widget-label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.25rem; color: #a8a29e; position: relative; z-index: 10; }
+        .widget-label.green-text { color: #bbf7d0; }
+        
+        .widget-value { font-size: 1.875rem; font-weight: 700; color: #000; position: relative; z-index: 10; }
+        .widget-value.red { color: #dc2626; }
+        .widget-value.green { color: #16a34a; }
+        .widget-value.gold { color: #cca830; font-size: 2.25rem; }
+        .widget-value.white { color: #ffffff; font-size: 2.25rem; }
+
+        .widget-icon-bg { position: absolute; right: -1rem; bottom: -1rem; font-size: 6rem; opacity: 0.3; }
+        .widget-icon-bg.dark { color: #292524; opacity: 0.5; }
+        .widget-icon-bg.green { color: #052e16; opacity: 0.3; }
+
+        /* Ledger Table */
+        .ledger-container { background: white; border-radius: 1rem; box-shadow: 0 1px 3px rgba(0,0,0,0.05); border: 1px solid #f5f5f4; overflow: hidden; }
+        .ledger-header { background: #f5f5f4; color: #52525b; padding: 1rem 1.5rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.75rem; }
+        .ledger-table-wrap { overflow-x: auto; max-height: 400px; }
+        .ledger-table { width: 100%; text-align: left; font-size: 0.875rem; border-collapse: collapse; white-space: nowrap; }
+        .ledger-table th { padding: 0.75rem 1.5rem; font-weight: 700; background: #fafaf9; color: #78716c; border-bottom: 1px solid #e7e5e4; position: sticky; top: 0; font-size: 0.75rem; }
+        .ledger-table th.right { text-align: right; }
+        .ledger-table td { padding: 0.75rem 1.5rem; border-bottom: 1px solid #f5f5f4; color: #52525b; }
+        .ledger-table tr:hover td { background-color: #fafaf9; }
+        .td-date { font-weight: 500; color: #444; }
+        .td-time { color: #a8a29e; font-size: 0.75rem; margin-left: 0.25rem; }
+        .td-items { font-size: 0.75rem; line-height: 1.3; }
+        .td-val-black { font-weight: 700; color: #000; text-align: right; }
+        .td-val-green { font-weight: 700; color: #16a34a; text-align: right; }
+
+        /* === MOBILE RESPONSIVE === */
         .mobile-header { display: none; }
         .sidebar-backdrop { display: none; }
 
-        @media (max-width: 768px) {
+        @media (min-width: 768px) {
+            .finance-header { flex-direction: row; align-items: center; }
+            .control-panel { flex-direction: row; align-items: center; }
+            .widget-grid-3 { grid-template-columns: repeat(3, 1fr); }
+            .widget-grid-2 { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 767px) {
             .mobile-header {
                 display: flex; position: fixed; top: 0; left: 0; right: 0; height: var(--header-height);
                 background: var(--brand-dark); color: var(--brand-gold); align-items: center;
@@ -118,14 +231,14 @@
                 padding-top: var(--header-height);
             }
             .sidebar.open { transform: translateX(0); }
-            .main-workspace { margin-top: var(--header-height); height: auto; overflow-y: visible; }
+            .main-workspace { padding: 1rem; margin-top: var(--header-height); height: auto; overflow-y: visible; }
             .sidebar-backdrop.active {
                 display: block; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 190;
             }
         }
     </style>
 </head>
-<body class="text-stone-800">
+<body>
 
     <!-- Mobile-only top bar -->
     <header class="mobile-header">
@@ -163,7 +276,6 @@
                     </a>
                 </li>
                 <li>
-                    <!-- ACTIVE CLASS applied here because we are ON the Finanzas page -->
                     <a href="#" class="sidebar-link active">
                         <span class="material-symbols-outlined">monitoring</span> Finanzas
                     </a>
@@ -173,86 +285,84 @@
     </aside>
 
     <!-- MAIN CONTENT AREA -->
-    <main class="main-workspace p-4 md:p-8">
-        <div class="max-w-6xl mx-auto space-y-8 w-full">
+    <main class="main-workspace">
+        <div class="finance-wrapper">
             <!-- Header -->
-            <header class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-stone-200">
+            <header class="finance-header">
                 <div>
-                    <h1 class="text-3xl font-bold text-black flex items-center gap-3">
-                        <span class="material-symbols-outlined text-4xl text-green-600">monitoring</span>
+                    <h1 class="finance-title">
+                        <span class="material-symbols-outlined" style="font-size: 2.25rem; color: #16a34a;">monitoring</span>
                         Finanzas
                     </h1>
-                    <p class="text-stone-500 mt-1">Análisis de ingresos, costos y distribución de utilidades.</p>
+                    <p class="finance-subtitle">Análisis de ingresos, costos y distribución de utilidades.</p>
                 </div>
-                <div class="flex gap-4 items-center">
-                    <input type="month" id="month-selector" onchange="calculateDashboard()" class="bg-white border border-stone-200 rounded-lg px-3 py-2 text-sm font-bold outline-none focus:border-green-600">
-                    <a href="admin-sales.html" class="text-sm font-semibold text-stone-500 hover:text-black hidden md:block">Ir a Ventas</a>
+                <div class="header-controls">
+                    <input type="month" id="month-selector" onchange="calculateDashboard()" class="input-month">
+                    <a href="admin-sales.html" style="text-decoration: none; color: #78716c; font-size: 0.875rem; font-weight: 600;">Ir a Ventas</a>
                 </div>
             </header>
 
             <!-- Top Controls: Owner Margin Setup -->
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-stone-200 flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="control-panel">
                 <div>
-                    <h3 class="font-bold text-black flex items-center gap-2">
-                        <span class="material-symbols-outlined text-stone-400">account_balance_wallet</span>
+                    <h3 class="control-title">
+                        <span class="material-symbols-outlined" style="color: #a8a29e;">account_balance_wallet</span>
                         Porcentaje de Utilidad del Dueño
                     </h3>
-                    <p class="text-xs text-stone-500 mt-1">Este % se extraerá de la Ganancia Operativa (Ingresos - Costos).</p>
+                    <p class="finance-subtitle" style="font-size: 0.75rem;">Este % se extraerá de la Ganancia Operativa (Ingresos - Costos).</p>
                 </div>
-                <div class="flex items-center gap-3">
-                    <input type="number" id="owner-margin" min="0" max="100" class="w-24 bg-stone-50 border border-stone-200 rounded-lg px-4 py-2 text-center font-bold text-lg outline-none focus:border-green-600" placeholder="%">
-                    <button onclick="saveOwnerMargin()" class="bg-stone-800 text-white text-xs font-bold uppercase tracking-widest px-6 py-2.5 rounded-lg hover:bg-black transition-colors shrink-0">
-                        Actualizar %
-                    </button>
+                <div class="control-input-group">
+                    <input type="number" id="owner-margin" min="0" max="100" class="input-margin" placeholder="%">
+                    <button onclick="saveOwnerMargin()" class="btn-update">Actualizar %</button>
                 </div>
             </div>
 
             <!-- Dashboard Widgets -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-stone-100">
-                    <p class="text-xs font-bold text-stone-400 uppercase tracking-widest mb-1">Ingresos Brutos</p>
-                    <h2 id="val-revenue" class="text-3xl font-bold text-black">$0</h2>
+            <div class="widget-grid-3">
+                <div class="widget-card">
+                    <p class="widget-label">Ingresos Brutos</p>
+                    <h2 id="val-revenue" class="widget-value">$0</h2>
                 </div>
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-stone-100">
-                    <p class="text-xs font-bold text-stone-400 uppercase tracking-widest mb-1">Costos de Material/Mano</p>
-                    <h2 id="val-cost" class="text-3xl font-bold text-red-600">-$0</h2>
+                <div class="widget-card">
+                    <p class="widget-label">Costos de Material/Mano</p>
+                    <h2 id="val-cost" class="widget-value red">-$0</h2>
                 </div>
-                <div class="bg-white p-6 rounded-2xl shadow-md border-t-4 border-green-500">
-                    <p class="text-xs font-bold text-stone-500 uppercase tracking-widest mb-1">Ganancia Operativa (Total)</p>
-                    <h2 id="val-profit" class="text-3xl font-bold text-green-600">$0</h2>
+                <div class="widget-card highlight">
+                    <p class="widget-label">Ganancia Operativa (Total)</p>
+                    <h2 id="val-profit" class="widget-value green">$0</h2>
                 </div>
             </div>
 
             <!-- Money Split Widgets -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="bg-stone-900 text-white p-8 rounded-2xl shadow-lg relative overflow-hidden">
-                    <span class="material-symbols-outlined absolute -right-4 -bottom-4 text-8xl text-stone-800 opacity-50">storefront</span>
-                    <p class="text-xs font-bold text-stone-400 uppercase tracking-widest mb-2 relative z-10">Cuenta del Negocio (Costos + Re-inversión)</p>
-                    <h2 id="val-business" class="text-4xl font-bold text-[#cca830] relative z-10">$0</h2>
+            <div class="widget-grid-2">
+                <div class="widget-card dark">
+                    <span class="material-symbols-outlined widget-icon-bg dark">storefront</span>
+                    <p class="widget-label dark-text">Cuenta del Negocio (Costos + Re-inversión)</p>
+                    <h2 id="val-business" class="widget-value gold">$0</h2>
                 </div>
-                <div class="bg-gradient-to-br from-green-700 to-green-900 text-white p-8 rounded-2xl shadow-lg relative overflow-hidden">
-                    <span class="material-symbols-outlined absolute -right-4 -bottom-4 text-8xl text-green-950 opacity-30">person</span>
-                    <p class="text-xs font-bold text-green-200 uppercase tracking-widest mb-2 relative z-10">Dinero del Dueño (Retirable)</p>
-                    <h2 id="val-owner" class="text-4xl font-bold text-white relative z-10">$0</h2>
+                <div class="widget-card gradient">
+                    <span class="material-symbols-outlined widget-icon-bg green">person</span>
+                    <p class="widget-label green-text">Dinero del Dueño (Retirable)</p>
+                    <h2 id="val-owner" class="widget-value white">$0</h2>
                 </div>
             </div>
 
             <!-- Ledger Table -->
-            <div class="bg-white rounded-2xl shadow-sm border border-stone-100 overflow-hidden">
-                <div class="bg-stone-100 text-stone-600 px-6 py-4 font-bold uppercase tracking-widest text-xs">
+            <div class="ledger-container">
+                <div class="ledger-header">
                     Historial de Transacciones del Mes
                 </div>
-                <div class="overflow-x-auto max-h-[400px]">
-                    <table class="w-full text-left text-sm whitespace-nowrap">
-                        <thead class="bg-stone-50 text-stone-500 border-b border-stone-200 text-xs sticky top-0">
+                <div class="ledger-table-wrap no-scrollbar">
+                    <table class="ledger-table">
+                        <thead>
                             <tr>
-                                <th class="px-6 py-3 font-bold">Fecha / Hora</th>
-                                <th class="px-6 py-3 font-bold">Artículos</th>
-                                <th class="px-6 py-3 font-bold text-right">Ingreso</th>
-                                <th class="px-6 py-3 font-bold text-right">Ganancia Neta</th>
+                                <th>Fecha / Hora</th>
+                                <th>Artículos</th>
+                                <th class="right">Ingreso</th>
+                                <th class="right">Ganancia Neta</th>
                             </tr>
                         </thead>
-                        <tbody id="sales-table" class="divide-y divide-stone-100">
+                        <tbody id="sales-table">
                             <!-- JS Injected -->
                         </tbody>
                     </table>
@@ -339,7 +449,7 @@
 
             // Update Table
             if (monthlySales.length === 0) {
-                document.getElementById('sales-table').innerHTML = `<tr><td colspan="4" class="text-center py-8 text-stone-400">No hay ventas registradas en este mes.</td></tr>`;
+                document.getElementById('sales-table').innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 2rem; color: #a8a29e;">No hay ventas registradas en este mes.</td></tr>`;
             } else {
                 // Reverse to show newest first
                 document.getElementById('sales-table').innerHTML = [...monthlySales].reverse().map(sale => {
@@ -350,13 +460,14 @@
                     const itemsDesc = sale.cart.map(i => `${i.qty}x ${i.name}`).join('<br>');
 
                     return `
-                    <tr class="hover:bg-stone-50">
-                        <td class="px-6 py-3 font-medium text-stone-600">
-                            ${formattedDate} <span class="text-stone-400 text-xs ml-1">${formattedTime}</span>
+                    <tr>
+                        <td>
+                            <span class="td-date">${formattedDate}</span> 
+                            <span class="td-time">${formattedTime}</span>
                         </td>
-                        <td class="px-6 py-3 text-xs text-stone-500 leading-tight">${itemsDesc}</td>
-                        <td class="px-6 py-3 text-right font-bold text-black">${formatter.format(sale.totalRevenue)}</td>
-                        <td class="px-6 py-3 text-right font-bold text-green-600">${formatter.format(sale.totalProfit)}</td>
+                        <td class="td-items">${itemsDesc}</td>
+                        <td class="td-val-black">${formatter.format(sale.totalRevenue)}</td>
+                        <td class="td-val-green">${formatter.format(sale.totalProfit)}</td>
                     </tr>`;
                 }).join('');
             }
