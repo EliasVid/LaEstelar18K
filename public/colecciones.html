@@ -37,6 +37,80 @@
             border: none;
             cursor: pointer;
         }
+
+        /* =======================================
+           ESTILOS PARA LAS TARJETAS DE CARPETAS
+           ======================================= */
+        .folder-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 1rem;
+        }
+        @media (min-width: 768px) {
+            .folder-grid {
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+                gap: 1.5rem;
+            }
+        }
+        .folder-card {
+            background-color: #f5f5f5; /* Fondo gris claro idéntico al catálogo de WA */
+            border: 1px solid rgba(0,0,0,0.04);
+            border-radius: 0.75rem;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            aspect-ratio: 3/4; /* Fuerza estrictamente la proporción vertical (no se hará horizontal) */
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.04);
+        }
+        .folder-card:hover {
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            transform: translateY(-3px);
+            border-color: rgba(229,199,107,0.3);
+        }
+        .folder-img-wrapper {
+            flex: 1; /* Ocupa todo el espacio sobrante arriba del texto */
+            width: 100%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f5f5f5;
+        }
+        .folder-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Corta el excedente de la imagen para llenar el cuadro */
+            object-position: center 35%; /* Centra la imagen pero corta ligeramente más de la parte superior */
+            mix-blend-mode: darken; /* Fusiona los fondos blancos de las fotos con el fondo gris de la tarjeta */
+            transition: transform 0.4s ease;
+        }
+        .folder-card:hover .folder-img {
+            transform: scale(1.06);
+        }
+        .folder-title {
+            height: 3.2rem; /* Altura fija para el contenedor del nombre */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f5f5f5;
+            font-size: 0.75rem;
+            font-weight: 500; /* Letra más fina para igualar la referencia */
+            color: #333333;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Animación suave al abrir una categoría */
+        @keyframes fadeInCategory {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in-cat {
+            animation: fadeInCategory 0.3s ease-out forwards;
+        }
+
         @media (min-width: 768px) {
             .tab-btn-base { padding: 0.6rem 2.5rem; font-size: 0.75rem; }
         }
@@ -78,6 +152,11 @@
     overscroll-behavior: contain;
 }
 
+.custom-margin{
+    margin-top:10px;
+    margin-bottom:10px;
+}
+
 @media (min-width: 768px) {
     #product-modal-content {
         overflow: hidden;
@@ -87,14 +166,12 @@
         min-height: 0;
         -webkit-overflow-scrolling: touch;
     }
-}
 
-        @media (min-width: 768px) {
-            .product-grid {
+    .product-grid {
                 grid-template-columns: repeat(4, minmax(0, 1fr));
                 gap: 1.5rem;
             }
-        }
+}
     </style>
 </head>
 
@@ -259,7 +336,7 @@
             
             <!-- SECTION 1: ORO LAMINADO 18K -->
             <section id="oro-laminado-section" class="scroll-mt-20 transition-all duration-500">
-                <div style="background-color: #000000; border: 1px solid rgba(229,199,107,0.3);" class="text-white p-6 md:p-8 rounded-2xl mb-10 flex flex-col md:flex-row justify-between items-center gap-4 shadow-lg">
+                <div style="background-color: #000000; border: 1px solid rgba(229,199,107,0.3);" class="text-white p-6 md:p-8 rounded-2xl flex flex-col md:flex-row justify-between items-center gap-4 shadow-lg">
                     <div>
                         <div class="flex items-center gap-2 mb-2">
                             <span class="material-symbols-outlined text-sm text-[#E5C76B]">auto_awesome</span>
@@ -463,14 +540,19 @@
             const laminadoProducts = products.filter(p => p.category === 'laminado');
             const oro18kProducts = products.filter(p => p.category === '18k');
 
-            if(laminadoContainer) laminadoContainer.innerHTML = buildGroupedHTML(laminadoProducts);
-            if(oro18kContainer) oro18kContainer.innerHTML = buildGroupedHTML(oro18kProducts);
+            // Renderiza la vista principal de "Carpetas" por defecto
+            if(laminadoContainer) renderFolders(laminadoProducts, 'laminado-container', 'laminado');
+            if(oro18kContainer) renderFolders(oro18kProducts, 'oro-18k-container', '18k');
         }
 
-        // Más margen inferior (mb-28) y más margen arriba del título (mt-12) para que respire mucho mejor
-        function buildGroupedHTML(productsArray) {
-            if (productsArray.length === 0) return `<p class="py-8 text-center text-black/50">Próximamente nuevos diseños.</p>`;
-            
+        // NUEVO: Genera el HTML de las tarjetas estilo "Carpeta"
+        function renderFolders(productsArray, containerId, tabType) {
+            if (productsArray.length === 0) {
+                document.getElementById(containerId).innerHTML = `<p class="py-8 text-center text-black/50">Próximamente nuevos diseños.</p>`;
+                return;
+            }
+
+            // Agrupar los productos
             const grouped = {};
             productsArray.forEach(p => {
                 const t = p.type || 'Otros Diseños';
@@ -478,38 +560,61 @@
                 grouped[t].push(p);
             });
 
-            let html = '';
+            let html = `<div class="folder-grid custom-margin pb-12 pt-4">`;
+
             for (const [type, prods] of Object.entries(grouped)) {
-                if(type=="Topos"){
-                    html += `
-                    <div class="mb-28 mt-12">
-                        <h4 class="text-2xl font-display-lg italic font-bold text-black border-b border-[#E5C76B]/40 pb-4 mb-10">${type}</h4>
-                        <div class="product-grid">
-                            ${prods.map(createProductCardHTML).join('')}
-                        </div>
+                // Tomar la primera imagen del primer producto como portada de la carpeta
+                const image = prods[0].image || (prods[0].images && prods[0].images.length > 0 ? prods[0].images[0] : 'img/placeholder.jpg');
+                const displayName = type === 'Topos' || type === 'Pulsos' || type === 'Otros Diseños' ? type : `${type}s`;
+
+                html += `
+                <button onclick="openCategory('${type}', '${tabType}')" class="folder-card">
+                    <div class="folder-img-wrapper">
+                        <img src="${image}" alt="${type}" class="folder-img" loading="lazy" onerror="this.src='img/placeholder.jpg'">
                     </div>
-                    `;
-                }else if(type=="Pulsos"){
-                    html += `
-                    <div class="mb-28 mt-12">
-                        <h4 class="text-2xl font-display-lg italic font-bold text-black border-b border-[#E5C76B]/40 pb-4 mb-10">${type}</h4>
-                        <div class="product-grid">
-                            ${prods.map(createProductCardHTML).join('')}
-                        </div>
+                    <div class="folder-title">
+                        ${displayName}
                     </div>
-                    `;
-                }else{
-                    html += `
-                        <div class="mb-28 mt-12">
-                            <h4 class="text-2xl font-display-lg italic font-bold text-black border-b border-[#E5C76B]/40 pb-4 mb-10">${type}s</h4>
-                            <div class="product-grid">
-                                ${prods.map(createProductCardHTML).join('')}
-                            </div>
-                        </div>
-                    `;
-                }
+                </button>
+                `;
             }
-            return html;
+            
+            html += `</div>`;
+            document.getElementById(containerId).innerHTML = html;
+        }
+
+        // NUEVO: Abre una categoría específica y muestra sus productos con botón de regreso
+        function openCategory(type, tabType) {
+            const containerId = tabType === 'laminado' ? 'laminado-container' : 'oro-18k-container';
+            const allCatProducts = globalCatalog.filter(p => p.category === tabType);
+            const prods = allCatProducts.filter(p => (p.type || 'Otros Diseños') === type);
+            const displayName = type === 'Topos' || type === 'Pulsos' || type === 'Otros Diseños' ? type : `${type}s`;
+
+            let html = `
+            <div class="mb-16 pt-4 animate-fade-in-cat">
+                <button onclick="renderCategorizedProducts(globalCatalog)" class="flex items-center gap-2 text-[10px] md:text-xs font-bold uppercase tracking-widest text-black/60 hover:text-black transition-colors mb-6 bg-stone-100 hover:bg-stone-200 px-5 py-2.5 rounded-full border border-black/5 shadow-sm custom-margin">
+                    <span class="material-symbols-outlined text-lg">arrow_back</span> Volver a Categorías
+                </button>
+                
+                <h4 class="text-2xl font-display-lg italic font-bold text-black border-b border-[#E5C76B]/40 pb-4 mb-8">${displayName}</h4>
+                
+                <div class="product-grid">
+                    ${prods.map(createProductCardHTML).join('')}
+                </div>
+            </div>
+            `;
+            
+            document.getElementById(containerId).innerHTML = html;
+            
+            // Hacer scroll suave hacia arriba para que el usuario vea el inicio de la categoría
+            const sectionId = tabType === 'laminado' ? 'oro-laminado-section' : 'oro-18k-section';
+            const sectionEl = document.getElementById(sectionId);
+            if(sectionEl) {
+                const headerOffset = 80;
+                const elementPosition = sectionEl.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                window.scrollTo({ top: offsetPosition, behavior: "smooth" });
+            }
         }
 
         function setModalMainImage(src, btnEl) {
