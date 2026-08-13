@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=block" rel="stylesheet">
     
-    <!-- Archivo CSS compilado (Soluciona el problema de carga en Edge) -->
+    <!-- Archivo CSS compilado -->
     <link rel="stylesheet" href="css/index.css">
 
     <style>
@@ -53,13 +53,13 @@
             }
         }
         .folder-card {
-            background-color: #f5f5f5; /* Fondo gris claro idéntico al catálogo de WA */
+            background-color: #f5f5f5;
             border: 1px solid rgba(0,0,0,0.04);
             border-radius: 0.75rem;
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            aspect-ratio: 3/4; /* Fuerza estrictamente la proporción vertical (no se hará horizontal) */
+            aspect-ratio: 3/4;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
             cursor: pointer;
             box-shadow: 0 2px 5px rgba(0,0,0,0.04);
@@ -70,7 +70,7 @@
             border-color: rgba(229,199,107,0.3);
         }
         .folder-img-wrapper {
-            flex: 1; /* Ocupa todo el espacio sobrante arriba del texto */
+            flex: 1;
             width: 100%;
             overflow: hidden;
             display: flex;
@@ -81,28 +81,27 @@
         .folder-img {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Corta el excedente de la imagen para llenar el cuadro */
-            object-position: center 35%; /* Centra la imagen pero corta ligeramente más de la parte superior */
-            mix-blend-mode: darken; /* Fusiona los fondos blancos de las fotos con el fondo gris de la tarjeta */
+            object-fit: cover;
+            object-position: center 35%;
+            mix-blend-mode: darken;
             transition: transform 0.4s ease;
         }
         .folder-card:hover .folder-img {
             transform: scale(1.06);
         }
         .folder-title {
-            height: 3.2rem; /* Altura fija para el contenedor del nombre */
+            height: 3.2rem;
             display: flex;
             align-items: center;
             justify-content: center;
             background-color: #f5f5f5;
             font-size: 0.75rem;
-            font-weight: 500; /* Letra más fina para igualar la referencia */
+            font-weight: 500;
             color: #333333;
             text-transform: uppercase;
             letter-spacing: 0.05em;
         }
 
-        /* Animación suave al abrir una categoría */
         @keyframes fadeInCategory {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -128,50 +127,39 @@
             background-color: rgba(0,0,0,0.04);
         }
 
-        /* FORZAR 4 COLUMNAS EN DESKTOP SIN DEPENDER DE TAILWIND */
         .product-grid {
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 0.75rem;
         }
 
-        /* Enables touch-drag scrolling inside a fixed-position modal on iOS/mobile browsers */
         #product-modal-content {
+            max-height: 90vh;
+            overflow-y: auto;
             -webkit-overflow-scrolling: touch;
             touch-action: pan-y;
             overscroll-behavior: contain;
         }
 
-        /* Hand-written rules replacing missing Tailwind utilities (max-h-[90vh], md:overflow-hidden,
-   md:overflow-y-auto, md:min-h-0) not present in the compiled index.css */
-#product-modal-content {
-    max-height: 90vh;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    touch-action: pan-y;
-    overscroll-behavior: contain;
-}
+        .custom-margin{
+            margin-top:10px;
+            margin-bottom:10px;
+        }
 
-.custom-margin{
-    margin-top:10px;
-    margin-bottom:10px;
-}
-
-@media (min-width: 768px) {
-    #product-modal-content {
-        overflow: hidden;
-    }
-    #modal-details-panel {
-        overflow-y: auto;
-        min-height: 0;
-        -webkit-overflow-scrolling: touch;
-    }
-
-    .product-grid {
+        @media (min-width: 768px) {
+            #product-modal-content {
+                overflow: hidden;
+            }
+            #modal-details-panel {
+                overflow-y: auto;
+                min-height: 0;
+                -webkit-overflow-scrolling: touch;
+            }
+            .product-grid {
                 grid-template-columns: repeat(4, minmax(0, 1fr));
                 gap: 1.5rem;
             }
-}
+        }
     </style>
 </head>
 
@@ -287,7 +275,6 @@
                         Añadir al Carrito
                     </button>
                     
-                    <!-- Botón WhatsApp idéntico al diseño de Añadir al Carrito -->
                     <button onclick="sendWhatsAppInquiry()" class="w-full bg-black text-[#E5C76B] border border-[#E5C76B]/40 hover:border-[#E5C76B] text-xs py-3 rounded-full hover:bg-[#E5C76B] hover:text-black transition-all duration-300 shadow-[0_4px_20px_rgba(229,199,107,0.2)] uppercase tracking-widest font-semibold flex items-center justify-center gap-2 active:scale-[0.98]">
                         <span class="material-symbols-outlined text-lg">chat</span>
                         Preguntar por WhatsApp
@@ -717,22 +704,24 @@
                     `;
                 }
             } 
-            else if (group4.includes(type) || product.colors?.length > 0) {
-                 if (product.colors && product.colors.length > 0) {
-                    modalActiveColor = product.colors[0];
-                    variantHtml = `
-                        <div class="flex flex-col gap-2">
-                            <label class="text-[11px] text-black uppercase tracking-wider font-semibold">Tonalidad / Color</label>
-                            <div class="flex flex-wrap gap-3">
-                                ${product.colors.map(color => `
-                                    <button onclick="selectModalColor('${color}')" id="swatch-${color.replace('#', '')}" class="w-8 h-8 md:w-10 md:h-10 rounded-full border-2 transition-all p-0.5 relative group shadow-sm ${modalActiveColor === color ? 'border-[#E5C76B]' : 'border-black/20 hover:border-[#E5C76B]/60'}">
-                                        <span class="block w-full h-full rounded-full shadow-inner border border-black/5" style="background-color: ${color}"></span>
-                                    </button>
-                                `).join('')}
-                            </div>
+            else if (group4.includes(type)) {
+                // Preset colors for Tejidos (Hilo macramé, neopreno, etc.)
+                const presetColors = ['#000000', '#DC2626', '#E5C76B', '#F5F5F0', '#1E3A8A', '#7DD3FC', '#D8B4E2', '#4B5320', '#FBCFE8', '#FF10F0', '#D1D5DB', '#374151'
+                ];
+                
+                modalActiveColor = presetColors[0]; // Default to first color
+                variantHtml = `
+                    <div class="flex flex-col gap-2">
+                        <label class="text-[11px] text-black uppercase tracking-wider font-semibold">Color del Hilo / Tejido</label>
+                        <div class="flex flex-wrap gap-3">
+                            ${presetColors.map(color => `
+                                <button onclick="selectModalColor('${color}')" id="swatch-${color.replace('#', '')}" class="w-8 h-8 md:w-10 md:h-10 rounded-full border-2 transition-all p-0.5 relative group shadow-sm ${modalActiveColor === color ? 'border-[#E5C76B]' : 'border-black/20 hover:border-[#E5C76B]/60'}">
+                                    <span class="block w-full h-full rounded-full shadow-inner border border-black/5" style="background-color: ${color}"></span>
+                                </button>
+                            `).join('')}
                         </div>
-                    `;
-                }
+                    </div>
+                `;
             } else {
                 variantHtml = `<p class="text-xs text-black/50 italic py-1">Pieza estándar.</p>`;
             }
@@ -780,12 +769,11 @@
 
         function selectModalColor(color) {
             modalActiveColor = color;
-            if(modalActiveProduct && modalActiveProduct.colors) {
-                modalActiveProduct.colors.forEach(c => {
-                    const btn = document.getElementById(`swatch-${c.replace('#', '')}`);
-                    if(btn) btn.className = `w-8 h-8 md:w-10 md:h-10 rounded-full border-2 transition-all p-0.5 relative group shadow-sm ${c === color ? 'border-[#E5C76B]' : 'border-black/20 hover:border-[#E5C76B]/60'}`;
-                });
-            }
+            const presetColors = ['#000000', '#EF4444', '#3B82F6', '#10B981', '#E5C76B', '#EC4899', '#FFFFFF'];
+            presetColors.forEach(c => {
+                const btn = document.getElementById(`swatch-${c.replace('#', '')}`);
+                if(btn) btn.className = `w-8 h-8 md:w-10 md:h-10 rounded-full border-2 transition-all p-0.5 relative group shadow-sm ${c === color ? 'border-[#E5C76B]' : 'border-black/20 hover:border-[#E5C76B]/60'}`;
+            });
         }
 
         function closeProductModal() {

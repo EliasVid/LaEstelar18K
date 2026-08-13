@@ -11,7 +11,6 @@
         (function guardAdminAccess() {
             const token = localStorage.getItem('adminToken');
             if (!token) {
-                // Redirect to login page if token is missing
                 window.location.replace('/index');
             }
         })();
@@ -87,9 +86,6 @@
         .dynamic-section-title { font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; color: #555; margin-bottom: 12px; }
         .picker-row { display: grid; grid-template-columns: 1fr 1fr auto; gap: 10px; align-items: end; margin-bottom: 15px; }
         .picker-row label { margin-bottom: 4px; font-size: 12px; color: #666; }
-        .color-input-wrapper { display: flex; align-items: center; gap: 6px; background: white; border: 1px solid #ccc; border-radius: 4px; padding: 4px 8px; height: 38px; }
-        .color-input-wrapper input[type="color"] { border: none; width: 30px; height: 100%; padding: 0; background: none; cursor: pointer; }
-        .color-preview { display: inline-block; width: 14px; height: 14px; border-radius: 50%; border: 1px solid #ccc; vertical-align: middle; margin-right: 6px; }
 
         .size-checkbox-group { display: flex; flex-wrap: wrap; gap: 10px; }
         .size-checkbox-label { background: #eee; padding: 6px 12px; border-radius: 4px; font-weight: 500; font-size: 13px; cursor: pointer; border: 1px solid transparent; transition: all 0.2s; user-select: none; }
@@ -160,58 +156,26 @@
 
 <body>
 
-    <!-- Mobile-only top bar -->
     <header class="mobile-header">
         <span class="mobile-header-brand">LA ESTELAR ADMIN</span>
         <button class="hamburger-btn" id="hamburgerBtn" aria-label="Abrir menú">&#9776;</button>
     </header>
 
-    <!-- Backdrop for mobile sidebar -->
     <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
 
     <aside class="sidebar" id="mainSidebar">
         <div>
             <div class="sidebar-brand">LA ESTELAR 18K</div>
-            
             <ul class="sidebar-menu">
                 <li class="sidebar-section-title">Catálogo Web</li>
-                <li>
-                    <a class="sidebar-link active" data-target="productsTab">
-                        <span class="material-symbols-outlined">storefront</span> Catálogo
-                    </a>
-                </li>
-                <li>
-                    <a class="sidebar-link" data-target="addProductTab">
-                        <span class="material-symbols-outlined">add_circle</span> Nueva Joya
-                    </a>
-                </li>
-                
+                <li><a class="sidebar-link active" data-target="productsTab"><span class="material-symbols-outlined">storefront</span> Catálogo</a></li>
+                <li><a class="sidebar-link" data-target="addProductTab"><span class="material-symbols-outlined">add_circle</span> Nueva Joya</a></li>
                 <li class="sidebar-section-title" style="margin-top: 15px;">Gestión & ERP</li>
-                <li>
-                    <a href="admin-inventory" class="sidebar-link">
-                        <span class="material-symbols-outlined">inventory_2</span> Inventario
-                    </a>
-                </li>
-                <li>
-                    <a href="admin-tejidos" class="sidebar-link">
-                        <span class="material-symbols-outlined">join_inner</span> Tejidos
-                    </a>
-                </li>
-                <li>
-                    <a href="admin-sales" class="sidebar-link">
-                        <span class="material-symbols-outlined">point_of_sale</span> Ventas POS
-                    </a>
-                </li>
-                <li>
-                    <a href="admin-finances" class="sidebar-link">
-                        <span class="material-symbols-outlined">monitoring</span> Finanzas
-                    </a>
-                </li>
-                <li>
-                    <a onclick="logoutAdmin()" class="sidebar-link logout-btn">
-                        <span class="material-symbols-outlined">logout</span> Cerrar Sesión
-                    </a>
-                </li>
+                <li><a href="admin-inventory" class="sidebar-link"><span class="material-symbols-outlined">inventory_2</span> Inventario</a></li>
+                <li><a href="admin-tejidos" class="sidebar-link"><span class="material-symbols-outlined">join_inner</span> Tejidos</a></li>
+                <li><a href="admin-sales" class="sidebar-link"><span class="material-symbols-outlined">point_of_sale</span> Ventas POS</a></li>
+                <li><a href="admin-finances" class="sidebar-link"><span class="material-symbols-outlined">monitoring</span> Finanzas</a></li>
+                <li><a onclick="logoutAdmin()" class="sidebar-link logout-btn"><span class="material-symbols-outlined">logout</span> Cerrar Sesión</a></li>
             </ul>
         </div>
     </aside>
@@ -412,7 +376,6 @@
         }
 
         let loadedCatalogData = [];
-        let activeColors = [];
         let activeSizes = [];
 
         let addSelectedImages = [];
@@ -576,20 +539,17 @@
                 const cat = catSel.value;
                 if (!type) return;
 
-                activeColors = [];
                 activeSizes = [];
                 container.innerHTML = '';
 
-                const group1 = ['Herraje', 'Dije', 'Topos']; 
+                // Agrupamos todo lo que no requiere talla en group1
+                const group1 = ['Herraje', 'Dije', 'Topos', 'Manilla', 'Anillo tejido']; 
                 const group2 = ['Cadena', 'Pulsos', 'Anillo']; 
-                const group3 = ['Manilla', 'Anillo tejido']; 
 
                 if (group1.includes(type)) {
-                    container.innerHTML = `<div class="variant-container" style="text-align:center; color:#666; font-size:13px; padding:20px;">Este tipo de joya no requiere configurar tallas ni colores adicionales.</div>`;
+                    container.innerHTML = `<div class="variant-container" style="text-align:center; color:#666; font-size:13px; padding:20px;">Este tipo de joya no requiere configurar tallas adicionales.</div>`;
                 } else if (group2.includes(type)) {
                     renderSizeEngine(type, container);
-                } else if (group3.includes(type)) {
-                    renderColorEngine(cat, container);
                 }
             };
 
@@ -689,60 +649,6 @@
             });
         }
 
-        // --- COLOR ENGINE ---
-        function renderColorEngine(category, containerNode) {
-            const labelTitle = category === '18k' ? 'Oro 18k Macizo' : (category === 'laminado' ? 'Oro Laminado 18k' : '');
-            containerNode.innerHTML = `
-                <div class="variant-container">
-                    <div class="dynamic-section-title">Colores Disponibles ${labelTitle ? `(${labelTitle})` : ''}</div>
-                    <div class="picker-row" style="grid-template-columns: 1fr auto;">
-                        <div>
-                            <label>Seleccionar Color</label>
-                            <div class="color-input-wrapper"><input type="color" class="varColorPicker" value="#E5C76B"></div>
-                        </div>
-                        <div>
-                            <button type="button" class="btn-secondary addColorBtnInstance">Agregar</button>
-                        </div>
-                    </div>
-                    <div class="matrix-title">Colores Registrados</div>
-                    <table class="matrix-table">
-                        <tbody class="colorTableBody"></tbody>
-                    </table>
-                </div>
-            `;
-
-            containerNode.querySelector('.addColorBtnInstance').addEventListener('click', () => {
-                const colorVal = containerNode.querySelector('.varColorPicker').value.toLowerCase();
-                if (!activeColors.includes(colorVal)) {
-                    activeColors.push(colorVal);
-                    refreshColorMatrixDisplay(containerNode);
-                }
-            });
-            refreshColorMatrixDisplay(containerNode);
-        }
-
-        function refreshColorMatrixDisplay(containerNode) {
-            const tbody = containerNode.querySelector('.colorTableBody');
-            if(!tbody) return;
-            if (activeColors.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="2" style="text-align:center; color:#999; font-size:12px; padding:12px;">Sin colores agregados.</td></tr>`;
-                return;
-            }
-            tbody.innerHTML = activeColors.map((color, idx) => `
-                <tr>
-                    <td><span class="color-preview" style="background-color:${color};"></span><code>${color.toUpperCase()}</code></td>
-                    <td style="width:40px;"><button type="button" class="btn-delete" data-idx="${idx}">✕</button></td>
-                </tr>
-            `).join('');
-
-            tbody.querySelectorAll('.btn-delete').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    activeColors.splice(parseInt(e.target.dataset.idx, 10), 1);
-                    refreshColorMatrixDisplay(containerNode);
-                });
-            });
-        }
-
         // ===================== EDIT MODAL & POPULATION =====================
         const editModalOverlay = document.getElementById('editModalOverlay');
         const confirmDeleteModalOverlay = document.getElementById('confirmDeleteModalOverlay');
@@ -755,7 +661,6 @@
             document.getElementById('editProdPrice').value = product.price;
             document.getElementById('editProdDescription').value = product.description || '';
             
-            activeColors = product.colors ? [...product.colors] : [];
             activeSizes = product.sizes ? [...product.sizes] : [];
 
             const existingImages = product.images && product.images.length > 0 ? product.images : (product.image ? [product.image] : []);
@@ -766,16 +671,13 @@
             const container = document.getElementById('editDynamicAttributesContainer');
             container.innerHTML = '';
             
-            const group1 = ['Herraje', 'Dije', 'Topos'];
+            const group1 = ['Herraje', 'Dije', 'Topos', 'Manilla', 'Anillo tejido'];
             const group2 = ['Cadena', 'Pulsos', 'Anillo'];
-            const group3 = ['Manilla', 'Anillo tejido'];
 
             if (group1.includes(product.type)) {
-                container.innerHTML = `<div class="variant-container" style="text-align:center; color:#666; font-size:13px; padding:20px;">Este tipo de joya no requiere configurar tallas ni colores adicionales.</div>`;
+                container.innerHTML = `<div class="variant-container" style="text-align:center; color:#666; font-size:13px; padding:20px;">Este tipo de joya no requiere configurar tallas adicionales.</div>`;
             } else if (group2.includes(product.type)) {
                 renderSizeEngine(product.type, container);
-            } else if (group3.includes(product.type)) {
-                renderColorEngine(product.category, container);
             }
 
             editModalOverlay.classList.add('active');
@@ -826,10 +728,8 @@
             if (addSelectedImages.length === 0) return alert('Selecciona al menos una imagen.');
 
             const group2 = ['Cadena', 'Pulsos', 'Anillo'];
-            const group3 = ['Manilla', 'Anillo tejido'];
 
             if (group2.includes(type) && activeSizes.length === 0) return alert('Debes seleccionar al menos una talla.');
-            if (group3.includes(type) && activeColors.length === 0) return alert('Debes agregar al menos un color.');
 
             submitBtn.disabled = true; submitBtn.style.opacity = '0.6'; submitBtn.innerHTML = 'Publicando...';
 
@@ -847,7 +747,6 @@
 
                 const payload = {
                     name, type, category, price, description,
-                    colors: group3.includes(type) ? activeColors : [],
                     sizes: group2.includes(type) ? activeSizes : [],
                     images: finalUrls
                 };
@@ -864,7 +763,7 @@
                     addSelectedImages.length = 0; 
                     document.getElementById('addImagePreviewGrid').innerHTML = '';
                     document.querySelector('#addProductTab .dynamicAttributesContainer').innerHTML = '';
-                    activeColors = []; activeSizes = [];
+                    activeSizes = [];
                 } else { alert('Error al guardar el producto.'); }
             } catch (err) {
                 console.error(err); alert('Error de red al publicar.');
@@ -889,10 +788,8 @@
             if (editSelectedImages.length === 0) return alert('La joya debe tener al menos una imagen.');
 
             const group2 = ['Cadena', 'Pulsos', 'Anillo'];
-            const group3 = ['Manilla', 'Anillo tejido'];
 
             if (group2.includes(type) && activeSizes.length === 0) return alert('Debes seleccionar al menos una talla.');
-            if (group3.includes(type) && activeColors.length === 0) return alert('Debes agregar al menos un color.');
 
             submitBtn.disabled = true; submitBtn.style.opacity = '0.6'; submitBtn.innerHTML = 'Guardando...';
 
@@ -910,7 +807,6 @@
 
                 const payload = {
                     id, name, type, category, price, description,
-                    colors: group3.includes(type) ? activeColors : [],
                     sizes: group2.includes(type) ? activeSizes : [],
                     images: finalUrls 
                 };

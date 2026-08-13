@@ -720,7 +720,15 @@
             const cost = parseFloat(document.getElementById('priceBought').value);
             const margin = parseFloat(document.getElementById('marginPercent').value);
             if (isNaN(cost) || isNaN(margin)) { alert("Ingresa costo y %."); return; }
-            const sale = cost + (cost * (margin / 100));
+            
+            // Nueva fórmula: Costo * (100 / (100 - Margen))
+            // Evitar división por cero si el margen es 100
+            if (margin >= 100) {
+                alert("El margen no puede ser 100% o superior con esta fórmula.");
+                return;
+            }
+
+            const sale = cost * (100 / (100 - margin));
             document.getElementById('priceSold').value = Math.round(sale);
             updateProfitPreview();
         }
