@@ -1,26 +1,21 @@
 import jwt from "jsonwebtoken";
 
 export function verifyAdmin(request) {
-  const cookieHeader = request.headers.cookie;
+  // 1. Grab the Authorization header (Express/Vercel typically lowercases headers)
+  const authHeader = request.headers.authorization || request.headers.Authorization;
 
-  if (!cookieHeader) {
-    throw new Error("No cookie");
+  if (!authHeader) {
+    throw new Error("No authorization header provided");
   }
 
-  // Find adminToken in cookies
-  const cookies = Object.fromEntries(
-    cookieHeader.split(";").map(c => {
-      const [key, ...v] = c.trim().split("=");
-      return [key, v.join("=")];
-    })
-  );
-
-  const token = cookies.adminToken;
+  // 2. The header looks like "Bearer eyJhbGciOiJIUz...", so we split it by the space and grab the second part
+  const token = authHeader.split(" ")[1];
 
   if (!token) {
-    throw new Error("No token");
+    throw new Error("Malformed or missing token");
   }
 
+  // 3. Verify the token against your secret
   const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
   if (!decoded.isAdmin) {

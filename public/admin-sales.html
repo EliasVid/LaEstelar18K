@@ -4,6 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Módulo 3: Punto de Venta | La Estelar</title>
+
+    <!-- AUTH GUARD: Execute immediately before rendering body -->
+    <script>
+        (function guardAdminAccess() {
+            const token = localStorage.getItem('adminToken');
+            if (!token) {
+                window.location.replace('/index');
+            }
+        })();
+    </script>
+
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=block" rel="stylesheet">
     
@@ -44,10 +55,14 @@
         .sidebar-brand { padding: 10px 25px 25px; font-size: 18px; font-weight: bold; border-bottom: 1px solid rgba(229, 199, 107, 0.2); color: var(--brand-gold); font-style: italic; }
         .sidebar-menu { list-style: none; margin-top: 10px; }
         .sidebar-section-title { padding: 15px 25px 5px; font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: #666; font-weight: bold; }
-        .sidebar-link { display: flex; align-items: center; padding: 12px 25px; color: #b3b3b3; text-decoration: none; font-size: 14px; font-weight: 500; transition: all 0.2s ease; }
+        .sidebar-link { display: flex; align-items: center; padding: 12px 25px; color: #b3b3b3; text-decoration: none; font-size: 14px; font-weight: 500; transition: all 0.2s ease; cursor: pointer; }
         .sidebar-link .material-symbols-outlined { margin-right: 12px; font-size: 20px; }
         .sidebar-link:hover, .sidebar-link.active { color: var(--brand-gold); background: rgba(229, 199, 107, 0.1); }
         .sidebar-link.active { border-left: 4px solid var(--brand-gold); padding-left: 21px; }
+
+        /* Logout button style */
+        .sidebar-link.logout-btn { color: #ef4444; margin-top: 20px; }
+        .sidebar-link.logout-btn:hover { background: rgba(239, 68, 68, 0.1); color: #dc2626; }
 
         /* === MAIN WORKSPACE & POS LAYOUT === */
         .main-workspace {
@@ -182,12 +197,17 @@
             <div class="sidebar-brand">LA ESTELAR 18K</div>
             <ul class="sidebar-menu">
                 <li class="sidebar-section-title">Catálogo Web</li>
-                <li><a href="admin.html" class="sidebar-link"><span class="material-symbols-outlined">storefront</span> Catálogo</a></li>
+                <li><a href="admin" class="sidebar-link"><span class="material-symbols-outlined">storefront</span> Catálogo</a></li>
                 <li class="sidebar-section-title" style="margin-top: 15px;">Gestión & ERP</li>
-                <li><a href="admin-inventory.html" class="sidebar-link"><span class="material-symbols-outlined">inventory_2</span> Inventario</a></li>
-                <li><a href="admin-tejidos.html" class="sidebar-link"><span class="material-symbols-outlined">join_inner</span> Tejidos</a></li>
+                <li><a href="admin-inventory" class="sidebar-link"><span class="material-symbols-outlined">inventory_2</span> Inventario</a></li>
+                <li><a href="admin-tejidos" class="sidebar-link"><span class="material-symbols-outlined">join_inner</span> Tejidos</a></li>
                 <li><a href="#" class="sidebar-link active"><span class="material-symbols-outlined">point_of_sale</span> Ventas POS</a></li>
-                <li><a href="admin-finances.html" class="sidebar-link"><span class="material-symbols-outlined">monitoring</span> Finanzas</a></li>
+                <li><a href="admin-finances" class="sidebar-link"><span class="material-symbols-outlined">monitoring</span> Finanzas</a></li>
+                <li>
+                    <a onclick="logoutAdmin()" class="sidebar-link logout-btn">
+                        <span class="material-symbols-outlined">logout</span> Cerrar Sesión
+                    </a>
+                </li>
             </ul>
         </div>
     </aside>
@@ -310,11 +330,59 @@
     </div>
 
     <!-- HIDDEN THERMAL RECEIPT -->
+    <div id="printable-receipt" class="hidden">
+        <div style="text-align: center; margin-bottom: 10px;">
+            <h2 class="receipt-font" style="margin: 0; font-size: 1.2rem;">LA ESTELAR</h2>
+            <p class="receipt-font" style="margin: 0; font-size: 0.75rem;">Joyería 18k</p>
+            <p class="receipt-font" style="margin: 0; font-size: 0.75rem;" id="receipt-date"></p>
+        </div>
+        
+        <table style="width: 100%; border-bottom: 1px dashed #000; margin-bottom: 8px; font-size: 0.75rem;" class="receipt-font">
+            <thead>
+                <tr>
+                    <th style="text-align: left; padding-bottom: 4px;">CANT</th>
+                    <th style="text-align: left; padding-bottom: 4px;">DESC</th>
+                    <th style="text-align: right; padding-bottom: 4px;">VALOR</th>
+                </tr>
+            </thead>
+            <tbody id="receipt-items"></tbody>
+        </table>
+        
         <div id="receipt-totals-container" style="border-top: 2px dashed #000; padding-top: 0.75rem; margin-bottom: 1.5rem;">
             
         </div>
+        
+        <div style="text-align: center;" class="receipt-font">
+            <p style="font-size: 0.75rem; margin: 0;">¡GRACIAS POR SU COMPRA!</p>
+            <p style="font-size: 0.65rem; margin-top: 4px;">No se aceptan devoluciones sin factura.</p>
+        </div>
+    </div>
 
     <script>
+        // --- Auth & Logout Functions ---
+        function logoutAdmin() {
+            localStorage.removeItem('adminToken');
+            window.location.replace('/index');
+        }
+
+        async function authFetch(url, options = {}) {
+            const token = localStorage.getItem('adminToken');
+            const headers = {
+                ...options.headers,
+                'Authorization': `Bearer ${token}`
+            };
+
+            const response = await fetch(url, { ...options, headers });
+
+            if (response.status === 401 || response.status === 403) {
+                localStorage.removeItem('adminToken');
+                window.location.replace('/index');
+                throw new Error("Sesión expirada o no autorizada.");
+            }
+
+            return response;
+        }
+
         // --- Sidebar Logic ---
         const hamburgerBtn = document.getElementById('hamburgerBtn');
         const mainSidebar = document.getElementById('mainSidebar');
@@ -334,9 +402,9 @@
 
         async function loadPOSData() {
             try {
-                const invRes = await fetch('/api/inventory');
+                const invRes = await authFetch('/api/inventory');
                 const inventory = await invRes.json();
-                const tejRes = await fetch('/api/tejidos');
+                const tejRes = await authFetch('/api/tejidos');
                 const tejidos = await tejRes.json();
 
                 const activeInventory = Array.isArray(inventory) ? inventory.filter(i => i.stock > 0) : [];
@@ -510,7 +578,7 @@
             btn.disabled = true;
 
             try {
-                const res = await fetch('/api/sales', {
+                const res = await authFetch('/api/sales', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(currentSalePayload)
@@ -581,7 +649,7 @@
             const tbody = document.getElementById('salesHistoryTableBody');
             tbody.innerHTML = `<tr><td colspan="3" style="text-align: center; color: #999; padding: 40px;">Cargando historial...</td></tr>`;
             try {
-                const res = await fetch('/api/sales');
+                const res = await authFetch('/api/sales');
                 const sales = await res.json();
                 if(!Array.isArray(sales) || sales.length === 0) {
                     globalSalesHistory = [];

@@ -65,13 +65,19 @@
                 });
 
                 if (res.ok) {
+                    // 1. Extraer la data (incluyendo el token) del servidor
+                    const data = await res.json();
+                    
+                    // 2. Guardar el token en localStorage para que admin.html lo encuentre
+                    localStorage.setItem('adminToken', data.token);
+
                     btn.innerHTML = `<span class="material-symbols-outlined text-sm">check_circle</span> <span>Acceso Concedido</span>`;
                     btn.classList.replace('bg-black', 'bg-green-600');
                     btn.classList.replace('text-[#cca830]', 'text-white');
                     
-                    // Small delay so the user sees the success state before the page flashes
+                    // 3. Redirigir a la URL limpia
                     setTimeout(() => {
-                        window.location.href = "/admin.html";
+                        window.location.href = "/admin";
                     }, 500);
                 } else {
                     // Show error and reset button

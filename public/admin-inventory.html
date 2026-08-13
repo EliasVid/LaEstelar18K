@@ -4,6 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Módulo 1: Registro de Inventario | La Estelar</title>
+
+    <!-- AUTH GUARD: Execute immediately before rendering body -->
+    <script>
+        (function guardAdminAccess() {
+            const token = localStorage.getItem('adminToken');
+            if (!token) {
+                window.location.replace('/index');
+            }
+        })();
+    </script>
+
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=block" rel="stylesheet">
     
@@ -66,6 +77,7 @@
             font-size: 14px;
             font-weight: 500;
             transition: all 0.2s ease;
+            cursor: pointer;
         }
         .sidebar-link .material-symbols-outlined { margin-right: 12px; font-size: 20px; }
         .sidebar-link:hover, .sidebar-link.active {
@@ -76,6 +88,10 @@
             border-left: 4px solid var(--brand-gold);
             padding-left: 21px;
         }
+
+        /* Logout button style */
+        .sidebar-link.logout-btn { color: #ef4444; margin-top: 20px; }
+        .sidebar-link.logout-btn:hover { background: rgba(239, 68, 68, 0.1); color: #dc2626; }
 
         .main-workspace {
             flex-grow: 1;
@@ -356,30 +372,35 @@
             <ul class="sidebar-menu">
                 <li class="sidebar-section-title">Catálogo Web</li>
                 <li>
-                    <a href="admin.html" class="sidebar-link">
+                    <a href="admin" class="sidebar-link">
                         <span class="material-symbols-outlined">storefront</span> Catálogo
                     </a>
                 </li>
                 
                 <li class="sidebar-section-title" style="margin-top: 15px;">Gestión & ERP</li>
                 <li>
-                    <a href="#" class="sidebar-link active">
+                    <a href="admin-inventory" class="sidebar-link active">
                         <span class="material-symbols-outlined">inventory_2</span> Inventario
                     </a>
                 </li>
                 <li>
-                    <a href="admin-tejidos.html" class="sidebar-link">
+                    <a href="admin-tejidos" class="sidebar-link">
                         <span class="material-symbols-outlined">join_inner</span> Tejidos
                     </a>
                 </li>
                 <li>
-                    <a href="admin-sales.html" class="sidebar-link">
+                    <a href="admin-sales" class="sidebar-link">
                         <span class="material-symbols-outlined">point_of_sale</span> Ventas POS
                     </a>
                 </li>
                 <li>
-                    <a href="admin-finances.html" class="sidebar-link">
+                    <a href="admin-finances" class="sidebar-link">
                         <span class="material-symbols-outlined">monitoring</span> Finanzas
+                    </a>
+                </li>
+                <li>
+                    <a onclick="logoutAdmin()" class="sidebar-link logout-btn">
+                        <span class="material-symbols-outlined">logout</span> Cerrar Sesión
                     </a>
                 </li>
             </ul>
@@ -614,6 +635,32 @@
 
     <!-- SCRIPT (SAME EXACT LOGIC AS BEFORE, just added Mobile Menu Handler) -->
     <script>
+        // Logout handler
+        function logoutAdmin() {
+            localStorage.removeItem('adminToken');
+            window.location.replace('/index');
+        }
+
+        // Helper to perform authenticated API calls
+        async function authFetch(url, options = {}) {
+            const token = localStorage.getItem('adminToken');
+            
+            const headers = {
+                ...options.headers,
+                'Authorization': `Bearer ${token}`
+            };
+
+            const response = await fetch(url, { ...options, headers });
+
+            if (response.status === 401 || response.status === 403) {
+                localStorage.removeItem('adminToken');
+                window.location.replace('/index');
+                throw new Error("Sesión expirada o no autorizada.");
+            }
+
+            return response;
+        }
+
         // --- Mobile Menu Toggle ---
         const hamburgerBtn = document.getElementById('hamburgerBtn');
         const mainSidebar = document.getElementById('mainSidebar');
@@ -718,7 +765,7 @@
             }
 
             try {
-                const res = await fetch('/api/inventory', {
+                const res = await authFetch('/api/inventory', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
@@ -745,7 +792,7 @@
             if(!confirm("¿Estás seguro de que deseas eliminar este elemento por completo? Se perderá permanentemente su historial de inventario.")) return;
 
             try {
-                const res = await fetch('/api/inventory', {
+                const res = await authFetch('/api/inventory', {
                     method: 'DELETE',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ id })
@@ -757,7 +804,7 @@
 
         async function loadInventory() {
             try {
-                const res = await fetch('/api/inventory');
+                const res = await authFetch('/api/inventory');
                 const data = await res.json();
                 if (!Array.isArray(data)) throw new Error(data.error || "No se pudo cargar.");
 
