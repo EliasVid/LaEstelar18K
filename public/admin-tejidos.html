@@ -18,21 +18,6 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=block" rel="stylesheet">
     
-    <!-- Carga limpia de Tailwind (Evita bloqueos de Edge) -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        "brand-gold": "#E5C76B",
-                        "brand-dark": "#121212",
-                    }
-                }
-            }
-        }
-    </script>
-    
     <style>
         /* === IMPORTED SIDEBAR CSS FROM ADMIN.HTML === */
         :root {
@@ -41,6 +26,8 @@
             --brand-dark: #121212;
             --header-height: 56px;
         }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
         body { 
             font-family: 'DM Sans', sans-serif; 
             display: flex;
@@ -118,11 +105,77 @@
             background: #f9f9f9;
         }
 
-        /* Mobile Sidebar adjustments */
+        /* ========================================================
+           PURE CSS UI FOR TEJIDOS (Replacing Tailwind CDN)
+        ======================================================== */
+        .workspace-container { max-width: 72rem; margin: 0 auto; width: 100%; padding: 2rem; }
+        .header-section { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #e5e7eb; }
+        .page-title { font-size: 1.875rem; font-weight: 700; color: #111827; display: flex; align-items: center; gap: 0.75rem; }
+        .text-gold { color: #cca830; }
+        .page-subtitle { color: #6b7280; margin-top: 0.25rem; font-size: 0.9rem; }
+        
+        .form-layout { display: flex; gap: 2rem; align-items: flex-start; }
+        
+        /* Left Panel - Materials */
+        .materials-section { flex: 1; display: flex; flex-direction: column; gap: 1.5rem; width: 100%; }
+        .tabs-wrapper { display: inline-flex; gap: 0.5rem; background-color: #e5e7eb; padding: 0.35rem; border-radius: 0.75rem; }
+        .tab-btn { padding: 0.625rem 1.5rem; border-radius: 0.5rem; font-size: 0.875rem; font-weight: 700; border: none; cursor: pointer; transition: all 0.3s ease; background: transparent; color: #78716c; }
+        .tab-btn:hover { color: #111827; }
+        .tab-btn.active { background: white; color: #111827; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+
+        .materials-card { background: white; padding: 1.5rem; border-radius: 1rem; border: 1px solid #f5f5f4; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+        .materials-card-title { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #111827; margin-bottom: 1rem; }
+        .loading-text { color: #a8a29e; font-size: 0.875rem; padding: 1rem 0; }
+        .materials-list { max-height: 600px; overflow-y: auto; display: flex; flex-direction: column; gap: 0.75rem; padding-right: 0.5rem; }
+        
+        .materials-list::-webkit-scrollbar { width: 6px; }
+        .materials-list::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+        .materials-list::-webkit-scrollbar-thumb { background: #d4d4d8; border-radius: 10px; }
+
+        .material-item { display: flex; justify-content: space-between; align-items: center; padding: 0.75rem; background: #fafaf9; border: 1px solid #f5f5f4; border-radius: 0.75rem; transition: border-color 0.2s; }
+        .material-item:hover { border-color: rgba(204,168,48,0.5); }
+        .material-name { font-weight: 700; color: #111827; font-size: 0.875rem; margin-bottom: 0.25rem; }
+        .material-meta { font-size: 0.65rem; color: #78716c; text-transform: uppercase; letter-spacing: 0.05em; }
+        .qty-input { width: 4rem; background: white; border: 1px solid #e5e7eb; border-radius: 0.5rem; padding: 0.35rem 0.5rem; text-align: center; font-size: 0.875rem; font-weight: 700; outline: none; }
+        .qty-input:focus { border-color: #cca830; }
+
+        /* Right Panel - Ticket */
+        .receipt-section { width: 400px; background: #1c1917; color: white; padding: 1.5rem; border-radius: 1rem; position: sticky; top: 2rem; flex-shrink: 0; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); }
+        .receipt-title { font-size: 1.25rem; color: #cca830; font-style: italic; font-weight: 700; margin-bottom: 1.5rem; }
+        .receipt-label { display: block; font-size: 0.65rem; font-weight: 700; color: #cca830; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.25rem; }
+        .receipt-input { width: 100%; background: #292524; border: 1px solid #44403c; border-radius: 0.5rem; padding: 0.5rem 0.75rem; color: white; font-size: 0.875rem; outline: none; transition: border-color 0.2s; }
+        .receipt-input:focus { border-color: #cca830; }
+        .receipt-input-small { width: 6rem; background: #292524; border: 1px solid #44403c; border-radius: 0.25rem; padding: 0.25rem 0.5rem; color: white; font-size: 0.875rem; text-align: right; outline: none; }
+        .receipt-input-large { width: 100%; background: #000; border: 1px solid rgba(204,168,48,0.5); border-radius: 0.5rem; padding: 0.75rem; color: #4ade80; font-size: 1.25rem; font-weight: 700; text-align: right; outline: none; }
+        .divider { height: 1px; background: #44403c; width: 100%; margin: 1rem 0; }
+        
+        .receipt-list { list-style: none; margin: 0; padding: 0; min-height: 50px; display: flex; flex-direction: column; gap: 0.5rem; }
+        .receipt-list-item { display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; color: #d6d3d1; }
+        
+        .totals-row { display: flex; justify-content: space-between; font-size: 0.875rem; }
+        .totals-bold { font-weight: 700; padding-top: 0.5rem; margin-top: 0.5rem; border-top: 1px solid #44403c; }
+        
+        .btn-apply { background: #cca830; color: black; font-weight: 700; font-size: 0.75rem; padding: 0.5rem 0.75rem; border-radius: 0.5rem; border: none; cursor: pointer; transition: background 0.2s; }
+        .btn-apply:hover { background: #b5952a; }
+        
+        .submit-btn { width: 100%; background: #cca830; color: black; font-size: 0.875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; padding: 0.75rem; margin-top: 1.5rem; border-radius: 0.75rem; border: none; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 0.5rem; transition: background 0.2s; }
+        .submit-btn:hover { background: #b5952a; }
+        .submit-btn:disabled { opacity: 0.7; cursor: not-allowed; }
+
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        .animate-spin { animation: spin 1s linear infinite; }
+
+        /* Mobile Adjustments */
         .mobile-header { display: none; }
         .sidebar-backdrop { display: none; }
 
+        @media (max-width: 1024px) { 
+            .form-layout { flex-direction: column; } 
+            .receipt-section { width: 100%; position: static; }
+        }
+
         @media (max-width: 768px) {
+            .workspace-container { padding: 1rem; }
             .mobile-header {
                 display: flex; position: fixed; top: 0; left: 0; right: 0; height: var(--header-height);
                 background: var(--brand-dark); color: var(--brand-gold); align-items: center;
@@ -172,7 +225,6 @@
                     </a>
                 </li>
                 <li>
-                    <!-- ACTIVE CLASS applied here because we are ON the Tejidos page -->
                     <a href="#" class="sidebar-link active">
                         <span class="material-symbols-outlined">join_inner</span> Tejidos
                     </a>
@@ -197,130 +249,104 @@
     </aside>
 
     <!-- MAIN CONTENT AREA -->
-    <main class="main-workspace p-4 md:p-8">
-        <div class="max-w-6xl mx-auto w-full">
+    <main class="main-workspace">
+        <div class="workspace-container">
             
-            <!-- Header -->
-            <header class="flex items-center justify-between mb-8 pb-4 border-b border-stone-200">
+            <header class="header-section">
                 <div>
-                    <h1 class="text-3xl font-bold text-black flex items-center gap-3">
-                        <span class="material-symbols-outlined text-4xl text-[#cca830]">join_inner</span>
+                    <h1 class="page-title">
+                        <span class="material-symbols-outlined text-gold">join_inner</span>
                         Armado de Tejidos
                     </h1>
-                    <p class="text-stone-500 mt-1">Ensambla pulseras y anillos usando insumos del inventario.</p>
+                    <p class="page-subtitle">Ensambla pulseras y anillos usando insumos del inventario.</p>
                 </div>
             </header>
 
-            <form id="tejido-form" class="flex flex-col lg:flex-row gap-8" onsubmit="handleTejidoSubmission(event)">
+            <form id="tejido-form" class="form-layout" onsubmit="handleTejidoSubmission(event)">
                 
                 <!-- Left Side: Material Selection -->
-                <div class="flex-1 space-y-6">
-                    
-                    <!-- Material Category Toggle -->
-                    <div class="flex gap-4 bg-stone-200 p-1.5 rounded-xl w-fit">
-                        <button type="button" id="tab-18k" onclick="switchTab('18k')" class="px-6 py-2.5 rounded-lg text-sm font-bold bg-white text-black shadow-sm transition-all">
-                            Insumos Oro 18k
-                        </button>
-                        <button type="button" id="tab-laminado" onclick="switchTab('Laminado')" class="px-6 py-2.5 rounded-lg text-sm font-bold text-stone-500 hover:text-black transition-all">
-                            Insumos Laminados
-                        </button>
-                        <button type="button" id="tab-na" onclick="switchTab('N/A')" class="px-6 py-2.5 rounded-lg text-sm font-bold text-stone-500 hover:text-black transition-all">
-                            Otros (N/A)
-                        </button>
+                <div class="materials-section">
+                    <div class="tabs-wrapper">
+                        <button type="button" id="tab-18k" onclick="switchTab('18k')" class="tab-btn active">Insumos Oro 18k</button>
+                        <button type="button" id="tab-laminado" onclick="switchTab('Laminado')" class="tab-btn">Insumos Laminados</button>
+                        <button type="button" id="tab-na" onclick="switchTab('N/A')" class="tab-btn">Otros (N/A)</button>
                     </div>
 
-                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-stone-100">
-                        <h3 class="font-bold text-black mb-4 uppercase tracking-widest text-xs" id="list-title">Insumos Disponibles (18k)</h3>
-                        
-                        <div id="loading-materials" class="text-stone-400 text-sm py-4">Cargando inventario...</div>
-                        
-                        <!-- Dynamic Material List -->
-                        <div id="materials-container" class="space-y-3 max-h-[600px] overflow-y-auto pr-2">
+                    <div class="materials-card">
+                        <h3 class="materials-card-title" id="list-title">Insumos Disponibles (18k)</h3>
+                        <div id="loading-materials" class="loading-text">Cargando inventario...</div>
+                        <div id="materials-container" class="materials-list">
                             <!-- JS Injected -->
                         </div>
                     </div>
                 </div>
 
                 <!-- Right Side: The Assembly Receipt -->
-                <div class="w-full lg:w-[400px] shrink-0">
-                    <div class="bg-stone-900 text-white p-6 rounded-2xl shadow-lg sticky top-8">
-                        <h3 class="font-display-lg italic text-[#cca830] text-xl mb-6">Detalles del Tejido</h3>
+                <div class="receipt-section">
+                    <h3 class="receipt-title">Detalles del Tejido</h3>
+                    
+                    <div class="receipt-form-group">
+                        <label class="receipt-label">Nombre del Tejido</label>
+                        <input type="text" id="tejido-name" required class="receipt-input" placeholder="Ej: Pulsera Neopreno Balines #4">
+                    </div>
+
+                    <div class="receipt-form-group" style="margin-top: 1rem;">
+                        <label class="receipt-label">Descripción / Notas (Opcional)</label>
+                        <textarea id="tejido-desc" rows="2" class="receipt-input" style="resize:none;" placeholder="Ej: Hilo negro, tejido macramé..."></textarea>
+                    </div>
+
+                    <div class="divider"></div>
+
+                    <div class="receipt-form-group">
+                        <label class="receipt-label">Insumos Utilizados</label>
+                        <ul id="receipt-list" class="receipt-list">
+                            <li style="color:#78716c; font-style:italic; font-size:12px;">No has seleccionado insumos.</li>
+                        </ul>
+                    </div>
+
+                    <div class="divider"></div>
+
+                    <div class="totals-section">
+                        <div class="totals-row">
+                            <span style="color:#a8a29e;">Costo Materiales:</span>
+                            <span id="cost-materials" style="font-family:monospace; color:white;">$0</span>
+                        </div>
                         
-                        <div class="space-y-5">
-                            <!-- Name -->
-                            <div>
-                                <label class="block text-[10px] font-bold text-[#cca830] uppercase tracking-wider mb-1">Nombre del Tejido</label>
-                                <input type="text" id="tejido-name" required class="w-full bg-stone-800 border border-stone-700 rounded-lg px-3 py-2 text-sm text-white focus:ring-1 focus:ring-[#cca830] outline-none" placeholder="Ej: Pulsera Neopreno Balines #4">
-                            </div>
+                        <div class="totals-row" style="margin-top:0.75rem; align-items:center;">
+                            <span style="color:#a8a29e;">Mano de Obra:</span>
+                            <input type="number" id="cost-labor" value="8000" min="0" oninput="calculateTotals()" class="receipt-input-small">
+                        </div>
 
-                            <!-- Description -->
-                            <div class="mt-4">
-                                <label class="block text-[10px] font-bold text-[#cca830] uppercase tracking-wider mb-1">Descripción / Notas (Opcional)</label>
-                                <textarea id="tejido-desc" rows="2" class="w-full bg-stone-800 border border-stone-700 rounded-lg px-3 py-2 text-sm text-white focus:ring-1 focus:ring-[#cca830] outline-none resize-none" placeholder="Ej: Hilo negro, tejido macramé, largo ajustable..."></textarea>
-                            </div>
-
-                            <div class="h-px bg-stone-700 w-full my-4"></div>
-
-                            <!-- Used Materials List -->
-                            <div>
-                                <label class="block text-[10px] font-bold text-[#cca830] uppercase tracking-wider mb-2">Insumos Utilizados</label>
-                                <ul id="receipt-list" class="space-y-2 text-xs text-stone-300 min-h-[50px]">
-                                    <li class="text-stone-500 italic">No has seleccionado insumos.</li>
-                                </ul>
-                            </div>
-
-                            <div class="h-px bg-stone-700 w-full my-4"></div>
-
-                            <!-- Costing -->
-                            <div class="space-y-3">
-                                <div class="flex justify-between text-sm">
-                                    <span class="text-stone-400">Costo Materiales:</span>
-                                    <span id="cost-materials" class="font-mono text-white">$0</span>
-                                </div>
-                                
-                                <!-- Labor Cost -->
-                                <div>
-                                    <label class="flex justify-between items-center text-sm">
-                                        <span class="text-stone-400">Mano de Obra:</span>
-                                        <input type="number" id="cost-labor" value="8000" min="0" oninput="calculateTotals()" class="w-24 bg-stone-800 border border-stone-700 rounded px-2 py-1 text-right text-white text-sm outline-none focus:border-[#cca830]">
-                                    </label>
-                                </div>
-
-                                <div class="flex justify-between text-sm font-bold pt-2 border-t border-stone-700">
-                                    <span class="text-[#cca830]">Costo Total:</span>
-                                    <span id="cost-total" class="font-mono text-[#cca830]">$0</span>
-                                </div>
-                            </div>
-
-                            <div class="h-px bg-stone-700 w-full my-4"></div>
-
-                            <!-- Sale Price & Margin -->
-                            <div class="space-y-4">
-                                <div class="flex gap-2">
-                                    <div class="flex-1">
-                                        <label class="block text-[10px] font-bold text-stone-400 uppercase tracking-wider mb-1">Margen %</label>
-                                        <input type="number" id="margin-percent" min="0" class="w-full bg-stone-800 border border-stone-700 rounded-lg px-3 py-2 text-sm text-center text-white outline-none" placeholder="%">
-                                    </div>
-                                    <div class="flex items-end">
-                                        <button type="button" onclick="applyMargin()" class="bg-[#cca830] text-black font-bold text-xs px-3 py-2 rounded-lg hover:bg-[#b5952a]">Aplicar</button>
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <label class="block text-[10px] font-bold text-[#cca830] uppercase tracking-wider mb-1">Precio de Venta Sugerido</label>
-                                    <input type="number" id="sale-price" required min="0" class="w-full bg-black border border-[#cca830]/50 rounded-lg px-3 py-3 text-lg font-bold text-green-400 text-right outline-none focus:border-[#cca830]" placeholder="$0">
-                                </div>
-                            </div>
-
-                            <!-- Submit -->
-                            <button type="submit" id="submit-btn" class="w-full bg-[#cca830] text-black text-sm font-bold uppercase tracking-widest py-3 mt-4 rounded-xl hover:bg-[#b5952a] transition-all flex justify-center items-center gap-2">
-                                <span class="material-symbols-outlined text-lg">add_task</span>
-                                Registrar Tejido
-                            </button>
+                        <div class="totals-row totals-bold">
+                            <span style="color:#cca830;">Costo Total:</span>
+                            <span id="cost-total" style="font-family:monospace; color:#cca830;" data-val="0">$0</span>
                         </div>
                     </div>
-                </div>
 
+                    <div class="divider"></div>
+
+                    <div class="margin-section">
+                        <div style="display:flex; gap:0.5rem; margin-bottom:1rem;">
+                            <div style="flex:1;">
+                                <label class="receipt-label" style="color:#a8a29e;">Margen %</label>
+                                <input type="number" id="margin-percent" min="0" class="receipt-input" style="text-align:center;" placeholder="%">
+                            </div>
+                            <div style="display:flex; align-items:flex-end;">
+                                <button type="button" onclick="applyMargin()" class="btn-apply">Aplicar</button>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="receipt-label">Precio de Venta Sugerido</label>
+                            <input type="number" id="sale-price" required min="0" class="receipt-input-large" placeholder="$0">
+                        </div>
+                    </div>
+
+                    <button type="submit" id="submit-btn" class="submit-btn">
+                        <span class="material-symbols-outlined" style="font-size:1.25rem;">add_task</span>
+                        Registrar Tejido
+                    </button>
+                </div>
             </form>
         </div>
     </main>
@@ -378,6 +404,7 @@
 
                 allMaterials = data.filter(item => item.class === 'material' && item.stock > 0);
                 document.getElementById('loading-materials').classList.add('hidden');
+                document.getElementById('loading-materials').style.display = 'none';
                 
                 renderMaterials();
             } catch (err) {
@@ -393,27 +420,21 @@
             const btnLam = document.getElementById('tab-laminado');
             const btnNA = document.getElementById('tab-na');
             
-            const activeClass = "px-6 py-2.5 rounded-lg text-sm font-bold bg-white text-black shadow-sm transition-all";
-            const inactiveClass = "px-6 py-2.5 rounded-lg text-sm font-bold text-stone-500 hover:text-black transition-all";
+            btn18k.className = "tab-btn";
+            btnLam.className = "tab-btn";
+            btnNA.className = "tab-btn";
 
-            // 1. Reset all buttons to inactive
-            btn18k.className = inactiveClass;
-            btnLam.className = inactiveClass;
-            btnNA.className = inactiveClass;
-
-            // 2. Apply active class and update title based on selection
             if (tab === '18k') {
-                btn18k.className = activeClass;
+                btn18k.classList.add('active');
                 document.getElementById('list-title').innerText = "Insumos Disponibles (18k)";
             } else if (tab === 'Laminado') {
-                btnLam.className = activeClass;
+                btnLam.classList.add('active');
                 document.getElementById('list-title').innerText = "Insumos Disponibles (Laminado)";
             } else if (tab === 'N/A') {
-                btnNA.className = activeClass;
+                btnNA.classList.add('active');
                 document.getElementById('list-title').innerText = "Insumos Disponibles (Otros)";
             }
 
-            // 3. Render the newly filtered materials
             renderMaterials();
         }
 
@@ -422,23 +443,23 @@
             const filtered = allMaterials.filter(m => m.material === currentTab);
 
             if (filtered.length === 0) {
-                container.innerHTML = `<p class="text-stone-400 text-sm">No hay insumos disponibles en esta categoría.</p>`;
+                container.innerHTML = `<p style="color:#a8a29e; font-size:0.875rem;">No hay insumos disponibles en esta categoría.</p>`;
                 return;
             }
 
             container.innerHTML = filtered.map(m => `
-                <div class="flex items-center justify-between p-3 bg-stone-50 rounded-xl border border-stone-100 hover:border-[#cca830]/50 transition-colors">
+                <div class="material-item">
                     <div>
-                        <p class="font-bold text-black text-sm">${m.name}</p>
-                        <p class="text-[10px] text-stone-500 uppercase">Stock: ${m.stock} • Costo: ${formatter.format(m.costPrice)}</p>
+                        <p class="material-name">${m.name}</p>
+                        <p class="material-meta">Stock: ${m.stock} • Costo: ${formatter.format(m.costPrice)}</p>
                     </div>
-                    <div class="flex items-center gap-2">
-                        <label class="text-[10px] font-bold text-stone-400 uppercase">Usados:</label>
+                    <div style="display:flex; align-items:center; gap:0.5rem;">
+                        <label style="font-size:10px; font-weight:bold; color:#a8a29e; text-transform:uppercase;">Usados:</label>
                         <input type="number" 
                                min="0" max="${m.stock}" 
                                value="${m.qty || 0}" 
                                oninput="handleQtyChange('${m.id}', this.value)"
-                               class="w-16 bg-white border border-stone-200 rounded-lg px-2 py-1.5 text-center text-sm font-bold outline-none focus:border-[#cca830]">
+                               class="qty-input">
                     </div>
                 </div>
             `).join('');
@@ -457,7 +478,6 @@
             let materialCost = 0;
             let receiptHtml = '';
 
-            // Revisar todo el inventario en memoria, no solo la pestaña activa
             allMaterials.forEach(m => {
                 const qty = m.qty || 0;
                 if (qty > 0) {
@@ -465,16 +485,16 @@
                     materialCost += itemTotal;
                     
                     receiptHtml += `
-                        <li class="flex justify-between items-center">
+                        <li class="receipt-list-item">
                             <span>${qty}x ${m.name}</span>
-                            <span class="font-mono text-stone-400">${formatter.format(itemTotal)}</span>
+                            <span style="font-family:monospace; color:#a8a29e;">${formatter.format(itemTotal)}</span>
                         </li>
                     `;
                 }
             });
 
             if (receiptHtml === '') {
-                receiptList.innerHTML = `<li class="text-stone-500 italic">No has seleccionado insumos.</li>`;
+                receiptList.innerHTML = `<li style="color:#78716c; font-style:italic; font-size:12px;">No has seleccionado insumos.</li>`;
             } else {
                 receiptList.innerHTML = receiptHtml;
             }
@@ -496,16 +516,21 @@
                 return;
             }
 
-            const salePrice = totalCost + (totalCost * (margin / 100));
+            // Aplicamos la misma fórmula matemática requerida: Costo * (100 / (100 - Margen))
+            if (margin >= 100) {
+                alert("El margen no puede ser 100% o superior con esta fórmula.");
+                return;
+            }
+
+            const salePrice = totalCost * (100 / (100 - margin));
             document.getElementById('sale-price').value = Math.round(salePrice);
         }
-
 
         async function handleTejidoSubmission(e) {
             e.preventDefault();
             
             const name = document.getElementById('tejido-name').value;
-            const description = document.getElementById('tejido-desc').value; // <-- Capturar descripción
+            const description = document.getElementById('tejido-desc').value;
             const laborCost = parseFloat(document.getElementById('cost-labor').value) || 0;
             const salePrice = parseFloat(document.getElementById('sale-price').value) || 0;
             
@@ -519,7 +544,7 @@
             }
 
             const btn = document.getElementById('submit-btn');
-            btn.innerHTML = `<span class="material-symbols-outlined animate-spin">refresh</span> Registrando...`;
+            btn.innerHTML = `<span class="material-symbols-outlined animate-spin" style="font-size:1.25rem;">refresh</span> Registrando...`;
             btn.disabled = true;
 
             const payload = { name, description, laborCost, salePrice, materialsUsed }; 
@@ -537,7 +562,7 @@
                 alert("¡Tejido registrado con éxito! El inventario de insumos ha sido descontado.");
                 
                 document.getElementById('tejido-form').reset();
-                document.getElementById('receipt-list').innerHTML = `<li class="text-stone-500 italic">No has seleccionado insumos.</li>`;
+                document.getElementById('receipt-list').innerHTML = `<li style="color:#78716c; font-style:italic; font-size:12px;">No has seleccionado insumos.</li>`;
                 document.getElementById('cost-materials').innerText = "$0";
                 document.getElementById('cost-total').innerText = "$0";
                 document.getElementById('cost-total').setAttribute('data-val', 0);
@@ -547,7 +572,7 @@
             } catch (err) {
                 alert(err.message);
             } finally {
-                btn.innerHTML = `<span class="material-symbols-outlined text-lg">add_task</span> Registrar Tejido`;
+                btn.innerHTML = `<span class="material-symbols-outlined" style="font-size:1.25rem;">add_task</span> Registrar Tejido`;
                 btn.disabled = false;
             }
         }
