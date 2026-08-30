@@ -28,10 +28,6 @@
                     La Estelar Joyería 18k</h1>
             </a>
         </div>
-        <button onclick="toggleCart()" class="hover:opacity-80 transition-opacity scale-95 active:scale-90 transition-transform p-2 text-[#E5C76B] relative" aria-label="Bolsa de compras">
-            <span class="material-symbols-outlined text-2xl" data-icon="shopping_bag">shopping_bag</span>
-            <span id="header-cart-badge" class="absolute top-1.5 right-1.5 bg-red-600 text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center hidden">0</span>
-        </button>
     </header>
 
     <!-- NavigationDrawer -->
@@ -52,36 +48,6 @@
                 <li><a href="historia" class="flex items-center gap-4 text-white/80 px-6 py-3.5 hover:bg-[#E5C76B]/10 hover:text-[#E5C76B] transition-colors"><span class="material-symbols-outlined text-[#E5C76B]">history_edu</span><span class="font-body-md">Nuestra Historia</span></a></li>
             </ul>
         </nav>
-    </aside>
-
-    <!-- Cart Drawer -->
-    <div id="cart-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[95] hidden opacity-0 transition-opacity duration-300"></div>
-    <aside id="cart-drawer" class="fixed top-0 right-0 h-full w-full sm:w-[400px] bg-surface-container-lowest border-l border-[#E5C76B]/20 shadow-2xl z-[100] transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col">
-        <div class="px-6 py-5 bg-black flex justify-between items-center border-b border-[#E5C76B]/20">
-            <div class="flex items-center gap-2">
-                <span class="material-symbols-outlined text-[#E5C76B]">shopping_bag</span>
-                <h2 class="text-[#E5C76B] font-display-lg italic text-xl">Tu Selección</h2>
-            </div>
-            <button id="close-cart" class="text-white/70 hover:text-[#E5C76B] transition-colors" aria-label="Cerrar carrito">
-                <span class="material-symbols-outlined">close</span>
-            </button>
-        </div>
-
-        <div id="cart-items-container" class="flex-1 overflow-y-auto p-4 space-y-4">
-            <div class="text-center mt-10">
-                <p class="text-black/50 text-sm">Tu carrito está vacío.</p>
-            </div>
-        </div>
-
-        <div class="p-6 bg-white border-t border-black/10 shadow-[0_-4px_20px_rgba(0,0,0,0.05)] z-10">
-            <div class="flex justify-between items-center mb-4">
-                <span class="font-body-md text-black/70 text-sm">Total Estimado</span>
-                <span id="cart-total-price" class="font-display-lg text-xl text-[#735c00] font-bold">$0 COP</span>
-            </div>
-            <button id="checkout-btn" onclick="checkoutToWhatsApp()" class="w-full bg-black text-[#E5C76B] border border-[#E5C76B]/40 py-3.5 rounded-full hover:bg-[#E5C76B] hover:text-black transition-all shadow-md uppercase tracking-widest font-semibold text-xs flex items-center justify-center gap-2 opacity-50 cursor-not-allowed">
-                <span class="material-symbols-outlined text-lg">arrow_forward</span> Proceder al Pago
-            </button>
-        </div>
     </aside>
 
     <!-- PRODUCT POPUP MODAL -->
@@ -112,9 +78,6 @@
                 <div class="h-px w-full bg-[#E5C76B]/20 mb-6"></div>
                 <div id="modal-variants-container" class="flex flex-col gap-4 mb-8"></div>
                 <div class="flex flex-col gap-3 mt-auto border-t border-black/5 pt-6">
-                    <button onclick="addToCart()" class="w-full bg-black text-[#E5C76B] border border-[#E5C76B]/40 hover:border-[#E5C76B] text-sm py-3.5 rounded-full hover:bg-[#E5C76B] hover:text-black transition-all duration-300 shadow-[0_4px_20px_rgba(229,199,107,0.2)] uppercase tracking-widest font-semibold flex items-center justify-center gap-2 active:scale-[0.98]">
-                        <span class="material-symbols-outlined text-xl">shopping_cart</span> Añadir al Carrito
-                    </button>
                     <button onclick="sendWhatsAppInquiry()" class="w-full bg-transparent border border-black text-black hover:bg-[#25D366] hover:border-[#25D366] hover:text-white text-sm py-3.5 rounded-full transition-all duration-300 uppercase tracking-widest font-semibold flex items-center justify-center gap-2 group">
                         <span class="material-symbols-outlined text-lg">chat</span> Preguntar por WhatsApp
                     </button>
@@ -234,11 +197,6 @@
                 <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
             </svg>
         </a>
-        <!-- Carrito -->
-        <button onclick="toggleCart()" class="bg-black text-[#E5C76B] w-14 h-14 rounded-full shadow-[0_4px_14px_rgba(0,0,0,0.4)] hover:scale-110 hover:shadow-[0_6px_20px_rgba(0,0,0,0.6)] transition-all duration-300 flex items-center justify-center relative group" aria-label="Abrir Carrito">
-            <span class="material-symbols-outlined text-3xl">shopping_bag</span>
-            <span id="floating-cart-badge" class="absolute -top-1 -right-1 bg-red-600 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center hidden border-2 border-white z-10">0</span>
-        </button>
     </div>
 
     <!-- JAVASCRIPT GLOBAL (Menu, Modal, Carrito, Productos Dinámicos) -->
@@ -515,160 +473,9 @@
             }, 300);
         }
 
-        // ==========================================
-        // SHOPPING CART
-        // ==========================================
-        let shoppingCart = [];
-        const cartDrawer = document.getElementById('cart-drawer');
-        const cartOverlay = document.getElementById('cart-overlay');
-        const closeCartBtn = document.getElementById('close-cart');
-
-        function toggleCart() {
-            const isOpen = !cartDrawer.classList.contains('translate-x-full');
-            if (isOpen) {
-                cartDrawer.classList.add('translate-x-full');
-                cartOverlay.classList.add('hidden');
-                setTimeout(() => cartOverlay.classList.remove('opacity-100'), 10);
-            } else {
-                cartDrawer.classList.remove('translate-x-full');
-                cartOverlay.classList.remove('hidden');
-                setTimeout(() => cartOverlay.classList.add('opacity-100'), 10);
-            }
-        }
-        closeCartBtn.addEventListener('click', toggleCart);
-        cartOverlay.addEventListener('click', toggleCart);
-
-        function addToCart() {
-            if(!modalActiveProduct) return;
-            
-            const existingItemIndex = shoppingCart.findIndex(item => 
-                item.id === modalActiveProduct.id && 
-                item.color === modalActiveColor && 
-                item.size === modalActiveSize
-            );
-            
-            if(existingItemIndex > -1) {
-                shoppingCart[existingItemIndex].quantity += 1;
-            } else {
-                shoppingCart.push({
-                    id: modalActiveProduct.id,
-                    name: modalActiveProduct.name,
-                    price: modalActiveProduct.price,
-                    image: modalActiveProduct.image || (modalActiveProduct.images ? modalActiveProduct.images[0] : ''),
-                    category: modalActiveProduct.category,
-                    color: modalActiveColor,
-                    size: modalActiveSize,
-                    quantity: 1
-                });
-            }
-            
-            closeProductModal();
-            renderCart();
-            setTimeout(toggleCart, 350); 
-        }
-
-        function renderCart() {
-            const container = document.getElementById('cart-items-container');
-            const totalElement = document.getElementById('cart-total-price');
-            const checkoutBtn = document.getElementById('checkout-btn');
-            const headerBadge = document.getElementById('header-cart-badge');
-            const floatingBadge = document.getElementById('floating-cart-badge');
-            
-            const totalItems = shoppingCart.reduce((sum, item) => sum + item.quantity, 0);
-            if(totalItems > 0) {
-                if(headerBadge) { headerBadge.innerText = totalItems; headerBadge.classList.remove('hidden'); }
-                if(floatingBadge) { floatingBadge.innerText = totalItems; floatingBadge.classList.remove('hidden'); }
-            } else {
-                if(headerBadge) headerBadge.classList.add('hidden');
-                if(floatingBadge) floatingBadge.classList.add('hidden');
-            }
-
-            if(shoppingCart.length === 0) {
-                container.innerHTML = `<div class="text-center mt-10"><p class="text-black/50 text-sm">Tu carrito está vacío.</p></div>`;
-                totalElement.innerText = "$0 COP";
-                checkoutBtn.classList.add('opacity-50', 'cursor-not-allowed');
-                return;
-            }
-            
-            let totalCost = 0;
-            container.innerHTML = shoppingCart.map((item, index) => {
-                totalCost += item.price * item.quantity;
-                const formattedPrice = new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(item.price * item.quantity);
-                const subtitle = item.category === '18k' ? 'Oro 18k Macizo' : 'Oro Laminado 18k';
-                
-                let variantPieces = [];
-                if (item.color && item.color !== 'Estándar') {
-                    variantPieces.push(item.color.startsWith('#') 
-                        ? `<span class="inline-block w-2.5 h-2.5 rounded-full border border-black/20 ml-1 align-middle shadow-inner" style="background-color:${item.color}"></span>`
-                        : item.color);
-                }
-                if (item.size) variantPieces.push(`Talla: ${item.size}`);
-                const variantHtml = variantPieces.length > 0 ? `• <span class="ml-1">${variantPieces.join(' | ')}</span>` : '';
-
-                return `
-                <article class="bg-white rounded-2xl p-3 border border-black/10 flex gap-4 shadow-sm relative">
-                    <button onclick="removeFromCart(${index})" class="absolute top-2 right-2 text-black/30 hover:text-red-600 transition-colors">
-                        <span class="material-symbols-outlined text-lg">close</span>
-                    </button>
-                    <div class="w-20 h-20 shrink-0 bg-stone-100 rounded-xl overflow-hidden border border-black/5">
-                        <img class="w-full h-full object-cover" src="${item.image}" alt="${item.name}">
-                    </div>
-                    <div class="flex-1 flex flex-col justify-between py-1 pr-4">
-                        <div>
-                            <h3 class="font-headline-lg-mobile text-base text-black leading-tight">${item.name}</h3>
-                            <p class="text-[10px] text-black/50 font-medium uppercase tracking-wider mt-1 flex items-center flex-wrap">${subtitle} ${variantHtml}</p>
-                        </div>
-                        <div class="flex justify-between items-end mt-2">
-                            <div class="flex items-center gap-2 bg-stone-100 border border-black/10 rounded-full px-2 py-0.5">
-                                <button onclick="updateCartQuantity(${index}, -1)" class="text-black/60 hover:text-black"><span class="material-symbols-outlined text-sm">remove</span></button>
-                                <span class="font-label-sm text-black text-xs font-semibold w-4 text-center">${item.quantity}</span>
-                                <button onclick="updateCartQuantity(${index}, 1)" class="text-black/60 hover:text-black"><span class="material-symbols-outlined text-sm">add</span></button>
-                            </div>
-                            <span class="font-body-md text-[#735c00] font-bold text-sm">${formattedPrice} COP</span>
-                        </div>
-                    </div>
-                </article>
-                `;
-            }).join('');
-            
-            totalElement.innerText = new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(totalCost) + " COP";
-            checkoutBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-        }
-
-        function removeFromCart(index) { shoppingCart.splice(index, 1); renderCart(); }
-        function updateCartQuantity(index, delta) {
-            shoppingCart[index].quantity += delta;
-            if(shoppingCart[index].quantity <= 0) removeFromCart(index);
-            else renderCart();
-        }
-
         function sendWhatsAppInquiry() {
             if(!modalActiveProduct) return;
             const message = `¡Hola! Estoy interesado/a en la pieza *${modalActiveProduct.name}*. ¿Me podrían dar más información?`;
-            window.open(`https://wa.me/573009635047?text=${encodeURIComponent(message)}`, '_blank');
-        }
-
-        function checkoutToWhatsApp() {
-            if (shoppingCart.length === 0) return;
-            let totalCost = 0;
-            let message = "¡Hola! Quisiera concretar la compra de mi carrito de La Estelar:\n\n";
-
-            shoppingCart.forEach(item => {
-                const itemTotal = item.price * item.quantity;
-                totalCost += itemTotal;
-                const formattedPrice = new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(itemTotal);
-                const subtitle = item.category === '18k' ? '18k Macizo' : 'Laminado';
-                
-                let variantPieces = [];
-                if (item.color && item.color !== 'Estándar') variantPieces.push(`Color: ${item.color}`);
-                if (item.size) variantPieces.push(`Talla: ${item.size}`);
-                const variantText = variantPieces.length > 0 ? ` [${variantPieces.join(', ')}]` : '';
-
-                message += `▪ ${item.quantity}x ${item.name} (${subtitle})${variantText} - ${formattedPrice} COP\n`;
-            });
-
-            const formattedTotal = new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(totalCost);
-            message += `\n*Total Estimado:* ${formattedTotal} COP\n\n¿Me indican los pasos para el pago y envío?`;
             window.open(`https://wa.me/573009635047?text=${encodeURIComponent(message)}`, '_blank');
         }
     </script>
