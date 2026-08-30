@@ -5,7 +5,6 @@ import { getRedisClient } from "./_redis.js";
 const INVENTORY_KEY = "data/inventory_master.json";
 
 export default async function handler(req, res) {
-  // Inicializamos Redis
   const redis = getRedisClient();
 
   // ==========================================
@@ -16,23 +15,16 @@ export default async function handler(req, res) {
       const INVENTORY_URL = `${process.env.R2_PUBLIC_URL}/${INVENTORY_KEY}`;
       
       const fileResponse = await fetch(`${INVENTORY_URL}?t=${Date.now()}`, {
-        headers: {
-          'Cache-Control': 'no-cache, no-store, must-revalidate',
-          'Pragma': 'no-cache'
-        }
+        headers: { 'Cache-Control': 'no-cache, no-store, must-revalidate', 'Pragma': 'no-cache' }
       });
       
-      if (!fileResponse.ok) {
-        return res.status(200).json([]);
-      }
+      if (!fileResponse.ok) return res.status(200).json([]);
       
       const text = await fileResponse.text();
       if (!text) return res.status(200).json([]);
 
       const inventoryData = JSON.parse(text);
-      if (!Array.isArray(inventoryData) || inventoryData.length === 0) {
-        return res.status(200).json([]);
-      }
+      if (!Array.isArray(inventoryData) || inventoryData.length === 0) return res.status(200).json([]);
 
       const keysToFetch = inventoryData.map(item => `inv_stock:${item.id}`);
       const stockValues = (await redis.mget(keysToFetch)) || [];
@@ -41,7 +33,8 @@ export default async function handler(req, res) {
         const redisValue = stockValues[index];
         return { 
           ...item, 
-          stock: redisValue !== null && redisValue !== undefined ? parseInt(redisValue, 10) : 0 
+          // FIX: Si Redis está vacío, toma el stock de la base de datos JSON en lugar de forzar un 0
+          stock: redisValue !== null && redisValue !== undefined ? parseInt(redisValue, 10) : (item.stock || 0) 
         };
       });
 
@@ -53,7 +46,7 @@ export default async function handler(req, res) {
   }
 
   // ==========================================
-  // POST: Registrar Ingreso / Actualizar Stock
+  // POST: Registrar Ingreso / Actualizar Stock Inicial
   // ==========================================
   else if (req.method === "POST") {
     try {
@@ -75,34 +68,29 @@ export default async function handler(req, res) {
       const parsedStock = parseInt(stock, 10);
       const currentDate = new Date().toISOString();
 
-      // SMART STACKING (Insumos)
       if (itemClass === 'material') {
         const existingIndex = inventory.findIndex(item => item.class === 'material' && item.name === name.trim());
-
         if (existingIndex > -1) {
           const newTotal = await redis.incrby(`inv_stock:${inventory[existingIndex].id}`, parsedStock);
           
+          inventory[existingIndex].stock = newTotal; // FIX: Guardar el nuevo stock en el JSON
           inventory[existingIndex].costPrice = parseFloat(costPrice);
           inventory[existingIndex].salePrice = parseFloat(salePrice);
           if (!inventory[existingIndex].history) inventory[existingIndex].history = [];
           
-          inventory[existingIndex].history.push({
-            date: currentDate, added: parsedStock, totalAfter: newTotal
-          });
-
+          inventory[existingIndex].history.push({ date: currentDate, added: parsedStock, totalAfter: newTotal });
           await r2.send(new PutObjectCommand({
             Bucket: process.env.R2_BUCKET, Key: INVENTORY_KEY,
             Body: JSON.stringify(inventory, null, 2), ContentType: "application/json",
           }));
-
           return res.status(200).json({ success: true, item: inventory[existingIndex], updated: true });
         }
       }
 
-      // CREATE NEW ITEM
       const newId = Date.now().toString();
       const newItem = {
         id: newId, class: itemClass, material: material.trim(), name: name.trim(), type: type,
+        stock: parsedStock, // FIX: Asegurarnos de que el stock se escriba en el JSON al crearse
         costPrice: parseFloat(costPrice), salePrice: parseFloat(salePrice),
         sold: 0, createdAt: currentDate
       };
@@ -110,8 +98,8 @@ export default async function handler(req, res) {
       if (itemClass === 'material') {
         newItem.size = size;
         newItem.history = [{ date: currentDate, added: parsedStock, totalAfter: parsedStock }];
-      } else if (itemClass === 'product' && image) {
-        newItem.image = image;
+      } else if (itemClass === 'product') {
+        if (image) newItem.image = image;
       }
 
       inventory.push(newItem);
@@ -126,6 +114,57 @@ export default async function handler(req, res) {
       return res.status(200).json({ success: true, item: newItem, updated: false });
     } catch (error) {
       console.error("Backend Error in POST inventory:", error);
+      return res.status(500).json({ error: error.message });
+    }
+  }
+
+  // ==========================================
+  // PUT: Editar Costo, Venta o Re-Ingresar Stock
+  // ==========================================
+  else if (req.method === "PUT") {
+    try {
+      const { id, stock, costPrice, salePrice } = req.body;
+      if (!id || isNaN(costPrice) || isNaN(salePrice) || isNaN(stock)) {
+        return res.status(400).json({ error: "Datos incompletos." });
+      }
+
+      const result = await r2.send(new GetObjectCommand({ Bucket: process.env.R2_BUCKET, Key: INVENTORY_KEY }));
+      const inventory = JSON.parse(await result.Body.transformToString());
+      
+      const itemIndex = inventory.findIndex(item => item.id === id);
+      if (itemIndex === -1) return res.status(404).json({ error: "Producto no encontrado" });
+
+      const parsedStock = parseInt(stock, 10);
+      
+      // FIX: Obtener el stock actual de Redis, o usar el del JSON para calcular la diferencia
+      const currentStockStr = await redis.get(`inv_stock:${id}`);
+      const currentStock = currentStockStr !== null ? parseInt(currentStockStr, 10) : (inventory[itemIndex].stock || 0);
+      const stockDiff = parsedStock - currentStock;
+
+      inventory[itemIndex].stock = parsedStock; // FIX: Guardar el nuevo stock en el JSON
+      inventory[itemIndex].costPrice = parseFloat(costPrice);
+      inventory[itemIndex].salePrice = parseFloat(salePrice);
+      
+      // Añadir al historial si hubo un cambio real en el inventario de un material
+      if (stockDiff !== 0 && inventory[itemIndex].class === 'material') {
+        if (!inventory[itemIndex].history) inventory[itemIndex].history = [];
+        inventory[itemIndex].history.push({
+            date: new Date().toISOString(),
+            added: stockDiff,
+            totalAfter: parsedStock
+        });
+      }
+
+      await r2.send(new PutObjectCommand({
+        Bucket: process.env.R2_BUCKET, Key: INVENTORY_KEY,
+        Body: JSON.stringify(inventory, null, 2), ContentType: "application/json",
+      }));
+
+      await redis.set(`inv_stock:${id}`, parsedStock);
+
+      return res.status(200).json({ success: true });
+    } catch (error) {
+      console.error("Backend Error in PUT inventory:", error);
       return res.status(500).json({ error: error.message });
     }
   }
@@ -157,6 +196,5 @@ export default async function handler(req, res) {
     }
   }
 
-  // Si no es GET, POST o DELETE:
   return res.status(405).json({ error: "Method not allowed" });
 }
