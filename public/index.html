@@ -114,6 +114,22 @@
             </div>
         </section>
 
+        <!-- Más Vendidos (Dinámico) -->
+        <section class="py-section-gap px-margin-mobile md:px-margin-desktop bg-surface-container-lowest">
+            <div class="max-w-7xl mx-auto">
+                <div class="flex justify-between items-end mb-stack-md">
+                    <h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-black">Más Vendidos</h2>
+                    <a href="colecciones" class="font-label-sm text-[#735c00] hover:text-black transition-colors hidden md:block uppercase tracking-wider font-semibold">Ver todos</a>
+                </div>
+                <div id="featured-products-container" class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-gutter">
+                    <div class="col-span-full text-center py-10 text-stone-400">Cargando productos destacados...</div>
+                </div>
+                <div class="mt-stack-md text-center md:hidden">
+                    <a class="font-label-sm text-[#735c00] underline hover:text-black transition-colors" href="colecciones">Ver todos</a>
+                </div>
+            </div>
+        </section>
+
         <!-- Personaliza tu Pieza -->
         <section class="py-section-gap px-margin-mobile md:px-margin-desktop bg-surface-container-lowest">
             <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-margin-desktop items-center">
@@ -144,22 +160,6 @@
                     <div class="relative w-full aspect-square rounded-2xl overflow-hidden bg-surface-container shadow-[0_20px_60px_rgba(0,0,0,0.15)] border border-[#E5C76B]/30">
                         <img class="w-full h-full object-cover" data-alt="Jeweler workbench" src="img/personalizar.jpeg">
                     </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Más Vendidos (Dinámico) -->
-        <section class="py-section-gap px-margin-mobile md:px-margin-desktop bg-surface-container-lowest">
-            <div class="max-w-7xl mx-auto">
-                <div class="flex justify-between items-end mb-stack-md">
-                    <h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-black">Más Vendidos</h2>
-                    <a href="colecciones" class="font-label-sm text-[#735c00] hover:text-black transition-colors hidden md:block uppercase tracking-wider font-semibold">Ver todos</a>
-                </div>
-                <div id="featured-products-container" class="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-gutter">
-                    <div class="col-span-full text-center py-10 text-stone-400">Cargando productos destacados...</div>
-                </div>
-                <div class="mt-stack-md text-center md:hidden">
-                    <a class="font-label-sm text-[#735c00] underline hover:text-black transition-colors" href="colecciones">Ver todos</a>
                 </div>
             </div>
         </section>
@@ -236,9 +236,16 @@
                 if (!response.ok) throw new Error('Failed to fetch catalog');
                 globalCatalog = await response.json();
                 
-                // Mostrar solo los primeros 6 productos en el Index
-                const featuredProducts = globalCatalog.slice(0, 6);
-                renderFeaturedProducts(featuredProducts);
+                // Filtrar los productos marcados como destacados desde el admin
+                let featuredProducts = globalCatalog.filter(p => p.isFeatured);
+                
+                // Si el admin aún no ha destacado ninguno, mostrar los primeros 4 por defecto
+                if (featuredProducts.length === 0) {
+                    featuredProducts = globalCatalog.slice(0, 4);
+                }
+                
+                // Asegurarnos de que máximo sean 4
+                renderFeaturedProducts(featuredProducts.slice(0, 4));
             } catch (error) {
                 console.error("Error loading catalog:", error);
                 document.getElementById('featured-products-container').innerHTML = `<p class="col-span-full text-center py-10 text-stone-400">Próximamente nuevas colecciones.</p>`;

@@ -47,7 +47,8 @@ export default async function handler(req, res) {
   // ==========================================
   if (req.method === "POST") {
     try {
-      const { name, type, price, description, category, sizes, images } = req.body;
+      // NUEVO: Extraemos isFeatured del body
+      const { name, type, price, description, category, sizes, images, isFeatured } = req.body;
 
       if (!name) return res.status(400).json({ error: "Nombre requerido." });
       if (!type) return res.status(400).json({ error: "Tipo de joya requerido." });
@@ -69,6 +70,7 @@ export default async function handler(req, res) {
         colors: [], // Hardcore vacío
         image: images[0],
         images: images,
+        isFeatured: isFeatured === true
       };
 
       catalog.push(newProduct);
@@ -85,8 +87,7 @@ export default async function handler(req, res) {
   // ==========================================
   else if (req.method === "PUT") {
     try {
-      // Extraemos sin colors
-      const { id, name, type, price, description, category, sizes, images } = req.body;
+      const { id, name, type, price, description, category, sizes, images, isFeatured } = req.body;
       const catalog = await getCatalog();
       const index = catalog.findIndex((p) => p.id === id);
 
@@ -105,6 +106,7 @@ export default async function handler(req, res) {
         colors: [], // Forzamos vacío
         image: finalImages[0],
         images: finalImages,
+        isFeatured: isFeatured !== undefined ? Boolean(isFeatured) : !!catalog[index].isFeatured
       };
 
       await saveCatalog(catalog);
