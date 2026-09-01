@@ -33,7 +33,6 @@ export default async function handler(req, res) {
         const redisValue = stockValues[index];
         return { 
           ...item, 
-          // FIX: Si Redis está vacío, toma el stock de la base de datos JSON en lugar de forzar un 0
           stock: redisValue !== null && redisValue !== undefined ? parseInt(redisValue, 10) : (item.stock || 0) 
         };
       });
@@ -73,7 +72,7 @@ export default async function handler(req, res) {
         if (existingIndex > -1) {
           const newTotal = await redis.incrby(`inv_stock:${inventory[existingIndex].id}`, parsedStock);
           
-          inventory[existingIndex].stock = newTotal; // FIX: Guardar el nuevo stock en el JSON
+          inventory[existingIndex].stock = newTotal;
           inventory[existingIndex].costPrice = parseFloat(costPrice);
           inventory[existingIndex].salePrice = parseFloat(salePrice);
           if (!inventory[existingIndex].history) inventory[existingIndex].history = [];
@@ -90,7 +89,7 @@ export default async function handler(req, res) {
       const newId = Date.now().toString();
       const newItem = {
         id: newId, class: itemClass, material: material.trim(), name: name.trim(), type: type,
-        stock: parsedStock, // FIX: Asegurarnos de que el stock se escriba en el JSON al crearse
+        stock: parsedStock,
         costPrice: parseFloat(costPrice), salePrice: parseFloat(salePrice),
         sold: 0, createdAt: currentDate
       };
@@ -119,11 +118,11 @@ export default async function handler(req, res) {
   }
 
   // ==========================================
-  // PUT: Editar Costo, Venta o Re-Ingresar Stock
+  // PUT: Editar Costo, Venta, Material o Re-Ingresar Stock
   // ==========================================
   else if (req.method === "PUT") {
     try {
-      const { id, stock, costPrice, salePrice } = req.body;
+      const { id, stock, costPrice, salePrice, material } = req.body;
       if (!id || isNaN(costPrice) || isNaN(salePrice) || isNaN(stock)) {
         return res.status(400).json({ error: "Datos incompletos." });
       }
@@ -136,16 +135,19 @@ export default async function handler(req, res) {
 
       const parsedStock = parseInt(stock, 10);
       
-      // FIX: Obtener el stock actual de Redis, o usar el del JSON para calcular la diferencia
       const currentStockStr = await redis.get(`inv_stock:${id}`);
       const currentStock = currentStockStr !== null ? parseInt(currentStockStr, 10) : (inventory[itemIndex].stock || 0);
       const stockDiff = parsedStock - currentStock;
 
-      inventory[itemIndex].stock = parsedStock; // FIX: Guardar el nuevo stock en el JSON
+      inventory[itemIndex].stock = parsedStock; 
       inventory[itemIndex].costPrice = parseFloat(costPrice);
       inventory[itemIndex].salePrice = parseFloat(salePrice);
       
-      // Añadir al historial si hubo un cambio real en el inventario de un material
+      // Update material if provided
+      if (material) {
+        inventory[itemIndex].material = material.trim();
+      }
+      
       if (stockDiff !== 0 && inventory[itemIndex].class === 'material') {
         if (!inventory[itemIndex].history) inventory[itemIndex].history = [];
         inventory[itemIndex].history.push({

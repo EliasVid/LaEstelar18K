@@ -220,7 +220,8 @@
                     </div>
                     <div>
                         <label class="label-premium">Material</label>
-                        <select class="input-premium">
+                        <!-- FIX: Added ID to correctly grab this value -->
+                        <select id="productMaterial" class="input-premium">
                             <option value="18k">Oro 18k Macizo</option>
                             <option value="Laminado">Oro Laminado 18k</option>
                         </select>
@@ -397,6 +398,14 @@
                 <div style="background: #f3f4f6; padding: 0.8rem; border-radius: 0.5rem; font-size: 0.85rem; font-weight: 700; color: #4b5563; text-align: center;" id="editItemNameDisplay"></div>
 
                 <div>
+                    <label class="label-premium">Material</label>
+                    <select id="editMaterial" class="input-premium">
+                        <option value="18k">Oro 18k Macizo</option>
+                        <option value="Laminado">Oro Laminado 18k</option>
+                        <option value="N/A">N/A</option>
+                    </select>
+                </div>
+                <div>
                     <label class="label-premium">Stock Actual / Nuevo Ingreso</label>
                     <input type="number" id="editStock" required min="0" class="input-premium">
                 </div>
@@ -460,7 +469,6 @@
         
         const formatter = new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 });
 
-        // Identificador robusto para aislar estrictamente los Insumos/Balines
         const isBalinOrNeopreno = (item) => {
             if (item.class !== 'material') return false;
             if (item.type === 'Dije' || item.type === 'Herraje') return false;
@@ -546,7 +554,7 @@
                 stock: parseInt(document.getElementById('itemStock').value),
                 costPrice: parseFloat(document.getElementById('priceBought').value),
                 salePrice: parseFloat(document.getElementById('priceSold').value),
-                material: document.getElementById('materialMetal').value
+                material: currentMode === 'product' ? document.getElementById('productMaterial').value : document.getElementById('materialMetal').value
             };
 
             if (currentMode === 'product') {
@@ -582,7 +590,6 @@
                 globalInventoryData = data; 
                 const activeData = data.filter(item => item.stock > 0);
                 
-                // Aplicamos el filtro estricto para asegurar que cada cosa esté en su tabla
                 globalMaterials = activeData.filter(item => isBalinOrNeopreno(item));
                 globalProducts = activeData.filter(item => !isBalinOrNeopreno(item));
                 globalSoldout = data.filter(item => item.stock <= 0);
@@ -635,7 +642,7 @@
                 <tr class="hover:bg-stone-50 transition-colors">
                     <td class="px-6 py-3 font-medium text-black">${p.name}</td>
                     <td class="px-6 py-3 text-stone-500">${p.type}</td>
-                    <td class="px-6 py-3 text-stone-500">${p.material}</td>
+                    <td class="px-6 py-3 text-stone-500">${p.material || '18k'}</td>
                     <td class="px-6 py-3 text-right text-stone-500">${formatter.format(p.costPrice)}</td>
                     <td class="px-6 py-3 text-right font-medium text-green-700">${formatter.format(p.salePrice)}</td>
                     <td class="px-6 py-3 text-center font-bold text-black">${p.stock}</td>
@@ -644,7 +651,6 @@
                             <button onclick="openEditModal('${p.id}')" class="text-blue-500 hover:text-blue-700 bg-blue-50 p-1.5 rounded-lg transition-colors flex items-center justify-center" title="Editar">
                                 <span class="material-symbols-outlined text-[18px]">edit</span>
                             </button>
-                            <!-- NOTE: History button removed exclusively for Finished Products -->
                             <button onclick="deleteInventoryItem('${p.id}')" class="text-red-500 hover:text-red-700 bg-red-50 p-1.5 rounded-lg transition-colors flex items-center justify-center" title="Eliminar">
                                 <span class="material-symbols-outlined text-[18px]">delete</span>
                             </button>
@@ -666,7 +672,7 @@
             document.getElementById('table-materials').innerHTML = paginated.map(m => `
                 <tr class="hover:bg-stone-50 transition-colors">
                     <td class="px-6 py-3 font-medium text-black">${m.name}</td>
-                    <td class="px-6 py-3 text-stone-500">${m.material}</td>
+                    <td class="px-6 py-3 text-stone-500">${m.material || 'N/A'}</td>
                     <td class="px-6 py-3 text-right text-stone-500">${formatter.format(m.costPrice)}</td>
                     <td class="px-6 py-3 text-right font-medium text-green-700">${formatter.format(m.salePrice)}</td>
                     <td class="px-6 py-3 text-center font-bold text-black">${m.stock}</td>
@@ -705,7 +711,6 @@
                     <td class="px-6 py-3 text-center font-bold text-red-500 text-xs">AGOTADO</td>
                     <td class="px-6 py-3 text-center">
                         <div class="flex items-center justify-center gap-2">
-                            <!-- BOTON DE RESTOCK -->
                             <button onclick="openEditModal('${s.id}')" class="text-green-600 hover:text-green-700 bg-stone-300 p-1.5 rounded-lg transition-colors flex items-center justify-center" title="Re-ingresar inventario">
                                 <span class="material-symbols-outlined text-[18px]">restore_from_trash</span>
                             </button>
@@ -724,7 +729,6 @@
             document.getElementById('pagination-soldout').innerHTML = buildPaginationHtml(page, data.length, 'soldout');
         }
 
-
         // =====================================
         // EDIT / RESTOCK MODAL LOGIC
         // =====================================
@@ -735,6 +739,7 @@
             document.getElementById('editItemId').value = item.id;
             document.getElementById('editItemNameDisplay').innerText = item.name;
             
+            document.getElementById('editMaterial').value = item.material || '18k';
             document.getElementById('editStock').value = item.stock <= 0 ? 1 : item.stock; 
             document.getElementById('editCost').value = item.costPrice;
             document.getElementById('editSale').value = item.salePrice;
@@ -761,6 +766,7 @@
                 stock: parseInt(document.getElementById('editStock').value),
                 costPrice: parseFloat(document.getElementById('editCost').value),
                 salePrice: parseFloat(document.getElementById('editSale').value),
+                material: document.getElementById('editMaterial').value
             };
 
             try {
