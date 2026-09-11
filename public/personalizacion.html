@@ -231,21 +231,21 @@
                             <h2 class="font-headline-lg text-lg text-black">Tipo de Tejido</h2>
                         </div>
                         <div class="grid-4-col">
-                            <button type="button" data-key="tejido" data-value="Nudo Plano" class="option-btn border-2 border-black bg-black text-[#E5C76B] p-2 rounded-xl text-center transition-all flex flex-col items-center gap-2">
-                                <img src="img/alondra.jpg" alt="Nudo Plano (Rosado)" class="w-full h-16 object-cover rounded-lg border border-black/10">
-                                <p class="text-xs font-semibold leading-tight">Nudo Alondra</p>
+                            <button type="button" data-key="tejido" data-value="Nudo Plano" class="option-btn border-2 border-black bg-black text-[#E5C76B] p-2 rounded-xl text-center transition-all flex flex-col items-center gap-2 relative">
+                                <img src="img/alondra.jpg" alt="Nudo Plano (Rosado)" class="w-full h-16 object-cover rounded-lg border border-black/10 zoomable-img hover:opacity-80 transition-opacity cursor-zoom-in relative z-10" title="Click para ampliar">
+                                <p class="text-xs font-semibold leading-tight mt-1">Nudo Alondra</p>
                             </button>
-                            <button type="button" data-key="tejido" data-value="Macramé Clásico" class="option-btn border border-black/15 hover:border-[#E5C76B] text-black p-2 rounded-xl text-center transition-all flex flex-col items-center gap-2">
-                                <img src="img/macrame.jpg" alt="Macramé Clásico (Café)" class="w-full h-16 object-cover rounded-lg border border-black/10">
-                                <p class="text-xs font-semibold leading-tight">Macramé Clásico</p>
+                            <button type="button" data-key="tejido" data-value="Macramé Clásico" class="option-btn border border-black/15 hover:border-[#E5C76B] text-black p-2 rounded-xl text-center transition-all flex flex-col items-center gap-2 relative">
+                                <img src="img/macrame.jpg" alt="Macramé Clásico (Café)" class="w-full h-16 object-cover rounded-lg border border-black/10 zoomable-img hover:opacity-80 transition-opacity cursor-zoom-in relative z-10" title="Click para ampliar">
+                                <p class="text-xs font-semibold leading-tight mt-1">Macramé Clásico</p>
                             </button>
-                            <button type="button" data-key="tejido" data-value="Nudo Espiral" class="option-btn border border-black/15 hover:border-[#E5C76B] text-black p-2 rounded-xl text-center transition-all flex flex-col items-center gap-2">
-                                <img src="img/espiral.jpg" alt="Nudo Espiral (Azul)" class="w-full h-16 object-cover rounded-lg border border-black/10">
-                                <p class="text-xs font-semibold leading-tight">Nudo Espiral</p>
+                            <button type="button" data-key="tejido" data-value="Nudo Espiral" class="option-btn border border-black/15 hover:border-[#E5C76B] text-black p-2 rounded-xl text-center transition-all flex flex-col items-center gap-2 relative">
+                                <img src="img/espiral.jpg" alt="Nudo Espiral (Azul)" class="w-full h-16 object-cover rounded-lg border border-black/10 zoomable-img hover:opacity-80 transition-opacity cursor-zoom-in relative z-10" title="Click para ampliar">
+                                <p class="text-xs font-semibold leading-tight mt-1">Nudo Espiral</p>
                             </button>
-                            <button type="button" data-key="tejido" data-value="Estilo Serpiente" class="option-btn border border-black/15 hover:border-[#E5C76B] text-black p-2 rounded-xl text-center transition-all flex flex-col items-center gap-2">
-                                <img src="img/serpiente.jpg" alt="Estilo Serpiente (Rojo)" class="w-full h-16 object-cover rounded-lg border border-black/10">
-                                <p class="text-xs font-semibold leading-tight">Estilo Serpiente</p>
+                            <button type="button" data-key="tejido" data-value="Estilo Serpiente" class="option-btn border border-black/15 hover:border-[#E5C76B] text-black p-2 rounded-xl text-center transition-all flex flex-col items-center gap-2 relative">
+                                <img src="img/serpiente.jpg" alt="Estilo Serpiente (Rojo)" class="w-full h-16 object-cover rounded-lg border border-black/10 zoomable-img hover:opacity-80 transition-opacity cursor-zoom-in relative z-10" title="Click para ampliar">
+                                <p class="text-xs font-semibold leading-tight mt-1">Estilo Serpiente</p>
                             </button>
                         </div>
                     </div>
@@ -485,6 +485,14 @@
         </section>
     </main>
 
+    <!-- Lightbox Image Modal -->
+    <div id="image-modal" class="fixed inset-0 z-[110] hidden bg-black/90 backdrop-blur-md flex items-center justify-center p-4 transition-opacity duration-300 opacity-0 cursor-zoom-out">
+        <button id="close-modal-btn" class="absolute top-6 right-6 text-white/70 hover:text-[#E5C76B] transition-colors p-2" aria-label="Cerrar imagen">
+            <span class="material-symbols-outlined text-4xl">close</span>
+        </button>
+        <img id="modal-image" src="" alt="Vista ampliada" class="max-w-full max-h-[85vh] rounded-xl shadow-2xl object-contain border border-[#E5C76B]/30">
+    </div>
+
     <!-- Official Website Footer -->
     <footer class="bg-black text-white border-t border-[#E5C76B]/20 py-12 px-margin-mobile md:px-margin-desktop">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8 text-center md:text-left">
@@ -712,6 +720,35 @@
 
         // Initialize link on load
         updateWhatsAppLink();
+
+        // ---------------------------------------------
+        // Image Lightbox Modal Logic
+        // ---------------------------------------------
+        const imageModal = document.getElementById('image-modal');
+        const modalImg = document.getElementById('modal-image');
+        const zoomableImages = document.querySelectorAll('.zoomable-img');
+
+        // Open modal when clicking an image
+        zoomableImages.forEach(img => {
+            img.addEventListener('click', (e) => {
+                // Prevent the button from being clicked when just zooming
+                e.stopPropagation(); 
+                
+                modalImg.src = e.target.src;
+                imageModal.classList.remove('hidden');
+                // Small delay to allow CSS transition to process
+                setTimeout(() => imageModal.classList.add('opacity-100'), 10);
+            });
+        });
+
+        // Close modal function
+        function closeImageModal() {
+            imageModal.classList.remove('opacity-100');
+            setTimeout(() => imageModal.classList.add('hidden'), 300);
+        }
+
+        // Close when clicking anywhere on the modal background or the close button
+        imageModal.addEventListener('click', closeImageModal);
     </script>
 </body>
 
