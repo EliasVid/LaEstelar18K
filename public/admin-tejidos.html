@@ -125,6 +125,35 @@
 
         .materials-card { background: white; padding: 1.5rem; border-radius: 1rem; border: 1px solid #f5f5f4; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
         .materials-card-title { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #111827; margin-bottom: 1rem; }
+        
+        /* --- ESTILOS DE LA BARRA DE BÚSQUEDA --- */
+        .materials-search-box {
+            display: flex;
+            align-items: center;
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.75rem;
+            padding: 0.6rem 1rem;
+            margin-bottom: 1.25rem;
+            transition: border-color 0.2s;
+        }
+        .materials-search-box:focus-within {
+            border-color: #cca830;
+        }
+        .materials-search-box input {
+            border: none;
+            outline: none;
+            background: transparent;
+            width: 100%;
+            font-size: 0.875rem;
+            color: #111827;
+            padding-left: 0.5rem;
+            font-family: inherit;
+        }
+        .materials-search-box input::placeholder {
+            color: #a8a29e;
+        }
+
         .loading-text { color: #a8a29e; font-size: 0.875rem; padding: 1rem 0; }
         .materials-list { max-height: 600px; overflow-y: auto; display: flex; flex-direction: column; gap: 0.75rem; padding-right: 0.5rem; }
         
@@ -274,6 +303,13 @@
 
                     <div class="materials-card">
                         <h3 class="materials-card-title" id="list-title">Insumos Disponibles (18k)</h3>
+                        
+                        <!-- SECCIÓN DE BÚSQUEDA AÑADIDA -->
+                        <div class="materials-search-box">
+                            <span class="material-symbols-outlined" style="color: #a8a29e; font-size: 20px;">search</span>
+                            <input type="text" id="materialSearchInput" placeholder="Buscar insumos por nombre..." oninput="renderMaterials()">
+                        </div>
+
                         <div id="loading-materials" class="loading-text">Cargando inventario...</div>
                         <div id="materials-container" class="materials-list">
                             <!-- JS Injected -->
@@ -435,15 +471,26 @@
                 document.getElementById('list-title').innerText = "Insumos Disponibles (Otros)";
             }
 
+            // Limpiamos la búsqueda al cambiar de pestaña
+            document.getElementById('materialSearchInput').value = '';
+            
             renderMaterials();
         }
 
         function renderMaterials() {
             const container = document.getElementById('materials-container');
-            const filtered = allMaterials.filter(m => m.material === currentTab);
+            const searchTerm = document.getElementById('materialSearchInput').value.toLowerCase().trim();
+
+            // Filtrar primero por categoría (pestaña activa)
+            let filtered = allMaterials.filter(m => m.material === currentTab);
+
+            // Filtrar por término de búsqueda si existe
+            if (searchTerm) {
+                filtered = filtered.filter(m => m.name.toLowerCase().includes(searchTerm));
+            }
 
             if (filtered.length === 0) {
-                container.innerHTML = `<p style="color:#a8a29e; font-size:0.875rem;">No hay insumos disponibles en esta categoría.</p>`;
+                container.innerHTML = `<p style="color:#a8a29e; font-size:0.875rem;">No se encontraron insumos.</p>`;
                 return;
             }
 
@@ -451,7 +498,7 @@
                 <div class="material-item">
                     <div>
                         <p class="material-name">${m.name}</p>
-                        <p class="material-meta">Stock: ${m.stock} • Costo: ${formatter.format(m.costPrice)}</p>
+                        <p class="material-meta">Stock: ${m.stock} &nbsp;•&nbsp; Costo: ${formatter.format(m.costPrice)}</p>
                     </div>
                     <div style="display:flex; align-items:center; gap:0.5rem;">
                         <label style="font-size:10px; font-weight:bold; color:#a8a29e; text-transform:uppercase;">Usados:</label>
