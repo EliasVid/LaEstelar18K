@@ -106,7 +106,7 @@
         }
 
         /* ========================================================
-           PURE CSS UI FOR TEJIDOS (Replacing Tailwind CDN)
+           PURE CSS UI FOR TEJIDOS 
         ======================================================== */
         .workspace-container { max-width: 72rem; margin: 0 auto; width: 100%; padding: 2rem; }
         .header-section { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #e5e7eb; }
@@ -304,7 +304,7 @@
                     <div class="materials-card">
                         <h3 class="materials-card-title" id="list-title">Insumos Disponibles (18k)</h3>
                         
-                        <!-- SECCIÓN DE BÚSQUEDA AÑADIDA -->
+                        <!-- SECCIÓN DE BÚSQUEDA -->
                         <div class="materials-search-box">
                             <span class="material-symbols-outlined" style="color: #a8a29e; font-size: 20px;">search</span>
                             <input type="text" id="materialSearchInput" placeholder="Buscar insumos por nombre..." oninput="renderMaterials()">
@@ -438,7 +438,24 @@
                 
                 if (!Array.isArray(data)) throw new Error("Error fetching inventory");
 
-                allMaterials = data.filter(item => item.class === 'material' && item.stock > 0);
+                // ========================================================
+                // EL FIX ESTÁ AQUÍ: Traemos todo lo que sea material, o productos que sean Dijes/Herrajes
+                // ========================================================
+                allMaterials = data.filter(item => {
+                    if (item.stock <= 0) return false;
+                    
+                    // Si es un insumo base, pasa
+                    if (item.class === 'material') return true;
+                    
+                    // Si lo registraste como producto, pero es un Dije o Herraje, también pasa
+                    if (item.class === 'product' && item.type) {
+                        const t = item.type.toLowerCase();
+                        if (t.includes('dije') || t.includes('herraje')) return true;
+                    }
+                    
+                    return false;
+                });
+
                 document.getElementById('loading-materials').classList.add('hidden');
                 document.getElementById('loading-materials').style.display = 'none';
                 
@@ -481,12 +498,15 @@
             const container = document.getElementById('materials-container');
             const searchTerm = document.getElementById('materialSearchInput').value.toLowerCase().trim();
 
-            // Filtrar primero por categoría (pestaña activa)
+            // Filtrar por la pestaña seleccionada (el dropdown del material guardó '18k' o 'Laminado')
             let filtered = allMaterials.filter(m => m.material === currentTab);
 
-            // Filtrar por término de búsqueda si existe
+            // Filtrar por término de búsqueda (nombre o tipo)
             if (searchTerm) {
-                filtered = filtered.filter(m => m.name.toLowerCase().includes(searchTerm));
+                filtered = filtered.filter(m => 
+                    m.name.toLowerCase().includes(searchTerm) || 
+                    (m.type && m.type.toLowerCase().includes(searchTerm))
+                );
             }
 
             if (filtered.length === 0) {
@@ -494,10 +514,12 @@
                 return;
             }
 
-            container.innerHTML = filtered.map(m => `
+            container.innerHTML = filtered.map(m => {
+                const tipoBadge = (m.class === 'product') ? ` <span style="font-size:0.6rem; background:#e5e7eb; padding:2px 4px; border-radius:4px; margin-left:4px;">${m.type}</span>` : '';
+                return `
                 <div class="material-item">
                     <div>
-                        <p class="material-name">${m.name}</p>
+                        <p class="material-name">${m.name}${tipoBadge}</p>
                         <p class="material-meta">Stock: ${m.stock} &nbsp;•&nbsp; Costo: ${formatter.format(m.costPrice)}</p>
                     </div>
                     <div style="display:flex; align-items:center; gap:0.5rem;">
@@ -509,7 +531,8 @@
                                class="qty-input">
                     </div>
                 </div>
-            `).join('');
+                `;
+            }).join('');
         }
 
         function handleQtyChange(id, value) {
@@ -563,7 +586,6 @@
                 return;
             }
 
-            // Aplicamos la misma fórmula matemática requerida: Costo * (100 / (100 - Margen))
             if (margin >= 100) {
                 alert("El margen no puede ser 100% o superior con esta fórmula.");
                 return;
