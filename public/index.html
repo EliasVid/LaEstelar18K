@@ -14,9 +14,140 @@
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
+
+    <!-- ============================================================== -->
+    <!-- START HALLOWEEN SPIDER STYLES (REMOVE AFTER HALLOWEEN)         -->
+    <!-- ============================================================== -->
+    <style id="halloween-spider-styles">
+        /* --- FOG & VIGNETTE --- */
+        .halloween-fog-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 9996;
+            pointer-events: none;
+            /* Dark edges (vignette) and subtle orange fog at bottom */
+            box-shadow: inset 0 0 120px rgba(0, 0, 0, 0.7); 
+            background: radial-gradient(circle at 50% 120%, rgba(255, 102, 0, 0.15) 0%, transparent 60%);
+            animation: fadeOutHalloween 3.5s ease-in-out forwards;
+        }
+
+        /* --- SPIDER CONTAINER --- */
+        #halloween-spider-container {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%); /* Centers the entire rig horizontally */
+            z-index: 9999;
+            pointer-events: none; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* --- WEB THREAD --- */
+        .spider-web-line {
+            width: 2px;
+            height: 380px; /* Much longer line so it drops deep into the screen */
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.1), rgba(255, 102, 0, 0.9));
+            box-shadow: 0 0 8px rgba(255, 102, 0, 0.8);
+            z-index: 1;
+            transform-origin: top center;
+            animation: webDropAndSnap 3.5s forwards;
+        }
+
+        /* --- SPIDER WRAPPER (Handles the drop) --- */
+        .spider-wrapper {
+            margin-top: -85px; /* Pulls the emoji deeply up over the web line */
+            z-index: 2;
+            animation: spiderDropAndFall 3.5s forwards;
+        }
+
+        /* --- SPIDER EMOJI (Handles the swinging) --- */
+        .spider {
+            font-size: 8rem;
+            line-height: 1;
+            display: block;
+            animation: spiderSwing 1.5s ease-in-out infinite alternate;
+            transform-origin: center 40px; /* Swings naturally exactly where the web attaches */
+            filter: drop-shadow(0 15px 20px rgba(255, 102, 0, 0.6));
+        }
+        
+        /* --- CORNER COBWEBS --- */
+        .halloween-corner-web {
+            position: fixed;
+            width: 1em; 
+            height: 1em;
+            line-height: 1;
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            z-index: 9998;
+            pointer-events: none;
+            opacity: 0.75;
+            filter: drop-shadow(0 0 12px rgba(255, 102, 0, 0.7));
+            animation: fadeOutHalloween 3.5s ease-in-out forwards;
+        }
+        /* Top Left: 1/4 showing */
+        .web-tl { font-size: 16rem; top: -0.42em; left: -0.42em; transform: rotate(0deg); }
+        /* Top Right: 1/4 showing */
+        .web-tr { font-size: 11rem; top: -0.42em; right: -0.42em; transform: rotate(-90deg); }
+        /* Bottom Left: 1/4 showing */
+        .web-bl { font-size: 9rem; bottom: -0.42em; left: -0.42em; transform: rotate(90deg); }
+
+        /* --- ANIMATIONS --- */
+        
+        /* Web thread drops in, stays, then snaps upward (scaleY to 0) */
+        @keyframes webDropAndSnap {
+            0% { transform: translateY(-800px); }
+            20% { transform: translateY(0px); }
+            75% { transform: translateY(0px) scaleY(1); opacity: 1; }
+            78% { transform: translateY(0px) scaleY(0); opacity: 0; } /* The snap! */
+            100% { transform: translateY(0px) scaleY(0); opacity: 0; visibility: hidden; }
+        }
+
+        /* Spider drops in, stays, then falls to the ground */
+        @keyframes spiderDropAndFall {
+            0% { transform: translateY(-800px); }
+            20% { transform: translateY(0px); }
+            75% { transform: translateY(0px); animation-timing-function: ease-in; } /* Gravity acceleration starts */
+            95% { transform: translateY(150vh); opacity: 1; } /* Plummet off screen */
+            100% { transform: translateY(150vh); opacity: 0; visibility: hidden; }
+        }
+
+        @keyframes spiderSwing {
+            0% { transform: rotate(-8deg); }
+            100% { transform: rotate(8deg); }
+        }
+
+        @keyframes fadeOutHalloween {
+            0%, 80% { opacity: 1; visibility: visible; }
+            100% { opacity: 0; visibility: hidden; }
+        }
+    </style>
+    <!-- ============================================================== -->
+    <!-- END HALLOWEEN SPIDER STYLES                                    -->
+    <!-- ============================================================== -->
 </head>
 
 <body class="bg-surface-container-lowest text-on-background font-body-md antialiased min-h-screen pb-24 md:pb-0">
+
+    <!-- ============================================================== -->
+    <!-- START HALLOWEEN SPIDER HTML (REMOVE AFTER HALLOWEEN)           -->
+    <!-- ============================================================== -->
+    <div class="halloween-fog-overlay"></div>
+    <div id="halloween-spider-container">
+        <div class="spider-web-line"></div>
+        <div class="spider-wrapper">
+            <div class="spider">🕷️</div>
+        </div>
+    </div>
+    <div class="halloween-corner-web web-tl">🕸️</div>
+    <div class="halloween-corner-web web-tr">🕸️</div>
+    <div class="halloween-corner-web web-bl">🕸️</div>
+    <!-- ============================================================== -->
+    <!-- END HALLOWEEN SPIDER HTML                                      -->
+    <!-- ============================================================== -->
+
     <!-- TopAppBar -->
     <header class="flex justify-between items-center px-2 sm:px-margin-mobile md:px-margin-desktop h-16 w-full fixed top-0 z-50 transition-all duration-300 bg-black/50 backdrop-blur-md border-b border-[#E5C76B]/20">
         <button class="hover:opacity-80 transition-opacity scale-95 active:scale-90 transition-transform p-2 text-[#E5C76B]" id="menu-btn" aria-label="Abrir menú">
@@ -488,3 +619,8 @@
     </script>
 </body>
 </html>
+```<ElicitationsGroup>
+  <FollowUp>Does the spider drop low enough now?</FollowUp>
+  <FollowUp>Would you like the fog overlay to fade out a little slower so it feels spookier?</FollowUp>
+  <FollowUp>Do we need to adjust the snap effect timing so the spider hangs just a little longer before falling?</FollowUp>
+</ElicitationsGroup>
