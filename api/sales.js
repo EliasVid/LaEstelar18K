@@ -1,6 +1,7 @@
 import { GetObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
 import { r2 } from "./_r2.js";
 import { getRedisClient } from "./_redis.js";
+import { verifyAdmin } from "./_auth.js";
 
 const SALES_KEY = "data/sales_history.json";
 const INVENTORY_KEY = "data/inventory_master.json";
@@ -98,6 +99,34 @@ export default async function handler(req, res) {
       return res.status(200).json({ success: true });
     } catch (error) {
       console.error("Backend Error in POST sales:", error);
+      return res.status(500).json({ error: error.message });
+    }
+  }
+
+  // ==========================================
+  // DELETE: Eliminar una venta del historial (sin tocar stock)
+  // ==========================================
+  else if (req.method === "DELETE") {
+    try {
+      verifyAdmin(req);
+    } catch (e) {
+      return res.status(401).json({ error: e.message });
+    }
+    try {
+      const id = req.query?.id || req.body?.id;
+      if (!id) return res.status(400).json({ error: "Missing sale id" });
+
+      const result = await r2.send(new GetObjectCommand({ Bucket: process.env.R2_BUCKET, Key: SALES_KEY }));
+      const sales = JSON.parse(await result.Body.transformToString());
+      const filtered = sales.filter(s => s.id !== id);
+
+      await r2.send(new PutObjectCommand({
+        Bucket: process.env.R2_BUCKET, Key: SALES_KEY,
+        Body: JSON.stringify(filtered, null, 2), ContentType: "application/json"
+      }));
+      return res.status(200).json({ success: true });
+    } catch (error) {
+      console.error("Backend Error in DELETE sales:", error);
       return res.status(500).json({ error: error.message });
     }
   }

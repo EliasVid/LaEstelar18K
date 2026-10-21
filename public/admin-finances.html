@@ -390,6 +390,7 @@
                                 <th>Artículos</th>
                                 <th class="right">Ingreso</th>
                                 <th class="right">Ganancia Neta</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody id="sales-table">
@@ -477,6 +478,18 @@
             }
         }
 
+        async function deleteSale(id) {
+            if (!confirm("¿Eliminar esta venta? El inventario no se modificará.")) return;
+            try {
+                const res = await authFetch('/api/sales?id=' + encodeURIComponent(id), { method: 'DELETE' });
+                if (!res.ok) throw new Error();
+                globalSales = globalSales.filter(s => s.id !== id);
+                calculateDashboard();
+            } catch (err) {
+                alert("No se pudo eliminar la venta.");
+            }
+        }
+
         function calculateDashboard() {
             const selectedMonth = document.getElementById('month-selector').value; 
             const ownerMargin = parseFloat(document.getElementById('owner-margin').value) || 0;
@@ -523,7 +536,7 @@
 
             // Update Table
             if (monthlySales.length === 0) {
-                document.getElementById('sales-table').innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 2rem; color: #a8a29e;">No hay ventas registradas en este mes.</td></tr>`;
+                document.getElementById('sales-table').innerHTML = `<tr><td colspan="5" style="text-align: center; padding: 2rem; color: #a8a29e;">No hay ventas registradas en este mes.</td></tr>`;
             } else {
                 // Reverse to show newest first
                 document.getElementById('sales-table').innerHTML = [...monthlySales].reverse().map(sale => {
@@ -542,6 +555,9 @@
                         <td class="td-items">${itemsDesc}</td>
                         <td class="td-val-black">${formatter.format(sale.totalRevenue)}</td>
                         <td class="td-val-green">${formatter.format(sale.totalProfit)}</td>
+                        <td style="text-align:right;">
+                            <button onclick="deleteSale('${sale.id}')" title="Eliminar venta" style="background:none;border:none;cursor:pointer;color:#a8a29e;font-size:1.1rem;line-height:1;">&times;</button>
+                        </td>
                     </tr>`;
                 }).join('');
             }
