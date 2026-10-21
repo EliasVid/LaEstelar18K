@@ -544,7 +544,14 @@
                     const formattedDate = d.toLocaleDateString('es-CO', { day: '2-digit', month: 'short' });
                     const formattedTime = d.toLocaleTimeString('es-CO', { hour: '2-digit', minute:'2-digit' });
                     
-                    const itemsDesc = sale.cart.map(i => `${i.qty}x ${i.name}`).join('<br>');
+                    const itemsDesc = sale.cart.map(i => {
+                        let line = `${i.qty}x ${i.name}`;
+                        if (i.class === 'tejido' && Array.isArray(i.materials) && i.materials.length) {
+                            line += `<br><span style="font-size:0.75rem;color:#a8a29e;">` +
+                                i.materials.map(m => `${m.qty}x ${m.name}`).join(', ') + `</span>`;
+                        }
+                        return line;
+                    }).join('<br>');
 
                     return `
                     <tr>

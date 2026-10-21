@@ -560,7 +560,7 @@
             document.getElementById('cart-total').innerHTML = `${discountHtml}${formatter.format(grandTotal)}`;
 
             currentSalePayload = {
-                cart: posCart.map(item => ({ id: item.id, name: item.name, class: item.class, qty: item.qty, costPrice: item.costPrice, description: item.description })),
+                cart: posCart.map(item => ({ id: item.id, name: item.name, class: item.class, qty: item.qty, costPrice: item.costPrice, description: item.description, materials: item.materials })),
                 bags: bags,
                 discountPercent: discountPercent,
                 subTotal: subTotal,
